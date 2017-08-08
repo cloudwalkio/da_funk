@@ -1,5 +1,13 @@
 # DaFunk
 
+### 0.10.0 - 2017-08-08
+
+- Define pt-br as default locale.
+- Implement Kernel#print_last.
+- Adopt print_last for Herlper#attach.
+- Implement Device::Network.shutdown, what call disconnect and power(0).
+- Update cloudwalk_handshake (0.9.0), funky-emv (0.9.0) and posxml_parser(0.16.0).
+
 ### 0.9.2 - 2017-07-25
 
 - Refactoring Network.configured? fixing the return which must be a bool.
