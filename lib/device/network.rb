@@ -171,6 +171,13 @@ class Device
       self.code
     end
 
+    def self.shutdown
+      if self.adapter.started?
+        Device::Network.disconnect
+        Device::Network.power(0)
+      end
+    end
+
     def self.config
       # TODO raise some error if media was not set
       [Device::Setting.media, self.config_media]
