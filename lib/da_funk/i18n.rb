@@ -1,7 +1,7 @@
 class I18n
   include DaFunk::Helper
 
-  DEFAULT_LOCALE      = "en"
+  DEFAULT_LOCALE      = "pt-br"
   DEFAULT_APPLICATION = "main"
 
   class << self

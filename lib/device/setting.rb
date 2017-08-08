@@ -50,7 +50,7 @@ class Device
       "iso8583_send_tries"          => "0", #COMM
       "crypto_dukpt_slot"           => "", #SYS
       "ctls"                        => "", #SYS
-      "locale"                      => "en", #SYS
+      "locale"                      => "pt-br", #SYS
       "heartbeat"                   => "", #SYS
       "boot"                        => "1", #SYS
       "company_name"                => "" #SYS
