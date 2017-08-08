@@ -15,25 +15,24 @@ module DaFunk
     end
 
     def attach
-      Device::Display.clear
       if Device::Network.configured?
-        I18n.pt(:attach_connecting)
+        print_last(I18n.t(:attach_connecting))
         unless Device::Network.connected?
           if Device::Network.attach == Device::Network::SUCCESS
             Device::Setting.network_configured = 1
-            I18n.pt(:attach_connected)
+            print_last(I18n.t(:attach_connected))
           else
-            Device::Setting.network_configured = 0
-            I18n.pt(:attach_fail, :args => [Device::Network.code.to_s])
+            Device::Setting.network_configured = 0 if Device::ParamsDat.file["connection_managment"] != "1"
+            print_last(I18n.t(:attach_fail, :args => [Device::Network.code.to_s]))
             getc(4000)
             return false
           end
         else
-          I18n.pt(:attach_already_connected)
+          print_last(I18n.t(:attach_already_connected))
         end
         true
       else
-        I18n.pt(:attach_device_not_configured)
+        print_last(I18n.t(:attach_device_not_configured))
         getc(2000)
         false
       end
