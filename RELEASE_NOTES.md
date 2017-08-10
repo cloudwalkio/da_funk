@@ -1,5 +1,9 @@
 # DaFunk
 
+### 0.11.0 - 2017-08-10
+
+- Fix connection_management flag
+
 ### 0.10.0 - 2017-08-08
 
 - Define pt-br as default locale.
