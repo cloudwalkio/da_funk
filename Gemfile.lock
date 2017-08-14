@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    da_funk (0.11.0)
+    da_funk (0.12.0)
       bundler (~> 1.7)
       cloudwalk_handshake (~> 0.6)
       funky-emv (~> 0.3)
@@ -11,12 +11,12 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    cloudwalk_handshake (0.9.0)
-    funky-emv (0.7.0)
+    cloudwalk_handshake (0.10.0)
+    funky-emv (0.8.0)
       funky-tlv (~> 0.2)
     funky-simplehttp (0.4.4)
     funky-tlv (0.2.3)
-    posxml_parser (0.16.0)
+    posxml_parser (0.17.0)
       funky-emv (~> 0.3)
     rake (10.5.0)
     yard (0.9.9)

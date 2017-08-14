@@ -1,5 +1,9 @@
 # DaFunk
 
+### 0.12.0 - 2017-08-14
+
+- CommandLinePlatform.connected? return 0.
+
 ### 0.11.0 - 2017-08-10
 
 - Fix connection_management flag
