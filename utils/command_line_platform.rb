@@ -69,7 +69,7 @@ class CommandLinePlatform
     end
 
     def self.connected?
-      true
+      0
     end
 
     def self.code
