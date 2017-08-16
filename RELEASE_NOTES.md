@@ -1,5 +1,9 @@
 # DaFunk
 
+### 0.13.0 - 2017-08-16
+
+- Implement tcp_recv_timeout as custom attribute at Device::Setting.
+
 ### 0.12.0 - 2017-08-14
 
 - CommandLinePlatform.connected? return 0.
