@@ -109,6 +109,11 @@ class Device
         super
       end
     end
+
+    # Custom Attributes
+    def self.tcp_recv_timeout
+      Device::ParamsDat.file["tcp_recv_timeout"] || method_missing(:tcp_recv_timeout)
+    end
   end
 end
 
