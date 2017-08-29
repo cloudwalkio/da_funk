@@ -1,5 +1,10 @@
 # DaFunk
 
+### 0.14.0 - 2017-08-28
+
+- Add task to pack application.
+- Fix cloudwlak run call at rake task.
+
 ### 0.13.0 - 2017-08-16
 
 - Implement tcp_recv_timeout as custom attribute at Device::Setting.
