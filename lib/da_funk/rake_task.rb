@@ -111,6 +111,12 @@ module DaFunk
         platform_call "#{mrbc} #{debug_flag} -o #{main_out} #{libs} "
       end
 
+      desc "Compile, build and pack app and resources"
+      task :package => :build do
+        require "archive/zip"
+        Archive::Zip.archive File.join(root_path, "out", "#{name}.zip"), File.join(out_path, ".")
+      end
+
       namespace :test do
         task :setup => :resources do
           ENV["RUBY_PLATFORM"] = "mruby"

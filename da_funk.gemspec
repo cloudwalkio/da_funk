@@ -32,4 +32,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "yard", "~> 0.8"
   spec.add_dependency 'posxml_parser', '~> 0'
   spec.add_dependency 'funky-emv', '~> 0.3'
+  spec.add_dependency 'archive-zip', '~> 0.5'
 end
