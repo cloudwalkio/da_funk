@@ -30,7 +30,7 @@ module DaFunk
       @resources         ||= FileList['resources/**/*']
       @resources_out     ||= @resources.pathmap("%{resources,#{File.join(root_path, "out")}}p")
       @tests_res_out     ||= @tests_resources.pathmap("%{test/resources,out}p")
-      @mruby             ||= "cloudwalk run"
+      @mruby             ||= "cloudwalk run -b"
       @mrbc              = get_mrbc_bin(@mrbc)
 
       define
