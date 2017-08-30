@@ -67,11 +67,8 @@ class Device
     end
 
     def self.connected?
-      if self.adapter.started? ||
-        (self.configured? && Device::Network.init(*self.config) == SUCCESS)
-
+      if self.adapter.started? || self.setup
         self.code = adapter.connected?
-
         return self.code == Device::Network::SUCCESS
       end
       self.code = NO_CONNECTION
@@ -181,6 +178,10 @@ class Device
     def self.config
       # TODO raise some error if media was not set
       [Device::Setting.media, self.config_media]
+    end
+
+    def self.setup
+      self.configured? && Device::Network.init(*self.config) == SUCCESS
     end
 
     # TODO should check if WIFI, ETHERNET and etc
