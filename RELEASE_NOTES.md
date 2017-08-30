@@ -1,5 +1,10 @@
 # DaFunk
 
+### 0.15.0 - 2017-08-30
+
+- Add task to setup(initialize) Network based in the current configuration.
+- Reload Network, Setting and ParamsDat after app execution.
+
 ### 0.14.0 - 2017-08-28
 
 - Add task to pack application.
