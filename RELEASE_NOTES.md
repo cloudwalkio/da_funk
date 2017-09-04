@@ -1,5 +1,9 @@
 # DaFunk
 
+### 0.16.0 - 2017-09-04
+
+- Implement custom print at attach helper.
+
 ### 0.15.0 - 2017-08-30
 
 - Add task to setup(initialize) Network based in the current configuration.
