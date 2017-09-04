@@ -14,25 +14,36 @@ module DaFunk
       string
     end
 
-    def attach
+    # {
+    #   :bmps => {
+    #     :attach_connecting => "<path>",
+    #     :attach_connected => "<path>",
+    #     :attach_fail => "<path>",
+    #     :attach_loop => ["<path1>", "<path2>", "<path3>", "<path4>"],
+    #   }
+    # }
+    #
+    # {:print_last => true} || nil
+
+    def attach(options = {:print_last => true})
       if Device::Network.configured?
-        print_last(I18n.t(:attach_connecting))
+        print_attach(:attach_connecting, options)
         unless Device::Network.connected?
-          if Device::Network.attach == Device::Network::SUCCESS
+          if Device::Network.attach(options) == Device::Network::SUCCESS
             Device::Setting.network_configured = 1
-            print_last(I18n.t(:attach_connected))
+            print_attach(:attach_connected, options)
           else
             Device::Setting.network_configured = 0 if Device::ParamsDat.file["connection_management"] != "1"
-            print_last(I18n.t(:attach_fail, :args => [Device::Network.code.to_s]))
+            print_attach(:attach_fail, options.merge(:args => [Device::Network.code.to_s]))
             getc(4000)
             return false
           end
         else
-          print_last(I18n.t(:attach_already_connected))
+          print_attach(:attach_already_connected, options)
         end
         true
       else
-        print_last(I18n.t(:attach_device_not_configured))
+        print_attach(:attach_device_not_configured, options)
         getc(2000)
         false
       end
@@ -90,10 +101,16 @@ module DaFunk
     end
 
     # must send nonblock proc
-    def try_user(timeout = Device::IO.timeout, &block)
+    def try_user(timeout = Device::IO.timeout, options = nil, &block)
       time = timeout != 0 ? Time.now + timeout / 1000 : Time.now
       processing = Hash.new(keep: true)
+      interation = 0
       while(processing[:keep] && processing[:key] != Device::IO::CANCEL) do
+        if options && options[:bmps] && files = options[:bmps][:attach_loop]
+          Device::Display.print_bitmap(files[interation])
+          max = files.size - 1
+          interation = (max >= interation) ? 0 : interation + 1
+        end
         if processing[:keep] = block.call(processing)
           processing[:key] = getc(300)
         end
@@ -291,6 +308,18 @@ module DaFunk
         puts("#{string} (#{default})")
       else
         puts("#{string}")
+      end
+    end
+
+    def print_attach(id, options = nil)
+      if options
+        if bmps = options[:bmps]
+          Device::Display.print_bitmap(bmps[id]) if bmps[id]
+        else
+          print_last(I18n.t(id, options)) if options[:print_last]
+        end
+      else
+        print_last(I18n.t(id))
       end
     end
   end

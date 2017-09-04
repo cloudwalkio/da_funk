@@ -144,14 +144,14 @@ class Device
       ret
     end
 
-    def self.attach
+    def self.attach(options = nil)
       Device::Network.connected?
       if self.code != SUCCESS
         self.code = Device::Network.init(*self.config)
         self.code = Device::Network.connect
         Device::Network.connected? if self.code != SUCCESS
 
-        hash = try_user do |process|
+        hash = try_user(Device::IO.timeout, options) do |process|
           Device::Network.connected?
           process[:ret] = self.code
           process[:ret] == PROCESSING # if true keep trying
