@@ -1,5 +1,9 @@
 # DaFunk
 
+### 0.17.0 - 2017-09-13
+
+- Update README_GUIDE.
+
 ### 0.16.0 - 2017-09-04
 
 - Implement custom print at attach helper.
