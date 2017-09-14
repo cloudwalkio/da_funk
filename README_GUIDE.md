@@ -1,52 +1,75 @@
-## Ruby Walk Framework
+## DaFunk Framework
 
-Ruby Walk Framework is a entire new VM for the Walk Platform, in Ruby, a modern and powerful language.
+DaFunk is a entire new framework for embedded applications running on top of MRuby runtime, initially design for Payment solutions.
+
+https://github.com/cloudwalkio/around_the_world/blob/master/imgs/apps.jpg
 
 
 ## Ruby Compatiblity
+
 Support for Ruby 1.9.3 and ISO/IEC 30170:2012, where specifies the syntax and semantics of the computer programming language Ruby, and the requirements for conforming Ruby processors, strictly conforming Ruby programs.
 
 ## Devices
-#### D200
-Alpha support, System, Network, IO, Sockets, Transction::Iso, Transaction::Download and Magnectic Card.
 
-#### Browser
-Alpha support, System, Network, IO, Sockets, Transction::Iso, Transaction::Download.
+#### PAX POS Device and Prolin OS
 
-#### Verifone
-Comming soon.
+Payment solutions that suport complete EMV transaction, check [here](https://docs.cloudwalk.io/pt-BR/framework/pax-d200).
 
-#### Ingenico
-Comming soon.
+#### Gertec POS
+
+Payment solutions that suport complete EMV transaction, check [here](https://docs.cloudwalk.io/pt-BR/framework/gertec).
+
+#### Implement the runtime in your OS
+
+The runtime is open source and available for study, change, and distribution, check [here](https://github.com/cloudwalkio/around_the_world).
+
 
 ## DaFunk API
 
-Project responsible for managed compatibility between implemented devices, and treat deprecated syntax or behaviour.
+![DaFunkMap](https://github.com/cloudwalkio/around_the_world/blob/master/imgs/apps.jpg?raw=true)
 
-## Getting Started
+## How do I use DaFunk?
 
-### D200 Environmet
+### Embedded Projects
 
-#### Install PC Loader
+DaFunk is a gem to be used in MRuby environment, to provide the environment we created a CLI that is able to create, compile, run and test DaFunk Apps. You can check [here](http://github.com/da-funk/cloudwalk)
 
-Found in PAX resources, is needed to upload the BIN and main.rb
+Project creation flow in Ruby environment:
 
-#### Upload Binary
+```
+cloudwalk new project
+cd project
+bundle install
+bundle exec rake test:unit
+```
 
-Upload as App/Script, download [here](https://dl.dropboxusercontent.com/u/436039/walk/pax/robot_rock-0.4.2.bin).
+## Guides/Samples
 
-#### Upload main.rb
+Check test samples [here](Guide.html).
 
-Upload as Para Files, download [here](https://dl.dropboxusercontent.com/u/436039/walk/pax/main.rb)
 
-### Guides/Samples
+## License
 
-1. [Input and Output](file.sample_input_output.html)
-2. [Network](file.sample_network_gprs.html)
-3. [Sockets](file.sample_sockt.html)
-4. [Transaction](file.sample_transaction.html)
-5. [Download File](file.sample_transaction_download_file.html)
-6. [Applications](file.sample_transaction_download_application.html)
-7. [Read Magnect Card](file.sample_read_magnect_card.html)
-8. [ISO8583 Message](file.sample_message_iso8583.html)
-9. [Download and parse parameter file](file.sample_transaction_download_parameter_file.html)
+```
+The MIT License (MIT)
+
+Copyright (c) 2016 CloudWalk, Inc.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+### 
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
