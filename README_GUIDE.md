@@ -2,9 +2,6 @@
 
 DaFunk is a entire new framework for embedded applications running on top of MRuby runtime, initially design for Payment solutions.
 
-https://github.com/cloudwalkio/around_the_world/blob/master/imgs/apps.jpg
-
-
 ## Ruby Compatiblity
 
 Support for Ruby 1.9.3 and ISO/IEC 30170:2012, where specifies the syntax and semantics of the computer programming language Ruby, and the requirements for conforming Ruby processors, strictly conforming Ruby programs.
