@@ -1,5 +1,9 @@
 # DaFunk
 
+### 0.18.0 - 2017-09-14
+
+- Update README_GUIDE.
+
 ### 0.17.0 - 2017-09-13
 
 - Update README_GUIDE.
