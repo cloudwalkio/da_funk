@@ -32,7 +32,7 @@ The runtime is open source and available for study, change, and distribution, ch
 
 ### Embedded Projects
 
-DaFunk is a gem to be used in MRuby environment, to provide the environment we created a CLI that is able to create, compile, run and test DaFunk Apps. You can check [here](http://github.com/da-funk/cloudwalk)
+DaFunk is a gem to be used in MRuby environment, to provide the environment we created a CLI that is able to create, compile, run and test DaFunk Apps. You can check [here](https://docs.cloudwalk.io/en/cli/setup)
 
 Project creation flow in Ruby environment:
 
@@ -45,7 +45,7 @@ bundle exec rake test:unit
 
 ## Guides/Samples
 
-Check test samples [here](Guide.html).
+Check test samples [here](da_funk/Guide.html).
 
 
 ## License
