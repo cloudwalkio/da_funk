@@ -1,5 +1,9 @@
 # DaFunk
 
+### 0.20.0 - 2017-10-31
+
+- Adopt connection_management 1 as default.
+
 ### 0.19.0 - 2017-09-14
 
 - Update README_GUIDE.
