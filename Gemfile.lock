@@ -15,12 +15,12 @@ GEM
     archive-zip (0.10.0)
       io-like (~> 0.3.0)
     cloudwalk_handshake (0.10.0)
-    funky-emv (0.9.1)
+    funky-emv (0.13.0)
       funky-tlv (~> 0.2)
     funky-simplehttp (0.4.4)
     funky-tlv (0.2.3)
     io-like (0.3.0)
-    posxml_parser (0.23.0)
+    posxml_parser (0.24.0)
       funky-emv (~> 0.3)
     rake (10.5.0)
     yard (0.9.9)
@@ -35,4 +35,4 @@ DEPENDENCIES
   yard (~> 0.8)
 
 BUNDLED WITH
-   1.15.1
+   1.15.4
