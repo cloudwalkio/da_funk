@@ -158,7 +158,9 @@ class Device
         hash = try_user(self.attach_timeout, options) do |process|
           Device::Network.connected?
           process[:ret] = self.code
-          process[:ret] == PROCESSING # if true keep trying
+          # TODO develop an interface to keep waiting communication module dial
+          # based on platform returns
+          process[:ret] == PROCESSING || process[:ret] == 2 || process[:ret] == -3307 # if true keep trying
         end
         self.code = hash[:ret]
 
