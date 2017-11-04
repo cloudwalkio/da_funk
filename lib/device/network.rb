@@ -144,6 +144,10 @@ class Device
       ret
     end
 
+    def self.attach_timeout
+      Device::Setting.attach_gprs_timeout || Device::IO.timeout
+    end
+
     def self.attach(options = nil)
       Device::Network.connected?
       if self.code != SUCCESS
@@ -151,7 +155,7 @@ class Device
         self.code = Device::Network.connect
         Device::Network.connected? if self.code != SUCCESS
 
-        hash = try_user(Device::IO.timeout, options) do |process|
+        hash = try_user(self.attach_timeout, options) do |process|
           Device::Network.connected?
           process[:ret] = self.code
           process[:ret] == PROCESSING # if true keep trying
