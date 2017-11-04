@@ -1,5 +1,11 @@
 # DaFunk
 
+### 0.21.0 - 2017-11-03
+
+- Implement custom Device::Setting.attach_gprs_timeout.
+- Adopt custom GPRS timeout on Network.attach.
+- Adopt temporary processing returns at Device::Network.attach.
+
 ### 0.20.0 - 2017-10-31
 
 - Adopt connection_management 1 as default.
