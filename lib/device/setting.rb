@@ -117,7 +117,7 @@ class Device
 
     def self.attach_gprs_timeout
       value = (Device::ParamsDat.file["attach_gprs_timeout"] || method_missing(:attach_gprs_timeout))
-      value.to_s.empty? ? value : value.to_s.to_i
+      value.to_s.empty? ? nil : value.to_s.to_i
     end
   end
 end

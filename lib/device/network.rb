@@ -145,7 +145,11 @@ class Device
     end
 
     def self.attach_timeout
-      Device::Setting.attach_gprs_timeout || Device::IO.timeout
+      if self.gprs?
+        Device::Setting.attach_gprs_timeout || Device::IO.timeout
+      else
+        Device::IO.timeout
+      end
     end
 
     def self.attach(options = nil)
