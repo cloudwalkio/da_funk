@@ -172,7 +172,7 @@ class Device
           self.code = Device::Network.dhcp_client(20000) if (wifi? || ethernet?)
         else
           self.code = ERR_USER_CANCEL if hash[:key] == Device::IO::CANCEL
-          Device::Network.disconnect
+          Device::Network.shutdown
         end
       end
       self.code
