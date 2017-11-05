@@ -1,5 +1,10 @@
 # DaFunk
 
+### 0.22.0 - 2017-11-04
+
+- Bug fix Device::Network.attach_timeout when dealing with wifi.
+- Always shutdown interface after communication error.
+
 ### 0.21.0 - 2017-11-03
 
 - Implement custom Device::Setting.attach_gprs_timeout.
