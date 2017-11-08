@@ -1,5 +1,10 @@
 # DaFunk
 
+### 0.23.0 - 2017-11-08
+
+- Implement String#to_big.
+- Implement custom Float#to_s(16).
+
 ### 0.22.0 - 2017-11-04
 
 - Bug fix Device::Network.attach_timeout when dealing with wifi.
