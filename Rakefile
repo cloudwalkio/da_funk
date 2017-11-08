@@ -14,6 +14,7 @@ FILES = FileList[
   "lib/ext/string.rb",
   "lib/ext/array.rb",
   "lib/ext/hash.rb",
+  "lib/ext/float.rb",
   "lib/device/version.rb",
   "lib/da_funk/version.rb",
   "lib/da_funk/helper.rb",
