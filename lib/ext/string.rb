@@ -23,5 +23,19 @@ class String
     end
     return false
   end
+
+  def to_big(*args)
+    if args.first == 16
+      self.chars.reverse.each_with_index.inject(0) do |t, v|
+        t += (v[0].hex * (16 ** v[1]))
+      end
+    elsif args.first == 10
+      self.chars.reverse.each_with_index.inject(0) do |t, v|
+        t += (v[0].hex * (10 ** v[1]))
+      end
+    else
+      self.to_i(*args)
+    end
+  end
 end
 
