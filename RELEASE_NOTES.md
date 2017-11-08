@@ -1,5 +1,9 @@
 # DaFunk
 
+### 0.24.0 - 2017-11-08
+
+- Update ext/float.rb to compilation.
+
 ### 0.23.0 - 2017-11-08
 
 - Implement String#to_big.
