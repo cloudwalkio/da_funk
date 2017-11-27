@@ -22,10 +22,16 @@ class I18n
   end
 
   def self.configure(klass = DEFAULT_APPLICATION, locale = DEFAULT_LOCALE)
-    raise I18nError.new("File not found") if (! File.exists?(filepath(klass)))
-    self.parse(klass)
     @locale = locale
-    raise I18nError.new("Locale not found") unless language
+    unless self.configured?
+      raise I18nError.new("File not found") if (! File.exists?(filepath(klass)))
+      self.parse(klass)
+      raise I18nError.new("Locale not found") unless language
+    end
+  end
+
+  def self.configured?
+    @hash && language
   end
 
   def self.parse(klass)
