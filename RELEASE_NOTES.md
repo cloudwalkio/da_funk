@@ -1,5 +1,11 @@
 # DaFunk
 
+### 0.25.0 - 2017-11-27
+
+- I18n, check if the current language was already configure to perform the merge options.
+- Add Support tests.
+- Implement String#snakecase.
+
 ### 0.24.0 - 2017-11-08
 
 - Update ext/float.rb to compilation.
