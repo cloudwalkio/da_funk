@@ -37,5 +37,14 @@ class String
       self.to_i(*args)
     end
   end
+
+  def snakecase
+    dup.bytes.inject("") do |str, ch|
+      if ch <= 90 && ! str.empty?
+        str << "_"
+      end
+      str << ch.chr.downcase
+    end
+  end
 end
 
