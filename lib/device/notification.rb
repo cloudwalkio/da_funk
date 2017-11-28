@@ -4,7 +4,7 @@ class Device
     DEFAULT_TIMEOUT           = 20
     DEFAULT_INTERVAL          = 10
     DEFAULT_STREAM_TIMEOUT    = 0
-    DEFAULT_CREATION_INTERVAL = 3600
+    DEFAULT_CREATION_INTERVAL = 180
 
     class << self
       attr_accessor :callbacks, :current, :last_creation, :creation_interval, :last_event
