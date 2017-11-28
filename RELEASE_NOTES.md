@@ -1,5 +1,10 @@
 # DaFunk
 
+### 0.26.0 - 2017-11-28
+
+- Change default serf notification creation timeout to 180 seconds.
+- Support new MessagePack syntax.
+
 ### 0.25.0 - 2017-11-27
 
 - I18n, check if the current language was already configure to perform the merge options.
