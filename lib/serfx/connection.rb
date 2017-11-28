@@ -105,11 +105,11 @@ module Serfx
         'Seq' => seq
       }
 
-      buff = MessagePack::Packer.new
-      buff.write(header)
-      buff.write(body) unless body.nil?
+      buff = ""
+      buff << header.to_msgpack
+      buff << body.to_msgpack unless body.nil?
 
-      res = socket.write(buff.to_str) unless buff.to_str.empty?
+      res = socket.write(buff) unless buff.empty?
       @requests[seq] = { header: header, ack?: false }
       seq
     end
