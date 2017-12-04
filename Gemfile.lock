@@ -7,7 +7,7 @@ PATH
       cloudwalk_handshake (~> 0.6)
       funky-emv (~> 0.3)
       posxml_parser (~> 0)
-      rake (~> 10)
+      rake (>= 10)
 
 GEM
   remote: https://rubygems.org/
@@ -20,9 +20,9 @@ GEM
     funky-simplehttp (0.4.4)
     funky-tlv (0.2.3)
     io-like (0.3.0)
-    posxml_parser (0.27.0)
+    posxml_parser (0.29.0)
       funky-emv (~> 0.3)
-    rake (10.5.0)
+    rake (12.0.0)
     yard (0.9.12)
 
 PLATFORMS
