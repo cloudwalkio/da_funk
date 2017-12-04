@@ -1,5 +1,9 @@
 # DaFunk
 
+### 0.27.0 - 2017-12-04
+
+- Update rake dependency.
+
 ### 0.26.0 - 2017-11-28
 
 - Change default serf notification creation timeout to 180 seconds.
