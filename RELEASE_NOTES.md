@@ -1,5 +1,9 @@
 # DaFunk
 
+### 0.28.0 - 2017-12-07
+
+- Support to interrupt file download if KEY CANCEL pressed.
+
 ### 0.27.0 - 2017-12-04
 
 - Update rake dependency.
