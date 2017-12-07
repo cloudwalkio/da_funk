@@ -113,7 +113,7 @@ class Device
         # Send Request
         socket.write(@request)
 
-        return COMMUNICATION_ERROR if (response_size = get_response_size(socket.read(4))) <= 0
+        return COMMUNICATION_ERROR if (response_size = get_response_size(read_header_size(socket))) <= 0
 
         return MAPREDUCE_RESPONSE_ERROR unless @first_packet = get_binary_term_beginning(response_size)
 
@@ -150,6 +150,36 @@ class Device
       end
 
       private
+
+      def read_header_size(socket)
+        buf, error = socket_read(socket, 4, Device::Setting.tcp_recv_timeout.to_i, 0)
+        case error
+        when nil
+          buf
+        else
+          ""
+        end
+      end
+
+      def socket_read(socket, size, timeout_seconds, total_attempts)
+        total_buffer = ""
+        error = nil
+        attempts = 0
+        timeout = Time.now + timeout_seconds
+        loop do
+          buf = socket.recv_nonblock(size - total_buffer.size)
+          total_buffer << buf.to_s
+          break if total_buffer.size >= size
+          break(error = :socket_closed) if buf.nil?
+          if (Time.now > timeout)
+            attempts+=1
+            timeout = Time.now + timeout_seconds
+            break(error = :attempts_exceeded) if attempts > total_attempts
+          end
+          break(error = :user_cancel) if (getc(200) == Device::IO::CANCEL)
+        end
+        [total_buffer, error]
+      end
 
       def get_response_size(bytes)
         return -1 if bytes.to_s.size <= 0
