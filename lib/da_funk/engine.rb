@@ -2,7 +2,6 @@ module DaFunk
   class Engine
     def self.check
       DaFunk::EventListener.check
-      Device::Notification.check
       DaFunk::Helper::StatusBar.check
     end
 
