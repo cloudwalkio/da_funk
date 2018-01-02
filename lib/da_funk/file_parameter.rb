@@ -51,9 +51,9 @@ module DaFunk
       File.delete(self.file) if exists?
     end
 
-    def outdated?
+    def outdated?(force = false)
       return true unless exists?
-      unless @crc_local
+      if !@crc_local || force
         handle = File.open(file)
         @crc_local = Device::Crypto.crc16_hex(handle.read)
       end

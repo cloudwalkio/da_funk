@@ -34,12 +34,12 @@ class Device
       true
     end
 
-    def self.outdated_apps
-      self.apps.select{|app| app.outdated? }
+    def self.outdated_apps(force = false)
+      self.apps.select{|app| app.outdated?(force) }
     end
 
-    def self.outdated_files
-      self.files.select{|f| f.outdated? }
+    def self.outdated_files(force = false)
+      self.files.select{|f| f.outdated?(force) }
     end
 
     def self.parse_apps
@@ -121,16 +121,16 @@ class Device
       end
     end
 
-    def self.update_apps(force = false)
-      self.download if force || ! self.valid
+    def self.update_apps(force_params = false, force_files = false)
+      self.download if force_params || ! self.valid
       if self.valid
-        apps_to_update = self.outdated_apps
+        apps_to_update = self.outdated_apps(force_files)
         size_apps = apps_to_update.size
         apps_to_update.each_with_index do |app, index|
           self.update_app(app, index+1, size_apps)
         end
 
-        files_to_update = self.outdated_files
+        files_to_update = self.outdated_files(force_files)
         size_files = files_to_update.size
         files_to_update.each_with_index do |file_, index|
           self.update_file(file_, index+1, size_files)

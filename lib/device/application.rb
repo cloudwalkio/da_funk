@@ -65,9 +65,11 @@ class Device
       end
     end
 
-    def outdated?
+    def outdated?(force = false)
       return true unless File.exists?(file)
-      @crc_local = calculate_crc unless @crc_local
+      if !@crc_local || force
+        @crc_local = calculate_crc
+      end
       @crc_local != @crc
     rescue
       true
