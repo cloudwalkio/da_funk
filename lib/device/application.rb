@@ -46,7 +46,7 @@ class Device
       end
       ret
     rescue => e
-      puts "ERROR #{e.message}"
+      ContextLog.exception(e, e.backtrace, "Error downloading #{self.name}")
       Device::Transaction::Download::IO_ERROR
     end
 
