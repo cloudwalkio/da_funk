@@ -8,6 +8,8 @@
 
 class Device
   class Application
+    class ApplicationError < StandardError; end
+
     attr_accessor  :crc
     attr_reader :label, :file, :type, :order, :name, :remote, :original, :crc_local
 
@@ -35,19 +37,29 @@ class Device
     def download(force = false)
       if force || self.outdated?
         ret = Device::Transaction::Download.request_file(remote, file, crc_local)
+        if ret == Device::Transaction::Download::SUCCESS
+          if ((@crc_local = calculate_crc) == @crc)
+            unzip
+          else
+            ret = Device::Transaction::Download::COMMUNICATION_ERROR
+          end
+        end
       else
         ret = Device::Transaction::Download::FILE_NOT_CHANGE
-      end
-      if ret == Device::Transaction::Download::SUCCESS
-        @crc_local = calculate_crc
-        if @crc_local != @crc
-          return Device::Transaction::Download::COMMUNICATION_ERROR
-        end
       end
       ret
     rescue => e
       ContextLog.exception(e, e.backtrace, "Error downloading #{self.name}")
       Device::Transaction::Download::IO_ERROR
+    end
+
+    def unzip
+      if self.ruby?
+        zip = self.file
+        message = "Problem to unzip #{zip}[#{name}]"
+        raise File::FileError.new(message) unless File.exists?(zip)
+        raise ApplicationError.new(message) unless Zip.uncompress(zip, name)
+      end
     end
 
     def dir
