@@ -1,7 +1,7 @@
 
 class NotificationTest < DaFunk::Test.case
   def setup
-    @notification = Device::Notification.new(15, 10)
+    @notification = DaFunk::Notification.new(15, 10)
   end
 
   def test_interval_last_check_blank

@@ -6,8 +6,8 @@ class MrbEvalTest < DaFunk::Test.case
     Device::Setting.company_name = "pc1"
     Device::Setting.logical_number = "1234"
 
-    Device::Notification.start
-    Device::Notification.check
+    DaFunk::Notification.start
+    DaFunk::Notification.check
 
     http = SimpleHttp.new('http', 'http://google.com', 443)
     http.socket = Device::Network.socket.call

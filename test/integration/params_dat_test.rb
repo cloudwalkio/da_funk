@@ -5,7 +5,7 @@ class ParamsDatTest < DaFunk::Test.case
     Device::Setting.host = Device::Setting::HOST_STAGING
     Device::Setting.company_name = "pc1"
     Device::Setting.logical_number = "1410"
-    Device::ParamsDat.update_apps
-    Device::ParamsDat.application_menu
+    DaFunk::ParamsDat.update_apps
+    DaFunk::ParamsDat.application_menu
   end
 end

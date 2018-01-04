@@ -11,17 +11,17 @@ class ApplicationTest < DaFunk::Test.case
   end
 
   def test_check_crc_true
-    application = Device::Application.new("TTT", @file_path, "ruby", nil)
+    application = DaFunk::Application.new("TTT", @file_path, "ruby", nil)
     assert_equal true, application.outdated?
   end
 
   def test_check_crc_false
-    application = Device::Application.new("TTT", @file_path, "ruby", @crc)
+    application = DaFunk::Application.new("TTT", @file_path, "ruby", @crc)
     assert_equal false, application.outdated?
   end
 
   def test_check_crc_non_file
-    application = Device::Application.new("TTT", "./non_exists", "ruby", "1111")
+    application = DaFunk::Application.new("TTT", "./non_exists", "ruby", "1111")
     assert_equal true, application.outdated?
   end
 

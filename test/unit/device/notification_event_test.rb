@@ -8,7 +8,7 @@ class NotificationEventTest < DaFunk::Test.case
       "Name" => "pc1;0101",
       "Event" => "user"
     }
-    @event = Device::NotificationEvent.new(@stream_event)
+    @event = DaFunk::NotificationEvent.new(@stream_event)
   end
 
   def test_attr_coalesce
@@ -59,14 +59,14 @@ class NotificationEventTest < DaFunk::Test.case
   def test_attr_one_parameter
     stream_event = @stream_event.dup
     stream_event["Payload"].gsub!("a", "|")
-    event = Device::NotificationEvent.new(stream_event)
+    event = DaFunk::NotificationEvent.new(stream_event)
     assert_equal ["ge 62"], event.parameters
   end
 
   def test_attr_multiple_parameters
     stream_event = @stream_event.dup
     stream_event["Payload"].gsub!("e", "|")
-    event = Device::NotificationEvent.new(stream_event)
+    event = DaFunk::NotificationEvent.new(stream_event)
     assert_equal ["ssag", " 62"], event.parameters
   end
 end
