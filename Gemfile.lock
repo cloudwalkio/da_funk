@@ -23,7 +23,7 @@ GEM
     funky-simplehttp (0.4.4)
     funky-tlv (0.2.3)
     io-like (0.3.0)
-    posxml_parser (0.30.0)
+    posxml_parser (0.31.0)
       funky-emv (~> 0.3)
     rake (12.3.0)
     yard (0.9.12)
