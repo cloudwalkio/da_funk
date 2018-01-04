@@ -36,7 +36,7 @@ DEPENDENCIES
   cloudwalk
   da_funk!
   funky-simplehttp (~> 0.2)
-  yard (~> 0.8)
+  yard
 
 BUNDLED WITH
    1.15.4

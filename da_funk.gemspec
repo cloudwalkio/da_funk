@@ -29,7 +29,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "bundler", "~> 1.7"
   spec.add_dependency "cloudwalk_handshake", "~> 0.6"
   spec.add_development_dependency "funky-simplehttp", "~> 0.2"
-  spec.add_development_dependency "yard", "~> 0.8"
+  spec.add_development_dependency "yard"
   spec.add_dependency 'posxml_parser', '~> 0'
   spec.add_dependency 'funky-emv', '~> 0.3'
   spec.add_dependency 'archive-zip', '~> 0.5'
