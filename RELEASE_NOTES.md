@@ -1,5 +1,22 @@
 # DaFunk
 
+
+### 1.0.0 - 2018-01-04
+
+- Remove serfs interface and implement notification
+interface via web socket.
+- Adopt ContextLog to store error on file download.
+- Implement force parameter to application, params dat and file download.
+- Unzip ruby application after download instead of execution call.
+- Move Application, Notification*, ParamsDat and Transaction from Device to Dafunk scope.
+- Remove transaction/emv.rb and refactor loads.
+- Remove Device:Helper.
+- Check if application file exists before return local crc.
+- Adopt custom exception for Application download.
+- Force unzip ruby application if file is the same.
+- Do not cache local crc on DaFunk::Application.
+- Adopt DaDunk::Application CRC check strategy in DaFunk::FileParameter
+
 ### 0.28.0 - 2017-12-07
 
 - Support to interrupt file download if KEY CANCEL pressed.
