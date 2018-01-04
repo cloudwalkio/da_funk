@@ -32,7 +32,6 @@ module DaFunk
       @remote    = remote.sub("#{company}_", "")
       @name      = remote.sub("#{company}_", "").split(".")[0]
       @file      = check_path(@remote)
-      @crc_local = @crc if File.exists?(@file)
     end
 
     def crc_local
