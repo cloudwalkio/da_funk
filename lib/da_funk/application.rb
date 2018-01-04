@@ -74,7 +74,7 @@ module DaFunk
     end
 
     def exists?
-      File.exists? file
+      File.exists?(file)
     end
 
     def delete
@@ -85,7 +85,7 @@ module DaFunk
     end
 
     def outdated?(force = false)
-      return true unless File.exists?(file)
+      return true unless self.exists?
       if !self.crc_local || force
         @crc_local = calculate_crc
       end
