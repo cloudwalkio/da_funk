@@ -1,5 +1,5 @@
 
-class Device
+module DaFunk
   class Transaction
     # Object responsible to create ISO8583 message
     #

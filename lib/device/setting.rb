@@ -112,11 +112,11 @@ class Device
 
     # Custom Attributes
     def self.tcp_recv_timeout
-      Device::ParamsDat.file["tcp_recv_timeout"] || method_missing(:tcp_recv_timeout)
+      DaFunk::ParamsDat.file["tcp_recv_timeout"] || method_missing(:tcp_recv_timeout)
     end
 
     def self.attach_gprs_timeout
-      value = (Device::ParamsDat.file["attach_gprs_timeout"] || method_missing(:attach_gprs_timeout))
+      value = (DaFunk::ParamsDat.file["attach_gprs_timeout"] || method_missing(:attach_gprs_timeout))
       value.to_s.empty? ? nil : value.to_s.to_i
     end
   end

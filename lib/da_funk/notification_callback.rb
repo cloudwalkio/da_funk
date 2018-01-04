@@ -1,4 +1,4 @@
-class Device
+module DaFunk
   class NotificationCallback
     attr_reader :on, :before, :after, :description
     attr_accessor :results

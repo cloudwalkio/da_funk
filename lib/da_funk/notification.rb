@@ -1,5 +1,5 @@
 
-class Device
+module DaFunk
   class Notification
     class << self
       attr_accessor :callbacks

@@ -33,7 +33,7 @@ module DaFunk
             Device::Setting.network_configured = 1
             print_attach(:attach_connected, options)
           else
-            Device::Setting.network_configured = 0 if Device::ParamsDat.file["connection_management"] == "0"
+            Device::Setting.network_configured = 0 if DaFunk::ParamsDat.file["connection_management"] == "0"
             print_attach(:attach_fail, options.merge(:args => [Device::Network.code.to_s]))
             getc(4000)
             return false
@@ -52,23 +52,23 @@ module DaFunk
     def check_download_error(ret)
       value = true
       case ret
-      when Device::Transaction::Download::SERIAL_NUMBER_NOT_FOUND
+      when DaFunk::Transaction::Download::SERIAL_NUMBER_NOT_FOUND
         I18n.pt(:download_serial_number_not_found, :args => [ret])
         value =  false
-      when Device::Transaction::Download::FILE_NOT_FOUND
+      when DaFunk::Transaction::Download::FILE_NOT_FOUND
         I18n.pt(:download_file_not_found, :args => [ret])
         value = false
-      when Device::Transaction::Download::FILE_NOT_CHANGE
+      when DaFunk::Transaction::Download::FILE_NOT_CHANGE
         I18n.pt(:download_file_is_the_same, :args => [ret])
-      when Device::Transaction::Download::SUCCESS
+      when DaFunk::Transaction::Download::SUCCESS
         I18n.pt(:download_success, :args => [ret])
-      when Device::Transaction::Download::COMMUNICATION_ERROR
+      when DaFunk::Transaction::Download::COMMUNICATION_ERROR
         I18n.pt(:download_communication_failure, :args => [ret])
         value = false
-      when Device::Transaction::Download::MAPREDUCE_RESPONSE_ERROR
+      when DaFunk::Transaction::Download::MAPREDUCE_RESPONSE_ERROR
         I18n.pt(:download_encoding_error, :args => [ret])
         value = false
-      when Device::Transaction::Download::IO_ERROR
+      when DaFunk::Transaction::Download::IO_ERROR
         I18n.pt(:download_io_error, :args => [ret])
         value = false
       else

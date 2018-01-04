@@ -6,7 +6,7 @@
 # - No crc update
 # - With crc update
 
-class Device
+module DaFunk
   class Application
     class ApplicationError < StandardError; end
 
@@ -36,21 +36,21 @@ class Device
 
     def download(force = false)
       if force || self.outdated?
-        ret = Device::Transaction::Download.request_file(remote, file, crc_local)
-        if ret == Device::Transaction::Download::SUCCESS
+        ret = DaFunk::Transaction::Download.request_file(remote, file, self.crc_local)
+        if ret == DaFunk::Transaction::Download::SUCCESS
           if ((@crc_local = calculate_crc) == @crc)
             unzip
           else
-            ret = Device::Transaction::Download::COMMUNICATION_ERROR
+            ret = DaFunk::Transaction::Download::COMMUNICATION_ERROR
           end
         end
       else
-        ret = Device::Transaction::Download::FILE_NOT_CHANGE
+        ret = DaFunk::Transaction::Download::FILE_NOT_CHANGE
       end
       ret
     rescue => e
       ContextLog.exception(e, e.backtrace, "Error downloading #{self.name}")
-      Device::Transaction::Download::IO_ERROR
+      DaFunk::Transaction::Download::IO_ERROR
     end
 
     def unzip

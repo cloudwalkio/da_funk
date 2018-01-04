@@ -1,4 +1,4 @@
-class Device
+module DaFunk
   class NotificationEvent
     attr_reader :id, :event, :acronym, :logical_number, :parameters, :callback
 

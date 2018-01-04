@@ -1,8 +1,8 @@
-class Device
+module DaFunk
   class ParamsDat
     FILE_NAME = "./main/params.dat"
 
-    include Device::Helper
+    include DaFunk::Helper
 
     class << self
       attr_accessor :file, :apps, :valid, :files
@@ -34,12 +34,12 @@ class Device
       true
     end
 
-    def self.outdated_apps(force = false)
-      self.apps.select{|app| app.outdated?(force) }
+    def self.outdated_apps(force_crc = false, force = false)
+      self.apps.select{|app| app.outdated?(force_crc) || force }
     end
 
-    def self.outdated_files(force = false)
-      self.files.select{|f| f.outdated?(force) }
+    def self.outdated_files(force_crc = false, force = false)
+      self.files.select{|f| f.outdated?(force_crc) || force }
     end
 
     def self.parse_apps
@@ -49,11 +49,11 @@ class Device
         if application = get_app(name)
           application.crc = crc
         else
-          application = Device::Application.new(label, name, type, crc)
+          application = DaFunk::Application.new(label, name, type, crc)
         end
         new_apps << application
       end
-      Device::Application.delete(@apps - new_apps)
+      DaFunk::Application.delete(@apps - new_apps)
       @apps = new_apps
     end
 
@@ -68,7 +68,7 @@ class Device
         end
         new_files << file_
       end
-      Device::Application.delete(@files - new_files)
+      DaFunk::Application.delete(@files - new_files)
       @files = new_files
     end
 
@@ -108,7 +108,7 @@ class Device
         ret = try(3) do |attempt|
           Device::Display.clear
           I18n.pt(:downloading_content, :args => ["PARAMS", 1, 1])
-          ret = Device::Transaction::Download.request_param_file(FILE_NAME)
+          ret = DaFunk::Transaction::Download.request_param_file(FILE_NAME)
           unless check_download_error(ret)
             sleep(2)
             false
@@ -121,25 +121,25 @@ class Device
       end
     end
 
-    def self.update_apps(force_params = false, force_files = false)
+    def self.update_apps(force_params = false, force_crc = false, force = false)
       self.download if force_params || ! self.valid
       if self.valid
-        apps_to_update = self.outdated_apps(force_files)
+        apps_to_update = self.outdated_apps(force_crc, force)
         size_apps = apps_to_update.size
         apps_to_update.each_with_index do |app, index|
-          self.update_app(app, index+1, size_apps)
+          self.update_app(app, index+1, size_apps, force_crc || force)
         end
 
-        files_to_update = self.outdated_files(force_files)
+        files_to_update = self.outdated_files(force_crc, force)
         size_files = files_to_update.size
         files_to_update.each_with_index do |file_, index|
-          self.update_file(file_, index+1, size_files)
+          self.update_file(file_, index+1, size_files, force_crc || force)
         end
       end
     end
 
     def self.format!(keep_config_files = false, keep_files = [])
-      Device::Application.delete(self.apps)
+      DaFunk::Application.delete(self.apps)
       DaFunk::FileParameter.delete(self.files)
       File.delete(FILE_NAME) if exists?
       @apps, @files = [], []

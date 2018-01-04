@@ -1,5 +1,5 @@
 
-class Device
+module DaFunk
   class Transaction
     class Download
       ERL_VERSION_MAGIC        = 131
@@ -36,7 +36,7 @@ class Device
       end
 
       def self.request_file(remote_path, local_path, crc = nil)
-        download = Device::Transaction::Download.new(Device::System.serial, "", DaFunk::VERSION)
+        download = DaFunk::Transaction::Download.new(Device::System.serial, "", DaFunk::VERSION)
         download.perform(Device::Network.socket,
                          Device::Setting.company_name,
                          remote_path, local_path, Device::System.app,

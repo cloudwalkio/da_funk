@@ -1,6 +1,6 @@
 class Device
   class IO < ::IO
-    include Device::Helper
+    include DaFunk::Helper
 
     F1               = "\001"
     F2               = "\002"

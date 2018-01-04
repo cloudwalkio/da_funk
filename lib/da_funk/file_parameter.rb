@@ -39,11 +39,11 @@ module DaFunk
 
     def download(force = false)
       if force || outdated?
-        ret = Device::Transaction::Download.request_file(remote, file, crc_local)
+        ret = DaFunk::Transaction::Download.request_file(remote, file, crc_local)
       else
-        ret = Device::Transaction::Download::FILE_NOT_CHANGE
+        ret = DaFunk::Transaction::Download::FILE_NOT_CHANGE
       end
-      @crc_local = @crc if ret == Device::Transaction::Download::SUCCESS
+      @crc_local = @crc if ret == DaFunk::Transaction::Download::SUCCESS
       ret
     end
 

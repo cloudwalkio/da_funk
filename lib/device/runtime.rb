@@ -21,7 +21,7 @@ class Device
     # @return [NilClass] From the new runtime instance.
     def self.system_reaload
       Device::Setting.setup
-      Device::ParamsDat.setup
+      DaFunk::ParamsDat.setup
       Device::Network.setup
       nil
     end
