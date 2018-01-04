@@ -9,6 +9,7 @@
 module DaFunk
   class Application
     class ApplicationError < StandardError; end
+    class FileNotFoundError < StandardError; end
 
     attr_accessor :crc
     attr_reader :label, :file, :type, :order, :name, :remote, :original
@@ -61,8 +62,8 @@ module DaFunk
       if self.ruby?
         zip = self.file
         message = "Problem to unzip #{zip}[#{name}]"
-        raise File::FileError.new(message) unless File.exists?(zip)
-        raise ApplicationError.new(message) unless Zip.uncompress(zip, name)
+        raise FileNotFoundError.new(message) unless self.exists?
+        raise ApplicationError.new(message) unless Zip.uncompress(zip)
       end
     end
 
