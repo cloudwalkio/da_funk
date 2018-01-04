@@ -10,8 +10,8 @@ module DaFunk
   class Application
     class ApplicationError < StandardError; end
 
-    attr_accessor  :crc
-    attr_reader :label, :file, :type, :order, :name, :remote, :original, :crc_local
+    attr_accessor :crc
+    attr_reader :label, :file, :type, :order, :name, :remote, :original
 
     def self.delete(collection)
       collection.each do |app|
@@ -32,6 +32,10 @@ module DaFunk
       @name      = remote.sub("#{company}_", "").split(".")[0]
       @file      = check_path(@remote)
       @crc_local = @crc if File.exists?(@file)
+    end
+
+    def crc_local
+      self.exists? ? @crc_local : nil
     end
 
     def download(force = false)
@@ -79,10 +83,10 @@ module DaFunk
 
     def outdated?(force = false)
       return true unless File.exists?(file)
-      if !@crc_local || force
+      if !self.crc_local || force
         @crc_local = calculate_crc
       end
-      @crc_local != @crc
+      self.crc_local != @crc
     rescue
       true
     end
