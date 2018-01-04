@@ -14,11 +14,11 @@ GEM
   specs:
     archive-zip (0.10.0)
       io-like (~> 0.3.0)
-    cloudwalk_handshake (0.11.0)
     funky-emv (0.14.0)
     cloudwalk (0.9.0)
       bundler
       rake
+    cloudwalk_handshake (0.12.0)
       funky-tlv (~> 0.2)
     funky-simplehttp (0.4.4)
     funky-tlv (0.2.3)
