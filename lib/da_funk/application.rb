@@ -48,6 +48,8 @@ module DaFunk
           else
             ret = DaFunk::Transaction::Download::COMMUNICATION_ERROR
           end
+        elsif ret == DaFunk::Transaction::Download::FILE_NOT_CHANGE
+          unzip
         end
       else
         ret = DaFunk::Transaction::Download::FILE_NOT_CHANGE
