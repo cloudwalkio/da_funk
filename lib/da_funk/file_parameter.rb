@@ -2,7 +2,7 @@ module DaFunk
   class FileParameter
     FILEPATH = "./shared"
     attr_accessor :crc
-    attr_reader :name, :file, :crc_local, :original, :remote
+    attr_reader :name, :file, :original, :remote
 
     def self.delete(collection)
       collection.each do |file_|
@@ -20,7 +20,10 @@ module DaFunk
       @remote   = @original.sub("#{company}_", "")
       @name     = @original.sub("#{company}_", "").split(".").first
       @file     = "#{FILEPATH}/#{@remote}"
-      @crc_local = @crc if File.exists?(@file)
+    end
+
+    def crc_local
+      self.exists? ? @crc_local : nil
     end
 
     def zip?
@@ -38,13 +41,20 @@ module DaFunk
     end
 
     def download(force = false)
-      if force || outdated?
-        ret = DaFunk::Transaction::Download.request_file(remote, file, crc_local)
+      if force || self.outdated?
+        ret = DaFunk::Transaction::Download.request_file(remote, file, self.crc_local)
+        if ret == DaFunk::Transaction::Download::SUCCESS
+          unless ((@crc_local = calculate_crc) == @crc)
+            ret = DaFunk::Transaction::Download::COMMUNICATION_ERROR
+          end
+        end
       else
         ret = DaFunk::Transaction::Download::FILE_NOT_CHANGE
       end
-      @crc_local = @crc if ret == DaFunk::Transaction::Download::SUCCESS
       ret
+    rescue => e
+      ContextLog.exception(e, e.backtrace, "Error downloading #{self.name}")
+      DaFunk::Transaction::Download::IO_ERROR
     end
 
     def delete
@@ -52,17 +62,25 @@ module DaFunk
     end
 
     def outdated?(force = false)
-      return true unless exists?
-      if !@crc_local || force
-        handle = File.open(file)
-        @crc_local = Device::Crypto.crc16_hex(handle.read)
+      return true unless self.exists?
+      if !self.crc_local || force
+        @crc_local = calculate_crc
       end
-      @crc_local != @crc
+      self.crc_local != @crc
+    rescue
+      true
+    end
+
+    private
+    def calculate_crc
+      if exists?
+        handle = File.open(file)
+        Device::Crypto.crc16_hex(handle.read)
+      end
     ensure
       handle.close if handle
     end
 
-    private
     def check_company(name)
       name.split("_", 2)[0]
     end
