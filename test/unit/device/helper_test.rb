@@ -1,5 +1,5 @@
 class HelperKlass
-  include Device::Helper
+  include DaFunk::Helper
 end
 
 class HelperTest < DaFunk::Test.case
