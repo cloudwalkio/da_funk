@@ -11,6 +11,7 @@ FileUtils.cd DA_FUNK_ROOT
 FILES = FileList[
   "lib/file_db.rb",
   "lib/zip.rb",
+  "lib/da_funk/helper.rb",
 
   "lib/ext/kernel.rb",
   "lib/ext/nil.rb",
@@ -33,7 +34,6 @@ FILES = FileList[
   "lib/da_funk/version.rb",
 
   "lib/da_funk.rb",
-  "lib/da_funk/helper.rb",
   "lib/da_funk/test.rb",
   "lib/da_funk/screen.rb",
   "lib/da_funk/callback_flow.rb",
@@ -59,7 +59,6 @@ FILES = FileList[
   "lib/device/audio.rb",
   "lib/device/crypto.rb",
   "lib/device/display.rb",
-  "lib/device/helper.rb",
   "lib/device/io.rb",
   "lib/device/network.rb",
   "lib/device/printer.rb",

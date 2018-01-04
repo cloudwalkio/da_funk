@@ -37,7 +37,6 @@ unless Object.const_defined?(:MTest)
   require file_path + "/device/audio.rb"
   require file_path + "/device/crypto.rb"
   require file_path + "/device/display.rb"
-  require file_path + "/device/helper.rb"
   require file_path + "/device/io.rb"
   require file_path + "/device/network.rb"
   require file_path + "/device/printer.rb"
