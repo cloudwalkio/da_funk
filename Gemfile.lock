@@ -16,6 +16,9 @@ GEM
       io-like (~> 0.3.0)
     cloudwalk_handshake (0.11.0)
     funky-emv (0.14.0)
+    cloudwalk (0.9.0)
+      bundler
+      rake
       funky-tlv (~> 0.2)
     funky-simplehttp (0.4.4)
     funky-tlv (0.2.3)
@@ -30,6 +33,7 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
+  cloudwalk
   da_funk!
   funky-simplehttp (~> 0.2)
   yard (~> 0.8)
