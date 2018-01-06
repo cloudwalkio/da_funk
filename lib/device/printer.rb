@@ -94,8 +94,8 @@ class Device
     # @return [Fixnum] RET_OK Success.
     # @return [Fixnum] ERR_FONT_NOT_EXIST Font does not exist.
     # @return [Fixnum] ERR_INVALID_PARAM Invalid parameter.
-    def self.set_font(path)
-      self.adapter.set_font(path)
+    def self.font(path)
+      self.adapter.font(path)
     end
 
     # Sets printing gray level.
