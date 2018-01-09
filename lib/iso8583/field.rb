@@ -19,7 +19,7 @@ module ISO8583
 
     def parse(raw)
       len, raw = case length
-                 when Fixnum
+                 when Integer
                    [length, raw]
                  when Field
                    length.parse(raw)
@@ -69,7 +69,7 @@ module ISO8583
       end
 
       len_str = case length
-                when Fixnum
+                when Integer
                   raise ISO8583Exception.new("Too long: #{value} (#{name})! length=#{length}")  if encoded_value.length > length
                   raise ISO8583Exception.new("Too short: #{value} (#{name})! length=#{length}") if encoded_value.length < length
                   "" 
