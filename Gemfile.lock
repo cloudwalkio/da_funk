@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    da_funk (1.0.0)
+    da_funk (1.1.0)
       archive-zip (~> 0.5)
       bundler (~> 1.7)
       cloudwalk_handshake (~> 0.6)
@@ -15,7 +15,7 @@ GEM
     archive-zip (0.10.0)
       io-like (~> 0.3.0)
     ast (2.3.0)
-    cloudwalk (0.9.0)
+    cloudwalk (1.1.0)
       bundler
       rake
     cloudwalk_handshake (0.12.0)
@@ -48,7 +48,7 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
-  cloudwalk
+  cloudwalk (= 1.1.0)
   da_funk!
   funky-simplehttp (~> 0.2)
   rubocop
