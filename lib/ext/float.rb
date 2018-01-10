@@ -1,4 +1,5 @@
 class Float
+  alias to_s_old to_s
   def to_s(*args)
     if args.first == 16
       t = self
@@ -10,7 +11,8 @@ class Float
       end
       v.reverse.inject("") {|str, v| str << v.to_i.to_s(16)}
     else
-      super(*args)
+      to_s_old(*args)
     end
   end
 end
+
