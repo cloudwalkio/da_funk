@@ -39,9 +39,9 @@ class HelperTest < DaFunk::Test.case
   end
 
   def test_number_to_currency_float
-    assert_equal "100.00", @helper.number_to_currency(100.0, {:precision => 2})
-    assert_equal "100.000", @helper.number_to_currency(100.0, {:precision => 3})
-    assert_equal "10,000.000", @helper.number_to_currency(10000.0, {:precision => 3})
+    assert_equal "100.34", @helper.number_to_currency(100.34, {:precision => 2})
+    assert_equal "100.341", @helper.number_to_currency(100.341, {:precision => 3})
+    assert_equal "10,000.341", @helper.number_to_currency(10000.341, {:precision => 3})
   end
 
   def test_helper_include_scope
