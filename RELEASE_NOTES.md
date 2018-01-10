@@ -1,5 +1,13 @@
 # DaFunk
 
+### 1.1.0 - 2018-01-10
+
+- Rename Device::Printer#set_font to Device::Printer#font.
+- Fix #18 - Adopt Integer instead of Fixnum.
+- Check if adapter isn’t nil before check Crypto class.
+- Fix Float.to_s method generating implementing Alis for the old.
+- Refact String.to_i implementing alias for the old.
+- Refact number_to_currecy float test.
 
 ### 1.0.0 - 2018-01-04
 
