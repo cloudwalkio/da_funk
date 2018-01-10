@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem 'cloudwalk', '1.1.0'
+gem 'cloudwalk'
 gem 'rubocop', require: false
 
 gemspec
