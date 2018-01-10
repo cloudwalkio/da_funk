@@ -24,6 +24,15 @@ class String
     return false
   end
 
+  alias to_i_old to_i
+  def to_i(*args)
+    if args.first == 16
+      to_big(*args)
+    else
+      to_i_old(*args)
+    end
+  end
+
   def to_big(*args)
     if args.first == 16
       self.chars.reverse.each_with_index.inject(0) do |t, v|
@@ -34,7 +43,7 @@ class String
         t += (v[0].hex * (10 ** v[1]))
       end
     else
-      self.to_i(*args)
+      to_i(*args)
     end
   end
 
