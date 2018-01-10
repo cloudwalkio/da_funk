@@ -1,5 +1,9 @@
 # DaFunk
 
+### 1.1.1 - 2018-01-10
+
+- Update dependencies versions.
+
 ### 1.1.0 - 2018-01-10
 
 - Rename Device::Printer#set_font to Device::Printer#font.
