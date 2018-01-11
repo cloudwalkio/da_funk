@@ -2,6 +2,14 @@ module Kernel
   def getc(timeout = 0)
     gets.chomp[0]
   end
+
+  def puts(*args)
+    STDOUT.puts(*args)
+  end
+
+  def print(*args)
+    STDOUT.print(*args)
+  end
 end
 
 class CommandLinePlatform
