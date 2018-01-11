@@ -74,11 +74,8 @@ module DaFunk
     private
     def calculate_crc
       if exists?
-        handle = File.open(file)
-        Device::Crypto.crc16_hex(handle.read)
+        Device::Crypto.file_crc16_hex(file)
       end
-    ensure
-      handle.close if handle
     end
 
     def check_company(name)
