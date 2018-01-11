@@ -139,7 +139,11 @@ module DaFunk
         number, text = text.to_s.split(" - ")
       end
 
-      [number.to_i, text.to_s]
+      if number && text
+        [number.to_i, text.to_s]
+      else
+        [0, text.to_s]
+      end
     end
   end
 end
