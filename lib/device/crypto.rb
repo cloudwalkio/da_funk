@@ -61,15 +61,19 @@ class Device
     end
 
     def self.file_crc16_hex(path)
-      if File.exists?(path)
-        crc = 0
-        File.open(path) do |file|
-          loop do
-            break unless buf = file.read(1000)
-            crc = self.crc16(buf, crc)
+      if File.exists?(path) && (len = File.size(path))
+        if len > 500_000
+          crc = 0
+          File.open(path) do |file|
+            loop do
+              break unless buf = file.read(10_000)
+              crc = self.crc16(buf, crc)
+            end
           end
+          rjust(crc.to_s(16).upcase, 4, "0")
+        else
+          crc16_hex(File.read(path))
         end
-        rjust(crc.to_s(16).upcase, 4, "0")
       else
         "0000"
       end
