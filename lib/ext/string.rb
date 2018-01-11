@@ -24,12 +24,12 @@ class String
     return false
   end
 
-  alias to_i_old to_i
   def to_i(*args)
-    if args.first == 16
-      to_big(*args)
+    case args.first 
+    when 16
+      to_big(16)
     else
-      to_i_old(*args)
+      Integer(self, args.first || 10)
     end
   end
 
