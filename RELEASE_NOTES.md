@@ -1,5 +1,9 @@
 # DaFunk
 
+### 1.3.0 - 2018-01-12
+
+- Call String.to_f when reached Integer conversion limit.
+
 ### 1.2.0 - 2018-01-11
 
 - Remove NotificatioTest, it’s outdated.
