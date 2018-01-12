@@ -12,7 +12,7 @@ class String
 
   def integer?
     return true if self[0] == "0"
-    !!Integer(self)
+    ! (self.to_f == 0)
   rescue ArgumentError => e
     if e.message[-19..-1] == "too big for integer"
       begin
@@ -32,7 +32,7 @@ class String
       begin
         Integer(self, args.first || 10)
       rescue ArgumentError => e
-        if e.message == "too big for integer"
+        if e.message[-19..-1] == "too big for integer"
           self.to_f(*args)
         else
           raise
