@@ -1,5 +1,9 @@
 # DaFunk
 
+### 1.3.1 - 2018-01-12
+
+- Fix String.integer? Method supporting Float.
+
 ### 1.3.0 - 2018-01-12
 
 - Call String.to_f when reached Integer conversion limit.
