@@ -25,11 +25,19 @@ class String
   end
 
   def to_i(*args)
-    case args.first 
+    case args.first
     when 16
       to_big(16)
     else
-      Integer(self, args.first || 10)
+      begin
+        Integer(self, args.first || 10)
+      rescue ArgumentError => e
+        if e.message == "too big for integer"
+          self.to_f(*args)
+        else
+          raise
+        end
+      end
     end
   end
 
