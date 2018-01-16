@@ -306,10 +306,14 @@ module DaFunk
     end
 
     def print_title(string, default)
-      if default
-        puts("#{string} (#{default})")
+      if string.to_s.downcase.include?(".bmp") && (path = "./shared/#{string}") && File.file?(path)
+        Device::Display.print_bitmap(path)
       else
-        puts("#{string}")
+        if default
+          puts("#{string} (#{default})")
+        else
+          puts("#{string}")
+        end
       end
     end
 
