@@ -1,5 +1,13 @@
 # DaFunk
 
+### 1.4.0 - 2018-01-16
+
+- Refactoring String.integer? And String.to_i adding more tests and support big numbers integer check.
+- Implement Screen.add to print and update x and y.
+- Support to print background image on menu if title path exists.
+- Update cloudwalk (1.4.0).
+-  Do no print menu entry if empty.
+
 ### 1.3.1 - 2018-01-12
 
 - Fix String.integer? Method supporting Float.
