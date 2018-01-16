@@ -15,5 +15,25 @@ class StringTest < DaFunk::Test.case
   def test_to_mask_number_bigger_than_value
     assert_equal "874948315", "874948315".to_mask("9999999999")
   end
+
+  def test_interger_check_false_5A179759
+    assert_false "5A179759".integer?
+  end
+
+  def test_interger_check_true_5A179759
+    assert "5179759".integer?
+  end
+
+  def test_interger_check_true_big
+    assert "51797590000000000000".integer?
+  end
+
+  def test_interger_check_false_0A179759
+    assert_false "0A179759".integer?
+  end
+
+  def test_interger_check_false_empty
+    assert_false "".integer?
+  end
 end
 

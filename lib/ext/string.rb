@@ -11,17 +11,17 @@ class String
   end
 
   def integer?
-    return true if self[0] == "0"
-    ! (self.to_f == 0)
+    !! Integer(self)
   rescue ArgumentError => e
     if e.message[-19..-1] == "too big for integer"
       begin
-        return self.to_i.to_s.size == self.size
+        self.to_f
+        return true
       rescue
         false
       end
     end
-    return false
+    false
   end
 
   def to_i(*args)
@@ -31,7 +31,7 @@ class String
     else
       begin
         Integer(self, args.first || 10)
-      rescue ArgumentError => e
+      rescue => e
         if e.message[-19..-1] == "too big for integer"
           self.to_f(*args)
         else
