@@ -154,7 +154,9 @@ module DaFunk
           if options[:number]
             Device::Display.print("#{i+1} #{display}", i+line_zero, 0)
           else
-            Device::Display.print("#{display}", i+line_zero, 0)
+            unless display.to_s.empty?
+              Device::Display.print("#{display}", i+line_zero, 0)
+            end
           end
         end
       end
