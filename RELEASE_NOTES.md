@@ -1,5 +1,9 @@
 # DaFunk
 
+### 1.4.1 - 2018-01-17
+
+- Fix Notification parse to make communication management works.
+
 ### 1.4.0 - 2018-01-16
 
 - Refactoring String.integer? And String.to_i adding more tests and support big numbers integer check.
