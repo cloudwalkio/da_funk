@@ -1,5 +1,11 @@
 # DaFunk
 
+### 1.4.2 - 2018-01-17
+
+- Extract background pagination helper.
+- Refactoring menu helper to support footer, header
+and background customization.
+
 ### 1.4.1 - 2018-01-17
 
 - Fix Notification parse to make communication management works.
