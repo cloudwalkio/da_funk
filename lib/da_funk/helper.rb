@@ -170,14 +170,14 @@ module DaFunk
 
     # TODO Scalone: Refactor.
     def pagination(title, options, collection, &block)
-      start_line, options[:limit] = pagination_limit(title, options[:limit])
+      start_line, options[:limit] = pagination_limit(title, options)
       if collection.size > (options[:limit] - 1) # minus pagination header
         key   = Device::IO.back_key
         pages = pagination_page(collection, options[:limit] - 1) # minus pagination header
         page  = 1
         while(key == Device::IO.back_key || key == Device::IO.forward_key)
           Device::Display.clear
-          pagination_header(title, page, pages.size, start_line, options[:default])
+          pagination_header(title, page, pages.size, start_line, options[:default], options[:header])
           values = pages[page].to_a
           block.call(values, start_line+1)
           key  = try_key(pagination_keys(values.size))
@@ -198,11 +198,13 @@ module DaFunk
       end
     end
 
-    def pagination_header(title, page, pages, line, default)
+    def pagination_header(title, page, pages, line, default = nil, header = nil)
       print_title(title, default) if title
       back    = Device::IO.back_key_label
       forward = Device::IO.forward_key_label
-      Device::Display.print("< #{back} __ #{page}/#{pages} __ #{forward} >", line, 0)
+      if header || header.nil?
+        Device::Display.print("< #{back} __ #{page}/#{pages} __ #{forward} >", line, 0)
+      end
     end
 
     def pagination_key_page(page, key, size)
@@ -231,22 +233,25 @@ module DaFunk
         Device::IO::CANCEL, Device::IO.back_key, Device::IO.forward_key]
     end
 
-    def pagination_limit(title, number = nil)
-      start = title.nil? ? 0 : 1 # start in next line if title
+    def pagination_limit(title, options = {})
+      number = options[:limit]
+      unless (start = options[:start])
+        start = title.nil? ? 0 : 1 # start in next line if title
+      end
+
       if number
         limit = number
       else
-        if STDOUT.max_y > 9
+        if STDOUT.max_y > (9 + start)
           limit = 9
         else
-          if title.nil?
-            limit = STDOUT.max_y
-          else
-            limit = STDOUT.max_y - 1 # minus title
-          end
+          limit = STDOUT.max_y - start # minus title
         end
       end
-      [start, limit]
+
+      footer = options[:footer] ? options[:footer] : 0
+
+      [start, limit - footer]
     end
 
     def number_to_currency(value, options = {})
