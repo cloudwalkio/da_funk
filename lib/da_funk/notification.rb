@@ -10,9 +10,15 @@ module DaFunk
     def self.check(msg)
       if msg.is_a?(String) && msg.include?("\"event\"") && msg.include?("\"id\"")
         [:notification, self.parse(JSON.parse(msg))]
+      else
+        msg
       end
     rescue ArgumentError => e
-      raise unless e.message == "invalid json"
+      if e.message == "invalid json"
+        msg
+      else
+        raise 
+      end
     end
 
     def self.parse(hash)
