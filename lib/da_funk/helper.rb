@@ -305,8 +305,12 @@ module DaFunk
       options
     end
 
+    def pagination_bg_image(string)
+      string.to_s.downcase.include?(".bmp") && (path = "./shared/#{string}") && File.file?(path) && path
+    end
+
     def print_title(string, default)
-      if string.to_s.downcase.include?(".bmp") && (path = "./shared/#{string}") && File.file?(path)
+      if path = pagination_bg_image(string)
         Device::Display.print_bitmap(path)
       else
         if default
