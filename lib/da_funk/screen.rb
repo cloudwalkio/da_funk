@@ -51,7 +51,6 @@ class Screen
   end
 
   def add(string, line, column)
-    ContextLog.info "STRING: #{string.inspect}"
     string.split("\n", -1).each_with_index do |str, i|
       self.y = i + line
       self.x = column
