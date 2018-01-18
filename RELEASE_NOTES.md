@@ -1,5 +1,9 @@
 # DaFunk
 
+### 1.4.3 - 2018-01-18
+
+- Refact automatic menu header reviewing limits.
+
 ### 1.4.2 - 2018-01-17
 
 - Extract background pagination helper.
