@@ -1,5 +1,9 @@
 # DaFunk
 
+### 1.4.4 - 2018-01-24
+
+- Fix Screen.add when column is missing.
+
 ### 1.4.3 - 2018-01-18
 
 - Refact automatic menu header reviewing limits.
