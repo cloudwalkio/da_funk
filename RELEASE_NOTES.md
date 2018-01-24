@@ -1,5 +1,9 @@
 # DaFunk
 
+### 1.5.0 - 2018-01-24
+
+- Implement Network::configure to split Network::init in two parts, configure for the definition of the interface, and init it self the system call.
+
 ### 1.4.4 - 2018-01-24
 
 - Fix Screen.add when column is missing.
