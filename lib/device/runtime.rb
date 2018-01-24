@@ -13,13 +13,13 @@ class Device
     # @return [Object] From the new runtime instance.
     def self.execute(app, json = nil)
       execution_ret = mrb_eval("Context.start('#{app}', '#{Device.adapter}', '#{json}')")
-      self.system_reaload
+      self.system_reload
       return execution_ret
     end
 
     # Check if any change has happen to Network, Settings or ParamsDat
     # @return [NilClass] From the new runtime instance.
-    def self.system_reaload
+    def self.system_reload
       Device::Setting.setup
       DaFunk::ParamsDat.setup
       Device::Network.setup
