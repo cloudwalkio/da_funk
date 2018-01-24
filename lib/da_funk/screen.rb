@@ -53,9 +53,9 @@ class Screen
   def add(string, line, column)
     string.split("\n", -1).each_with_index do |str, i|
       self.y = i + line
-      self.x = column
+      self.x = (column || 0)
       Device::Display.print(str, self.y, self.x)
-      self.x = column + str.size
+      self.x = (column || 0) + str.size
     end
   end
 
