@@ -58,6 +58,10 @@ class Device
       adapter.init(type, options)
     end
 
+    def self.configure(type, options)
+      adapter.configure(type, options)
+    end
+
     def self.power(command)
       adapter.power(command)
     end
@@ -191,7 +195,7 @@ class Device
     end
 
     def self.setup
-      self.configured? && Device::Network.init(*self.config) == SUCCESS
+      self.configured? && (Device::Network.configure(*self.config) == SUCCESS)
     end
 
     # TODO should check if WIFI, ETHERNET and etc
