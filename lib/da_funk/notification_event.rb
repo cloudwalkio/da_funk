@@ -22,6 +22,12 @@ module DaFunk
       values.shift # id
       @callback, *@parameters = values
     end
+
+    def reply
+      if id
+        {"type" => "pnconf","event" => "#{id}"}.to_json
+      end
+    end
   end
 end
 
