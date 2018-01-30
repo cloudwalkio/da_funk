@@ -17,7 +17,7 @@ module DaFunk
       if e.message == "invalid json"
         msg
       else
-        raise 
+        raise
       end
     end
 
