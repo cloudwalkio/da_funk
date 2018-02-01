@@ -1,5 +1,10 @@
 # DaFunk
 
+### 1.6.0 - 2018-02-01
+
+- Implement Notification#reply.
+- Temporarily remove I18n require.
+
 ### 1.5.0 - 2018-01-24
 
 - Implement Network::configure to split Network::init in two parts, configure for the definition of the interface, and init it self the system call.
