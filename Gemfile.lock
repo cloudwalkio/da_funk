@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    da_funk (1.6.0)
+    da_funk (1.7.0)
       archive-zip (~> 0.5)
       bundler
       cloudwalk_handshake
@@ -14,8 +14,8 @@ GEM
   specs:
     archive-zip (0.11.0)
       io-like (~> 0.3.0)
-    ast (2.3.0)
-    cloudwalk (1.4.3)
+    ast (2.4.0)
+    cloudwalk (1.5.0)
       bundler
       rake
     cloudwalk_handshake (0.12.0)

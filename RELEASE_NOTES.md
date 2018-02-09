@@ -1,5 +1,11 @@
 # DaFunk
 
+### 1.7.0 - 2018-02-09
+
+- Adopt “w” for FileDb and Transaction::Download write operation and improve IO time.
+- Implement ConnectionManagement class based on ParamsDat config.
+- Implement PaymentChannel via websocket.
+
 ### 1.6.0 - 2018-02-01
 
 - Implement Notification#reply.
