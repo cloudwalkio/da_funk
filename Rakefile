@@ -34,6 +34,8 @@ FILES = FileList[
   "lib/da_funk/version.rb",
 
   "lib/da_funk.rb",
+  "lib/da_funk/payment_channel.rb",
+  "lib/da_funk/connection_management.rb",
   "lib/da_funk/test.rb",
   "lib/da_funk/screen.rb",
   "lib/da_funk/callback_flow.rb",
