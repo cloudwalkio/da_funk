@@ -1,5 +1,9 @@
 # DaFunk
 
+### 1.7.1 - 2018-02-09
+
+- Fix payment channel compilation.
+
 ### 1.7.0 - 2018-02-09
 
 - Adopt “w” for FileDb and Transaction::Download write operation and improve IO time.
