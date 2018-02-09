@@ -30,15 +30,13 @@ class FileDb
   end
 
   def save
-    file_new = File.open(@path, "w+")
-    @hash.each do |line_key, line_value|
-      file_new.puts("#{line_key}=#{line_value}")
+    string = @hash.inject("") do |str, line| #|line_key, line_value|
+      str << "#{line[0]}=#{line[1]}\n"
     end
+    File.open(@path, "w") {|f| f.write(string) }
     true
-  rescue
+  rescue => e
     false
-  ensure
-    file_new.close
   end
 
   def []=(key, value)

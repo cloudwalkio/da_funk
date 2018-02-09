@@ -210,7 +210,7 @@ module DaFunk
 
       def partial_download_to_store(filepath, response_size, file_size)
         tmp  = tmp_file(filepath)
-        file = File.open(tmp, "w+")
+        file = File.open(tmp, "w")
 
         if (response_size > 1024)
           file.write(@first_packet[13..-1])
