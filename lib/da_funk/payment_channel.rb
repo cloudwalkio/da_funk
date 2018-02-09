@@ -78,12 +78,7 @@ module DaFunk
     end
 
     def self.alive?
-      a = Device::Network.connected?
-      a = Device::Network.connected?
-      b = @client if @client
-      c = @client.connected? if @client
-      ContextLog.info "a[#{a}] b[#{b}] c[#{c}]"
-      a && b && c
+      Device::Network.connected? && @client && @client.connected?
     end
 
     def self.close!
