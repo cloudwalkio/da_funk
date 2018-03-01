@@ -119,6 +119,10 @@ class Device
       value = (DaFunk::ParamsDat.file["attach_gprs_timeout"] || method_missing(:attach_gprs_timeout))
       value.to_s.empty? ? nil : value.to_s.to_i
     end
+
+    def self.heartbeat
+      DaFunk::ParamsDat.file["heartbeat"] || method_missing(:heartbeat)
+    end
   end
 end
 
