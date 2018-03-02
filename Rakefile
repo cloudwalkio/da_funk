@@ -72,8 +72,9 @@ FILES = FileList[
 ]
 
 DaFunk::RakeTask.new do |t|
-  t.main_out  = "./out/da_funk.mrb"
-  t.libs = FILES
+  t.main_out = "./out/da_funk.mrb"
+  t.libs     = FILES
+  t.debug    = false
 end
 
 desc "Generate YARD Documentation"

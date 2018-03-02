@@ -1,5 +1,10 @@
 # DaFunk
 
+### 1.8.0 - 2018-03-02
+
+- Implement Device::System::shutdown.
+- Implement Device::Setting::heartbeat ParamsDat check.
+
 ### 1.7.1 - 2018-02-09
 
 - Fix payment channel compilation.
