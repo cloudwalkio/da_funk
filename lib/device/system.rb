@@ -10,8 +10,8 @@ class Device
       Device.adapter::System
     end
 
-    def self.shutdown
-      adapter.shutdown if adapter.respond_to?(:shutdown)
+    def self.teardown
+      adapter.teardown if adapter.respond_to?(:teardown)
     end
 
     def self.serial
