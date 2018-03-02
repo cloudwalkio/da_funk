@@ -1,5 +1,10 @@
 # DaFunk
 
+### 1.9.0 - 2018-03-02
+
+- Replace shutdown by teardown, more appropriated for
+application loop.
+
 ### 1.8.0 - 2018-03-02
 
 - Implement Device::System::shutdown.
