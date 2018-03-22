@@ -8,8 +8,8 @@ module DaFunk
     self.callbacks = Hash.new
 
     def self.check(msg)
-      if msg.is_a?(String) && msg.include?("\"event\"") && msg.include?("\"id\"")
-        [:notification, self.parse(JSON.parse(msg))]
+      if msg.is_a?(String) && msg.include?("\"message\"") && msg.include?("|")
+        [:notification, NotificationEvent.new(JSON.parse(msg)["message"])]
       else
         msg
       end
@@ -19,10 +19,6 @@ module DaFunk
       else
         raise
       end
-    end
-
-    def self.parse(hash)
-      NotificationEvent.new(hash["id"], hash["event"], hash["acronym"], hash["logical_number"])
     end
 
     def self.execute(event)
