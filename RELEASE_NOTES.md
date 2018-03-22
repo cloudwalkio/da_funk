@@ -1,5 +1,9 @@
 # DaFunk
 
+### 1.10.0 - 2018-03-22
+
+- Change Notification format removing repeated values.
+
 ### 1.9.0 - 2018-03-02
 
 - Replace shutdown by teardown, more appropriated for
