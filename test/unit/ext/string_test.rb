@@ -32,6 +32,10 @@ class StringTest < DaFunk::Test.case
     assert_false "0A179759".integer?
   end
 
+  def test_interger_check_true_0517030931
+    assert "0517030931".integer?
+  end
+
   def test_interger_check_false_empty
     assert_false "".integer?
   end

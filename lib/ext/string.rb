@@ -13,7 +13,7 @@ class String
   def integer?
     !! Integer(self)
   rescue ArgumentError => e
-    if e.message[-19..-1] == "too big for integer"
+    if e.message[-19..-1] == "too big for integer" || (self[0] == "0" && !self.match(/[a-zA-Z]/))
       begin
         self.to_f
         return true
