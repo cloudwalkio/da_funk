@@ -1,5 +1,11 @@
 # DaFunk
 
+### 1.11.0 - 2018-05-18
+
+- Bug fix String.integer? when string starts with “0”.
+- Increase getc timeout to 10 seconds when communication error.
+- ISO8583 convert bitmap from binary to hex and hex to binary.
+
 ### 1.10.0 - 2018-03-22
 
 - Change Notification format removing repeated values.
