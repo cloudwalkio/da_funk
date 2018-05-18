@@ -35,7 +35,7 @@ module DaFunk
           else
             Device::Setting.network_configured = 0 if DaFunk::ParamsDat.file["connection_management"] == "0"
             print_attach(:attach_fail, options.merge(:args => [Device::Network.code.to_s]))
-            getc(4000)
+            getc(10000)
             return false
           end
         else
