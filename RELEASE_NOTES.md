@@ -1,5 +1,9 @@
 # DaFunk
 
+### 1.11.1 - 2018-05-22
+
+- Add Nil.integer?
+
 ### 1.11.0 - 2018-05-18
 
 - Bug fix String.integer? when string starts with “0”.
