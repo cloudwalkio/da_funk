@@ -114,7 +114,7 @@ module ISO8583
 
       if bmp[0,1] == "1"
         bmp = if hex_bitmap?
-                rjust(message[0..31].to_i(16).to_s(2), 128,'0')
+                rjust(convert_hex_to_binary(message[0..31]), 128, '0')
               else
                 message.unpack("B128")[0]
               end
