@@ -1,5 +1,9 @@
 # DaFunk
 
+### 1.11.2 - 2018-07-02
+
+- Fix ISO8583 bitmap parse when greater than 64 bytes.
+
 ### 1.11.1 - 2018-05-22
 
 - Add Nil.integer?
