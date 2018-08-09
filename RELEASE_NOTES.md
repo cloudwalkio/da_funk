@@ -1,5 +1,10 @@
 # DaFunk
 
+### 1.12.0 - 2018-08-09
+
+- Do not raise exception when bitmap to be display doesn’t exists.
+- Implement Device::Priter.print_barcode.
+
 ### 1.11.2 - 2018-07-02
 
 - Fix ISO8583 bitmap parse when greater than 64 bytes.
