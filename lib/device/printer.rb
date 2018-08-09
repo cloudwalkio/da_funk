@@ -182,9 +182,19 @@ class Device
     #
     # @param path [String] Path to bmp file.
     #
-    # @return [NilClass] Allways returns nil.
+    # @return [Integer] 0 success.
     def self.print_bmp(path)
       self.adapter.print_bmp(path)
+    end
+
+    # Print barcode as bmp image
+    #
+    # @param code [String] barcode number
+    #
+    # @return [Integer] 0 Success
+    # @return [Integer] -1 Fail
+    def self.print_barcode(code)
+      self.adapter.print_barcode(code)
     end
 
     # Check printer status, useful for paper check.
