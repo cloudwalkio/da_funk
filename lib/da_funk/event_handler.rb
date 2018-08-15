@@ -7,34 +7,34 @@ module DaFunk
       @type          = type
       @option        = option
       @perform_block = block
-      self.register
+      register
     end
 
     def register
-      self.schedule_timer
+      schedule_timer
       EventListener.add_handler(self)
     end
 
     def perform(*parameter)
-      if self.execute?
-        self.schedule_timer
+      if execute?
+        schedule_timer
         @perform_block.call(*parameter)
       end
     end
 
     def schedule_timer
-      if self.option.is_a?(Hash)
-        if self.option.include?(:minutes)
-          self.timer = Time.now + (self.option[:minutes].to_i * 60)
-        elsif self.option.include?(:seconds)
-          self.timer = Time.now + self.option[:seconds]
+      if option.is_a?(Hash)
+        if option.include?(:minutes)
+          timer = Time.now + (option[:minutes].to_i * 60)
+        elsif option.include?(:seconds)
+          timer = Time.now + option[:seconds]
         end
       end
     end
 
     def execute?
-      if self.timer
-        self.timer < Time.now
+      if timer
+        timer < Time.now
       else
         true
       end
