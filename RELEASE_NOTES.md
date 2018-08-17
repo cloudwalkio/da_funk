@@ -1,5 +1,11 @@
 # DaFunk
 
+### 1.13.0 - 2018-08-17
+
+- Add DaFunk::ParamsDat::parameters_load copy of ready?.
+- ScrenFlow.confirm returns boolean.
+- Support schedule events in file if using hours parameters.
+
 ### 1.12.0 - 2018-08-09
 
 - Do not raise exception when bitmap to be display doesn’t exists.
