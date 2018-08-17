@@ -32,7 +32,7 @@ module DaFunk
 
     def confirm(text)
       puts text.chomp
-      getc(0)
+      getc(0) == Device::IO::ENTER
     end
   end
 end
