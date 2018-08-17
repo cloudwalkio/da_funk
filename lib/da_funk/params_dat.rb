@@ -27,11 +27,15 @@ module DaFunk
       File.exists?(FILE_NAME)
     end
 
-    def self.ready?
+    def self.parameters_load
       return unless exists?
       apps.each {|app| return false if app.outdated? } if apps.size > 0
       files.each {|f| return false if f.outdated? } if files.size > 0
       true
+    end
+
+    def self.ready?
+      self.parameters_load
     end
 
     def self.outdated_apps(force_crc = false, force = false)
