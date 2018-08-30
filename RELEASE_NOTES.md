@@ -1,5 +1,9 @@
 # DaFunk
 
+### 1.13.1 - 2018-08-29
+
+- Fix ScreenFlow navigation when comparing confirmation.
+
 ### 1.13.0 - 2018-08-17
 
 - Add DaFunk::ParamsDat::parameters_load copy of ready?.
