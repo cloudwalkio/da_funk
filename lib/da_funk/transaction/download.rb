@@ -68,7 +68,7 @@ module DaFunk
         @crc = file_crc ? file_crc : generate_crc(filepath)
         key = "#{company_name}_#{remote_path}"
 
-        ContextLog.info "[D] Download file: #{filepath.split('/')[2]} started"
+        ContextLog.info "[D] Download file: #{filepath.split('/')[2]} started", true
 
         ei_encode_version                # version
         ei_encode_list_header(3)         # mapreduce with 3 tuples
@@ -234,7 +234,7 @@ module DaFunk
 
         file.close
         File.rename(tmp, filepath)
-        ContextLog.info "[D] Download file: #{filepath.split('/')[2]} finished, Size: #{response_size}"
+        ContextLog.info "[D] Download file: #{filepath.split('/')[2]} finished, Size: #{response_size}", true
         downloaded
       end
 
