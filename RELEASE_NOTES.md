@@ -1,5 +1,13 @@
 # DaFunk
 
+### 2.0.0 - 2018-10-02
+
+- Support check specific listener type;
+- Adopt ThreadScheduler and stop all thread at boot end;
+- Remove status bar check from engine loop;
+- Add Support to change link/unlink payment channel image.
+- Fix IO_INPUT_NUMBERS string change at IO.get_format
+
 ### 1.13.1 - 2018-08-29
 
 - Fix ScreenFlow navigation when comparing confirmation.
