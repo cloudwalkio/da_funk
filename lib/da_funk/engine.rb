@@ -12,6 +12,7 @@ module DaFunk
         break if @stop
         block.call
       end
+      ThreadScheduler.stop
     end
 
     def self.stop!
