@@ -6,8 +6,12 @@ module DaFunk
 
     self.listeners = {}
 
-    def self.check
-      self.listeners.each { |type, listener| listener.check }
+    def self.check(_type = nil)
+      if _type
+        self.listeners.each { |type, listener| listener.check if type == _type }
+      else
+        self.listeners.each { |type, listener| listener.check }
+      end
     end
 
     def self.register(event_listener)
