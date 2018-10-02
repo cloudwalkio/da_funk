@@ -176,6 +176,8 @@ class Device
         Device::IO::MASK_ALPHA
       elsif options[:mode] == Device::IO::IO_INPUT_LETTERS
         Device::IO::MASK_LETTERS
+      elsif options[:mode] == Device::IO::IO_INPUT_NUMBERS
+        Device::IO::MASK_NUMBERS
       elsif options[:mode] == Device::IO::IO_INPUT_MASK
         check_mask(options[:mask_clean].to_s[text.size - 1])
       else
@@ -185,13 +187,16 @@ class Device
 
     def self.change_next(text, mask_type = Device::IO::MASK_ALPHA)
       char = text[-1]
-      if char && (range = self.keys_range[mask_type].detect { |range| range.include?(char) })
-        index = range.index(char)
-        new_value = range[index+1]
-        if new_value
-          text[-1] = new_value
-        else
-          text[-1] = range[0]
+      if char
+        range = self.keys_range[mask_type].detect { |range| range.include?(char) }
+        if range
+          index = range.index(char)
+          new_value = range[index+1]
+          if new_value
+            text[-1] = new_value
+          else
+            text[-1] = range[0]
+          end
         end
       end
       text
