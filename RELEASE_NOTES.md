@@ -1,5 +1,9 @@
 # DaFunk
 
+### 2.0.1 - 2018-10-05
+
+- Add support to create and close PaymentChannel from CommunicationChannel.
+
 ### 2.0.0 - 2018-10-02
 
 - Support check specific listener type;
