@@ -1,5 +1,9 @@
 # DaFunk
 
+### 2.0.2 - 2018-10-05
+
+- Fix system update removing file existence validation because it could be a not valid path.
+
 ### 2.0.1 - 2018-10-05
 
 - Add support to create and close PaymentChannel from CommunicationChannel.
