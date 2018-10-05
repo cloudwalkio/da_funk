@@ -19,7 +19,7 @@ GEM
       bundler
       rake
     cloudwalk_handshake (0.13.2)
-    funky-emv (0.19.0)
+    funky-emv (0.20.0)
       funky-tlv (~> 0.2)
     funky-simplehttp (0.5.0)
     funky-tlv (0.2.3)
@@ -28,7 +28,7 @@ GEM
     parallel (1.12.1)
     parser (2.5.1.2)
       ast (~> 2.4.0)
-    posxml_parser (2.8.3)
+    posxml_parser (2.8.4)
       funky-emv (~> 0.3)
     powerpack (0.1.2)
     rainbow (3.0.0)
