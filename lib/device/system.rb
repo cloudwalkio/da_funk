@@ -74,9 +74,7 @@ class Device
     end
 
     def self.update(path)
-      if File.exists? path
-        adapter.update(path)
-      end
+      adapter.update(path)
     end
   end
 end
