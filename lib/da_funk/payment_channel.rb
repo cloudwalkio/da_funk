@@ -33,11 +33,11 @@ module DaFunk
     def self.connect(display_message = true)
       if self.dead? && self.ready?
         self.print_info(I18n.t(:attach_attaching), display_message)
-        @client = PaymentChannel.new
+        create
         self.print_info(I18n.t(:attach_authenticate), display_message)
         @client.handshake
       else
-        @client = nil
+        client_clear!
       end
       @client
     end
@@ -82,11 +82,23 @@ module DaFunk
     end
 
     def self.close!
-      @client && @client.close && @client = nil
+      @client && @client.close && client_clear!
     end
 
     def self.print_info(message, display = true)
       print_last(message) if display
+    end
+
+    def self.create
+      if @client == Context::CommunicationChannel
+        @client = Context::CommunicationChannel
+      else
+        @client = PaymentChannel.new
+      end
+    end
+
+    def self.client_clear!
+      @client = nil unless @client == Context::CommunicationChannel
     end
 
     def initialize(client = nil)
