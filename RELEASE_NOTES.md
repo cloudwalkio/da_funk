@@ -1,5 +1,9 @@
 # DaFunk
 
+### 2.0.2 - 2018-10-10
+
+- Fix I18n print and translate to check line and column.
+
 ### 2.0.2 - 2018-10-05
 
 - Fix system update removing file existence validation because it could be a not valid path.
