@@ -72,7 +72,11 @@ class I18n
   end
 
   def self.pt(symbol, options = {})
-    puts(t(symbol, options), options[:line], options[:column])
+    if options[:line] || options[:column]
+      Device::Display.print_line(t(symbol, options), options[:line] || 0, options[:column] || 0)
+    else
+      puts(t(symbol, options))
+    end
   end
 
   def self.parse_time(value, time)
