@@ -1,6 +1,11 @@
 # DaFunk
 
-### 2.0.2 - 2018-10-10
+### 2.0.4 - 2018-10-11
+
+- Do not print last if not in communication thread;
+- Replace sleep by getc at ParamsDat download functions;
+
+### 2.0.3 - 2018-10-10
 
 - Fix I18n print and translate to check line and column.
 
