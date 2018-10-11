@@ -14,6 +14,14 @@ module DaFunk
       string
     end
 
+    def attach_options
+      if DaFunk::PaymentChannel.client == Context::CommunicationChannel
+        {:print_last => true}
+      else
+        {:print_last => false}
+      end
+    end
+
     # {
     #   :bmps => {
     #     :attach_connecting => "<path>",
@@ -25,7 +33,7 @@ module DaFunk
     #
     # {:print_last => true} || nil
 
-    def attach(options = {:print_last => true})
+    def attach(options = attach_options)
       if Device::Network.configured?
         print_attach(:attach_connecting, options)
         unless Device::Network.connected?
