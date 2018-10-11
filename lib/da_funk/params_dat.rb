@@ -112,9 +112,10 @@ module DaFunk
         ret = try(3) do |attempt|
           Device::Display.clear
           I18n.pt(:downloading_content, :args => ["PARAMS", 1, 1])
+          getc(100)
           ret = DaFunk::Transaction::Download.request_param_file(FILE_NAME)
           unless check_download_error(ret)
-            sleep(2)
+            getc(2000)
             false
           else
             true
@@ -171,8 +172,9 @@ module DaFunk
         try(3) do |attempt|
           Device::Display.clear
           I18n.pt(:downloading_content, :args => [I18n.t(:apps), index, all])
+          getc(100)
           ret = check_download_error(application.download(force))
-          sleep(1)
+          getc(1000)
           ret
         end
       end
@@ -183,9 +185,10 @@ module DaFunk
         try(3) do |attempt|
           Device::Display.clear
           I18n.pt(:downloading_content, :args => [I18n.t(:files), index, all])
+          getc(100)
           ret = check_download_error(file_parameter.download(force))
           file_parameter.unzip if ret
-          sleep(1)
+          getc(1000)
           ret
         end
       end
