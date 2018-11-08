@@ -61,15 +61,13 @@ module DaFunk
 
       def self.change_connection
         sig = Device::Network.signal
-        if self.signal != sig
-          self.signal = sig
-          if Device::Network.gprs?
-            Device::Display.print_status_bar(SLOT_CONNECTION,
-                                             get_image_path(:gprs, self.signal))
-          elsif Device::Network.wifi?
-            Device::Display.print_status_bar(SLOT_CONNECTION,
-                                             get_image_path(:wifi, self.signal))
-          end
+        self.signal = sig if self.signal != sig
+        if Device::Network.gprs?
+          Device::Display.print_status_bar(SLOT_CONNECTION,
+                                           get_image_path(:gprs, self.signal))
+        elsif Device::Network.wifi?
+          Device::Display.print_status_bar(SLOT_CONNECTION,
+                                           get_image_path(:wifi, self.signal))
         end
       end
 
@@ -114,4 +112,3 @@ module DaFunk
     end
   end
 end
-
