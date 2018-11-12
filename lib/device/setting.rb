@@ -123,6 +123,17 @@ class Device
     def self.heartbeat
       DaFunk::ParamsDat.file["heartbeat"] || method_missing(:heartbeat)
     end
+
+    def self.media_changed?
+      FileDb.new("./main/config.dat")["media"].to_s != Device::Setting.media
+    end
+
+    def self.set_new_media
+      if FileDb.new("./main/config.dat")["media"].to_s == "wifi"
+        Device::Setting.media = Device::Network::MEDIA_WIFI
+      else
+        Device::Setting.media = Device::Network::MEDIA_GPRS
+      end
+    end
   end
 end
-
