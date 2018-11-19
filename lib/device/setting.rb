@@ -129,10 +129,18 @@ class Device
     end
 
     def self.set_new_media
-      if FileDb.new("./main/config.dat")["media"].to_s == "wifi"
+      configdat_file = FileDb.new("./main/config.dat")
+
+      if configdat_file["media"].to_s == "wifi"
         Device::Setting.media = Device::Network::MEDIA_WIFI
+        Device::Setting.media_primary = Device::Network::MEDIA_WIFI
+        Device::Setting.wifi_password = configdat_file["wifi_password"]
       else
         Device::Setting.media = Device::Network::MEDIA_GPRS
+        Device::Setting.media_primary = Device::Network::MEDIA_GPRS
+        Device::Setting.apn = configdat_file["apn"]
+        Device::Setting.user = configdat_file["user"]
+        Device::Setting.apn_password = configdat_file["apn_password"]
       end
     end
   end
