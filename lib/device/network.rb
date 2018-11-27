@@ -159,24 +159,26 @@ class Device
     def self.attach(options = nil)
       Device::Network.connected?
       if self.code != SUCCESS
-        self.code = Device::Network.init(*self.config)
-        self.code = Device::Network.connect
-        Device::Network.connected? if self.code != SUCCESS
+        ThreadScheduler.pausing_communication do
+          self.code = Device::Network.init(*self.config)
+          self.code = Device::Network.connect
+          Device::Network.connected? if self.code != SUCCESS
 
-        hash = try_user(self.attach_timeout, options) do |process|
-          Device::Network.connected?
-          process[:ret] = self.code
-          # TODO develop an interface to keep waiting communication module dial
-          # based on platform returns
-          process[:ret] == PROCESSING || process[:ret] == 2 || process[:ret] == -3307 # if true keep trying
-        end
-        self.code = hash[:ret]
+          hash = try_user(self.attach_timeout, options) do |process|
+            Device::Network.connected?
+            process[:ret] = self.code
+            # TODO develop an interface to keep waiting communication module dial
+            # based on platform returns
+            process[:ret] == PROCESSING || process[:ret] == 2 || process[:ret] == -3307 # if true keep trying
+          end
+          self.code = hash[:ret]
 
-        if self.code == SUCCESS
-          self.code = Device::Network.dhcp_client(20000) if (wifi? || ethernet?)
-        else
-          self.code = ERR_USER_CANCEL if hash[:key] == Device::IO::CANCEL
-          Device::Network.shutdown
+          if self.code == SUCCESS
+            self.code = Device::Network.dhcp_client(20000) if (wifi? || ethernet?)
+          else
+            self.code = ERR_USER_CANCEL if hash[:key] == Device::IO::CANCEL
+            Device::Network.shutdown
+          end
         end
       end
       self.code
