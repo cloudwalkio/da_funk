@@ -1,5 +1,10 @@
 # DaFunk
 
+### 2.1.0 - 2018-11-28
+
+- Support to thread pausing during Network.attach;
+- Ensure clear on PaymentChannel::close!.
+
 ### 2.0.4 - 2018-10-11
 
 - Do not print last if not in communication thread;
