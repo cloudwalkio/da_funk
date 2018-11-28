@@ -82,7 +82,9 @@ module DaFunk
     end
 
     def self.close!
-      @client && @client.close && client_clear!
+      @client && @client.close
+    ensure
+      client_clear!
     end
 
     def self.print_info(message, display = true)
