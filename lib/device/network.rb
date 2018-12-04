@@ -128,7 +128,9 @@ class Device
     #   Device::Setting.mode           = selected[:mode]
     def self.scan
       if wifi?
-        adapter.scan if Device::Network.init(*self.config)
+        ThreadScheduler.pausing_communication do
+          adapter.scan if Device::Network.init(*self.config)
+        end
       end
     end
 
