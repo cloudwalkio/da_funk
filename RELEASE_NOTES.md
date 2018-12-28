@@ -1,5 +1,10 @@
 # DaFunk
 
+### 2.3.0 - 2018-12-28
+
+- Implement Device::Setting.metadata_timestamp;
+- Implement access to configuration at Device::Setting.
+
 ### 2.2.0 - 2018-12-04
 
 - Support pausing communication on Network::scan.
