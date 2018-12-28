@@ -57,6 +57,15 @@ class Device
       "metadata_timestamp"          => ""
     }
 
+    class << self
+      attr_accessor :file
+    end
+
+    def self.file
+      self.setup unless @file
+      @file
+    end
+
     def self.setup
       @file = FileDb.new(FILE_PATH, DEFAULT)
       self.check_environment!
