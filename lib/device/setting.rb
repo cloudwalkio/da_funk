@@ -53,7 +53,8 @@ class Device
       "locale"                      => "pt-br", #SYS
       "heartbeat"                   => "", #SYS
       "boot"                        => "1", #SYS
-      "company_name"                => "" #SYS
+      "company_name"                => "", #SYS
+      "metadata_timestamp"          => ""
     }
 
     def self.setup
