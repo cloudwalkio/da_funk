@@ -15,7 +15,7 @@ GEM
     archive-zip (0.11.0)
       io-like (~> 0.3.0)
     ast (2.4.0)
-    cloudwalk (1.11.2)
+    cloudwalk (1.13.0)
       bundler
       rake
     cloudwalk_handshake (0.13.2)
@@ -28,12 +28,12 @@ GEM
     parallel (1.12.1)
     parser (2.5.3.0)
       ast (~> 2.4.0)
-    posxml_parser (2.8.6)
+    posxml_parser (2.10.0)
       funky-emv (~> 0.3)
     powerpack (0.1.2)
     rainbow (3.0.0)
-    rake (12.3.1)
-    rubocop (0.60.0)
+    rake (12.3.2)
+    rubocop (0.61.1)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
       parser (>= 2.5, != 2.5.1.1)
@@ -42,7 +42,7 @@ GEM
       ruby-progressbar (~> 1.7)
       unicode-display_width (~> 1.4.0)
     ruby-progressbar (1.10.0)
-    unicode-display_width (1.4.0)
+    unicode-display_width (1.4.1)
     yard (0.9.16)
 
 PLATFORMS
