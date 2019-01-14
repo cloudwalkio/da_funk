@@ -106,6 +106,38 @@ class Device
       end
     end
 
+    # Get mac address of the current connection or from the parameters sent
+    #
+    # @param media [String] From Network class, MEDIA_GPRS ("gprs"),
+    #   MEDIA_WIFI ("wifi"), MEDIA_ETHERNET ("ethernet")
+    # @return [String] Return mac address based on the example "AA:BB:CC:DD:EE:FF"
+    #
+    # @example
+    #   Device::Network.mac_address(Device::Network::MEDIA_GPRS)
+    #   # => "AA:BB:CC:DD:EE:FF"
+    def self.mac_address(media = nil)
+      ContextLog.info "mac_address"
+      unless media
+        self.adapter.mac_address(media2klass(Device::Setting.media))
+      else
+        self.adapter.mac_address(media2klass(media))
+      end
+    end
+
+    # Convert string media configuration to a class
+    def self.media2klass(media)
+      case media
+      when MEDIA_GPRS
+        Network::Gprs
+      when MEDIA_WIFI
+        Network::Wifi
+      when MEDIA_ETHERNET
+        Network::Ethernet
+      else
+        Network::Wifi
+      end
+    end
+
     # Scan for wifi aps available
     #
     # @return [Array] Return an array of hash values
