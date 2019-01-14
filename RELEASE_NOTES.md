@@ -1,5 +1,9 @@
 # DaFunk
 
+### 2.4.0 - 2019-01-14
+
+- Support Device::Network.mac_address.
+
 ### 2.3.0 - 2018-12-28
 
 - Implement Device::Setting.metadata_timestamp;
