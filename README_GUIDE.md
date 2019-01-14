@@ -50,7 +50,7 @@ Check test samples [here](da_funk/Guide.html).
 ```
 The MIT License (MIT)
 
-Copyright (c) 2016 CloudWalk, Inc.
+Copyright (c) 2019 CloudWalk, Inc.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
