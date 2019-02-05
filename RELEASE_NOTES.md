@@ -1,5 +1,11 @@
 # DaFunk
 
+### 2.5.0 - 2019-02-05
+
+- Bug fix EventHandler with slot configuration
+    - Fix timestamp when configuration has changed;
+    - Fix execution between boots.
+
 ### 2.4.0 - 2019-01-14
 
 - Support Device::Network.mac_address.
