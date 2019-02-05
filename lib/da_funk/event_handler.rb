@@ -39,16 +39,32 @@ module DaFunk
         raise "slot or hours missing on EventHandler creation"
       end
 
-      db    = FileDb.new("main/schedule.dat")
-      value = db[option[:slot]]
+      db     = FileDb.new("main/schedule.dat")
+      string = db[option[:slot]]
+      config = parse_slot(string)
 
-      if value.to_s.empty? || value.to_i <= Time.now.to_i
-        hours = 60 * 60 * option[:hours].to_i
-        hours = 99_999 if hours == 0
-        value = (Time.now.to_i + hours)
-        db[option[:slot]] = value
+      unless config
+        # configure from scrath
+        config = {"timestamp" => nil, "interval" => stringify_hours(option)}
       end
-      value.to_i
+
+      unless config["timestamp"]
+        config["timestamp"] = hours2seconds(option["interval"])
+      else
+        if config["interval"]["hours"].to_s != option[:hours].to_s
+          config["timestamp"] = hours2seconds(option[:hours])
+          config["interval"]["hours"] = option[:hours].to_s
+        else
+          if self.timer && self.timer.to_i < Time.now.to_i
+            config["timestamp"] = hours2seconds(option[:hours])
+            config["interval"]["hours"] = option[:hours].to_s
+          end
+        end
+      end
+
+      db[option[:slot]] = config.to_json
+
+      config["timestamp"].to_i
     end
 
     def execute?
@@ -58,6 +74,25 @@ module DaFunk
       else
         ! self.timer
       end
+    end
+
+    private
+    def stringify_hours(options)
+      {"hours" => options[:hours]}
+    end
+
+    def hours2seconds(interval)
+      hours = 60 * 60 * interval.to_i
+      hours = 99_999 if hours == 0
+      (Time.now.to_i + hours)
+    end
+
+    def parse_slot(string)
+      unless string.to_s.empty?
+        JSON.parse(string)
+      end
+    rescue # old format slot=<fixnum>
+      nil
     end
   end
 end
