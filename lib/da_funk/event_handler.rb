@@ -55,7 +55,7 @@ module DaFunk
           config["timestamp"] = hours2seconds(option[:hours])
           config["interval"]["hours"] = option[:hours].to_s
         else
-          if self.timer && self.timer.to_i < Time.now.to_i
+          if self.timer && self.timer.to_i <= Time.now.to_i
             config["timestamp"] = hours2seconds(option[:hours])
             config["interval"]["hours"] = option[:hours].to_s
           end
