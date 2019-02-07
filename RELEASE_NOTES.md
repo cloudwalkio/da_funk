@@ -1,5 +1,9 @@
 # DaFunk
 
+### 2.5.1 - 2019-02-07
+
+- Fix EventHandler rescheduler when dealing with slots.
+
 ### 2.5.0 - 2019-02-05
 
 - Bug fix EventHandler with slot configuration
