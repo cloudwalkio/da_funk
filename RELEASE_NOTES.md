@@ -1,5 +1,9 @@
 # DaFunk
 
+### 2.6.0 - 2019-02-14
+
+- Support to Device::Runtime::reload on Engine stop.
+
 ### 2.5.1 - 2019-02-07
 
 - Fix EventHandler rescheduler when dealing with slots.
