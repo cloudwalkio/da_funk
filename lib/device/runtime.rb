@@ -25,5 +25,9 @@ class Device
       Device::Network.setup
       nil
     end
+
+    def self.reload
+      self.adapter.reload
+    end
   end
 end

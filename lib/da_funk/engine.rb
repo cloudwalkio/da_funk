@@ -14,7 +14,8 @@ module DaFunk
       ThreadScheduler.stop
     end
 
-    def self.stop!
+    def self.stop!(reload = false)
+      Device::Runtime.reload if reload
       @stop = true
     end
   end
