@@ -2,6 +2,7 @@ module DaFunk
   class Engine
     def self.check
       DaFunk::EventListener.check
+      ThreadScheduler.keep_alive
     end
 
     def self.app_loop(&block)
