@@ -18,7 +18,7 @@ class Device
       "sim_pin"                     => "", #GPRS
       "sim_slot"                    => "0", #GPRS
       "sim_dual"                    => "0", #GPRS
-      "wifi_password"                    => "", #WIFI
+      "wifi_password"               => "", #WIFI
       "authentication"              => "", #WIFI
       "essid"                       => "", #WIFI
       "bssid"                       => "", #WIFI
@@ -54,7 +54,9 @@ class Device
       "heartbeat"                   => "", #SYS
       "boot"                        => "1", #SYS
       "company_name"                => "", #SYS
-      "metadata_timestamp"          => ""
+      "metadata_timestamp"          => "",
+      "payment_channel_attempts"    => "0",
+      "payment_channel_date"        => ""
     }
 
     class << self
