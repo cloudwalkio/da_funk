@@ -53,7 +53,7 @@ module DaFunk
     end
 
     def self.payment_channel_limit?
-      DaFunk::ParamsDat.exists? && DaFunk::ParamsDat.file["payment_channel_check_limit"] != "0"
+      DaFunk::ParamsDat.exists? && DaFunk::ParamsDat.file["payment_channel_check_limit"] == "1"
     end
 
     def self.payment_channel_limit
