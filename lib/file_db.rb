@@ -41,6 +41,9 @@ class FileDb
 
   def []=(key, value)
     value = value.to_s
+    # reload if boot is key to avoid initial change problem between threads
+    # TODO: Refactoring config.dat handling between threads
+    open if key == "boot"
     old = @hash[key.to_s]
     ret = @hash[key.to_s] = value
     save if old != value
