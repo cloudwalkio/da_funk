@@ -1,5 +1,9 @@
 # DaFunk
 
+### 2.7.1 - 2019-02-16
+
+- Bug fix set payment channel limit disable as default.
+
 ### 2.7.0 - 2019-02-16
 
 - Execute ThreadScheduler::keep_alive every engine check
