@@ -1,5 +1,13 @@
 # DaFunk
 
+### 2.7.0 - 2019-02-16
+
+- Execute ThreadScheduler::keep_alive every engine check
+- Refresh every file on every FileDb set method if key is boot, this is a temporary fix to avoid edit problem between threads;
+- Add Device::Setting attributes, payment_channel_attempts - To count channels in a day; payment_channel_date - Connection day;
+- Implement Device::Setting::payment_channel_set_attempts, it’s a simple helper to set both payment_channel_date and payment_channel_attempts;
+- Implement channel connection limit configuration.
+
 ### 2.6.0 - 2019-02-14
 
 - Support to Device::Runtime::reload on Engine stop.
