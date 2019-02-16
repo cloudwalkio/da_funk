@@ -52,19 +52,41 @@ module DaFunk
       end
     end
 
+    def self.payment_channel_limit?
+      DaFunk::ParamsDat.exists? && DaFunk::ParamsDat.file["payment_channel_check_limit"] != "0"
+    end
+
+    def self.payment_channel_limit
+      if DaFunk::ParamsDat.exists?
+        DaFunk::ParamsDat.file["payment_channel_limit"].to_i
+      else
+        0
+      end
+    end
+
+    def self.channel_limit_exceed?
+      if payment_channel_limit?
+        payment_channel_limit <= Device::Setting.payment_channel_attempts.to_i
+      else
+        false
+      end
+    end
+
     def self.check(display_message = true)
-      if self.dead?
-        PaymentChannel.connect(display_message)
-        if @client
-          self.print_info(I18n.t(:attach_waiting), display_message)
-          if message = @client.check || @client.handshake?
-            self.print_info(I18n.t(:attach_connected), display_message)
-            message
+      if self.dead? 
+        unless self.channel_limit_exceed?
+          PaymentChannel.connect(display_message)
+          if @client
+            self.print_info(I18n.t(:attach_waiting), display_message)
+            if message = @client.check || @client.handshake?
+              self.print_info(I18n.t(:attach_connected), display_message)
+              message
+            else
+              self.error
+            end
           else
             self.error
           end
-        else
-          self.error
         end
       else
         if @client
@@ -91,11 +113,27 @@ module DaFunk
       print_last(message) if display
     end
 
-    def self.create
-      if @client == Context::CommunicationChannel
-        @client = Context::CommunicationChannel
+    def self.payment_channel_increment_attempts
+      number = Device::Setting.payment_channel_attempts.to_i
+      date   = Device::Setting.payment_channel_date
+      if date.to_s.empty?
+        Device::Setting.payment_channel_set_attempts(Time.now)
       else
+        year, mon, day = date.split("-")
+        if day.to_i == Time.now.day
+          Device::Setting.payment_channel_set_attempts(nil, number + 1)
+        else
+          Device::Setting.payment_channel_set_attempts(Time.now)
+        end
+      end
+    end
+
+    def self.create
+      if @client != Context::CommunicationChannel
+        payment_channel_increment_attempts
         @client = PaymentChannel.new
+      else
+        @client.connect
       end
     end
 
