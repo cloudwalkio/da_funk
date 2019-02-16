@@ -122,6 +122,21 @@ class Device
       end
     end
 
+    # helper
+    def self.payment_channel_set_attempts(time = nil, attempts = nil)
+      if time
+        str = "%d-%02d-%02d"
+        update_attributes({
+          "payment_channel_date"     => (str % [time.year, time.mon, time.day]),
+          "payment_channel_attempts" => (attempts || 1)
+        })
+      else
+        update_attributes({
+          "payment_channel_attempts" => (attempts || 1)
+        })
+      end
+    end
+
     # Custom Attributes
     def self.tcp_recv_timeout
       DaFunk::ParamsDat.file["tcp_recv_timeout"] || method_missing(:tcp_recv_timeout)
