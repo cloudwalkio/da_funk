@@ -28,7 +28,7 @@ GEM
     parallel (1.13.0)
     parser (2.6.0.0)
       ast (~> 2.4.0)
-    posxml_parser (2.13.1)
+    posxml_parser (2.14.0)
       funky-emv (~> 0.3)
     powerpack (0.1.2)
     rainbow (3.0.0)
