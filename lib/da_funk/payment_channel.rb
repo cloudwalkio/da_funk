@@ -36,7 +36,7 @@ module DaFunk
         create
         self.print_info(I18n.t(:attach_authenticate), display_message)
         @client.handshake
-        ContextLog.info "[C] WebSocket Handshake Finished", true
+        ContextLog.info "[C] WebSocket Handshake Finished"
       else
         client_clear!
       end
@@ -74,7 +74,7 @@ module DaFunk
     end
 
     def self.check(display_message = true)
-      if self.dead? 
+      if self.dead?
         unless self.channel_limit_exceed?
           PaymentChannel.connect(display_message)
           if @client
@@ -152,8 +152,8 @@ module DaFunk
 
     def write(value)
       nsu = Protocol.new(value).extract_nsu
-      ContextLog.info "[F] Transaction nsu is: #{nsu}", true
-      ContextLog.info "[T] WebSocket Sent Size: #{value.size}", true
+      ContextLog.info "[F] Transaction nsu is: #{nsu}"
+      ContextLog.info "[T] WebSocket Sent Size: #{value.size}"
       @client.write(value)
     end
 
@@ -161,7 +161,7 @@ module DaFunk
       begin
         bytes = @client.read
         unless bytes.nil? || bytes.empty? || bytes == "OPCODE_PING"
-          ContextLog.info "[T] WebSocket Recv Size: #{bytes.size}", true
+          ContextLog.info "[T] WebSocket Recv Size: #{bytes.size}"
         end
         bytes
       rescue SocketError, PolarSSL::SSL::Error => e
@@ -173,7 +173,7 @@ module DaFunk
       @client.close if @client
       @client = nil
       PaymentChannel.client = nil
-      ContextLog.info "[C] WebSocket Closed", true
+      ContextLog.info "[C] WebSocket Closed"
     end
 
     def connected?
@@ -212,7 +212,7 @@ module DaFunk
 
     def handshake
       if self.connected?
-        ContextLog.info "[C] WebSocket Handshake Started", true
+        ContextLog.info "[C] WebSocket Handshake Started"
         @client.write(PaymentChannel.handshake_message)
       end
     end
