@@ -2,10 +2,13 @@
 class Device
   class Setting
     FILE_PATH       = "./main/config.dat"
-    HOST_PRODUCTION = "switch.cloudwalk.io"
-    HOST_STAGING    = "switch-staging.cloudwalk.io"
-    PORT_TCP        = "31415"
-    PORT_TCP_SSL    = "31416"
+    HOST_PRODUCTION      = "switch.cloudwalk.io"
+    HOST_STAGING         = "switch-staging.cloudwalk.io"
+    HTTP_HOST_PRODUCTION = "switch-http.cloudwalk.io"
+    HTTP_HOST_STAGING    = "switch-http-staging.cloudwalk.io"
+    HTTP_PORT            = "443"
+    PORT_TCP             = "31415"
+    PORT_TCP_SSL         = "31416"
 
     DEFAULT     = {
       "host"                        => HOST_PRODUCTION,
@@ -56,7 +59,10 @@ class Device
       "company_name"                => "", #SYS
       "metadata_timestamp"          => "",
       "payment_channel_attempts"    => "0",
-      "payment_channel_date"        => ""
+      "payment_channel_date"        => "",
+      "transaction_http_enabled"    => "1",
+      "transaction_http_host"       => HTTP_HOST_PRODUCTION,
+      "transaction_http_port"       => HTTP_PORT
     }
 
     class << self
@@ -92,7 +98,7 @@ class Device
 
     def self.to_production!
       if self.environment != "production"
-        @file.update_attributes("company_name" => "", "environment" => "production", "host" => HOST_PRODUCTION)
+        @file.update_attributes("company_name" => "", "environment" => "production", "host" => HOST_PRODUCTION, "transaction_http_host" => HTTP_HOST_PRODUCTION)
         return true
       end
       false
@@ -100,7 +106,7 @@ class Device
 
     def self.to_staging!
       if self.environment != "staging"
-        @file.update_attributes("company_name" => "", "environment" => "staging", "host" => HOST_STAGING)
+        @file.update_attributes("company_name" => "", "environment" => "staging", "host" => HOST_STAGING, "transaction_http_host" => HTTP_HOST_STAGING)
         return true
       end
       false

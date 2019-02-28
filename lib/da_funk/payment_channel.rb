@@ -64,7 +64,12 @@ module DaFunk
       end
     end
 
+    def self.transaction_http?
+      DaFunk::ParamsDat.exists? && DaFunk::ParamsDat.file["transaction_http_enabled"] != "0"
+    end
+
     def self.channel_limit_exceed?
+      return true if transaction_http?
       if payment_channel_limit?
         payment_channel_limit <= Device::Setting.payment_channel_attempts.to_i
       else
@@ -73,7 +78,7 @@ module DaFunk
     end
 
     def self.check(display_message = true)
-      if self.dead? 
+      if self.dead?
         unless self.channel_limit_exceed?
           PaymentChannel.connect(display_message)
           if @client
@@ -144,7 +149,8 @@ module DaFunk
     def initialize(client = nil)
       @host   = Device::Setting.host
       @port   = (Device::Setting.apn == "gprsnac.com.br") ? 32304 : 443
-      @client = client || CwWebSocket::Client.new(@host, @port)
+      @client = client || CwHttpSocket.new(Device::Setting.transaction_http_host,
+                                           Device::Setting.transaction_http_port)
     rescue SocketError, PolarSSL::SSL::Error => e
       self.error(e)
     end
@@ -172,14 +178,18 @@ module DaFunk
     end
 
     def handshake?
-      if self.connected? && ! @handshake_response
-        timeout = Time.now + Device::Setting.tcp_recv_timeout.to_i
-        loop do
-          break if @handshake_response = self.client.read
-          break if Time.now > timeout || getc(200) == Device::IO::CANCEL
+      if self.client.respond_to?(:handshake?)
+        self.client.handshake?
+      else
+        if self.connected? && ! @handshake_response
+          timeout = Time.now + Device::Setting.tcp_recv_timeout.to_i
+          loop do
+            break if @handshake_response = self.client.read
+            break if Time.now > timeout || getc(200) == Device::IO::CANCEL
+          end
         end
+        !! @handshake_response
       end
-      !! @handshake_response
     end
 
     def check
@@ -203,7 +213,11 @@ module DaFunk
 
     def handshake
       if self.connected?
-        @client.write(PaymentChannel.handshake_message)
+        if self.handshake?
+          true
+        else
+          @client.write(PaymentChannel.handshake_message)
+        end
       end
     end
   end
