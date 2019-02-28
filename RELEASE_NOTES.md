@@ -1,5 +1,10 @@
 # DaFunk
 
+### 3.0.0 - 2019-02-28
+
+- Replace payment channel interface from WebSocket to HTTP;
+- Support config.dat parameters `transaction_http_enabled`, `transaction_http_host`, `transaction_http_port`.
+
 ### 2.7.1 - 2019-02-16
 
 - Bug fix set payment channel limit disable as default.
