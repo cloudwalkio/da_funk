@@ -1,5 +1,9 @@
 # DaFunk
 
+### 3.1.0 - 2019-03-12
+
+- Replace host config for http.
+
 ### 3.0.0 - 2019-02-28
 
 - Replace payment channel interface from WebSocket to HTTP;
