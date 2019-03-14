@@ -1,5 +1,9 @@
 # DaFunk
 
+### 3.2.0 - 2019-03-14
+
+- Support menu_image helper that display image for menu.
+
 ### 3.1.1 - 2019-03-14
 
 - Bug fix attach helper loop image and decrease display time to 200ms;
