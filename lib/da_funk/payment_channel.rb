@@ -149,8 +149,12 @@ module DaFunk
     def initialize(client = nil)
       @host   = Device::Setting.host
       @port   = (Device::Setting.apn == "gprsnac.com.br") ? 32304 : 443
-      @client = client || CwHttpSocket.new(Device::Setting.transaction_http_host,
-                                           Device::Setting.transaction_http_port)
+      if PaymentChannel.transaction_http?
+        @client = client || CwHttpSocket.new(Device::Setting.transaction_http_host,
+                                             Device::Setting.transaction_http_port)
+      else
+        @client = client || CwWebSocket::Client.new(@host, @port)
+      end
     rescue SocketError, PolarSSL::SSL::Error => e
       self.error(e)
     end
