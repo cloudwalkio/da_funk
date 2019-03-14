@@ -1,5 +1,11 @@
 # DaFunk
 
+### 3.1.1 - 2019-03-14
+
+- Bug fix attach helper loop image and decrease display time to 200ms;
+- Bugfix flag PaymentChannel::transaction_http use PaymentChannel didn’t change to payment channel approach when demand;
+- Bug fix extend timeout to PaymentChannel handshake.
+
 ### 3.1.0 - 2019-03-12
 
 - Replace host config for http.
