@@ -129,6 +129,22 @@ module DaFunk
       processing
     end
 
+    def menu_image(path, selection, options = {})
+      return nil if selection.empty?
+
+      Device::Display.print_bitmap(path)
+
+      keys     = ((1..(selection.size)).to_a.map(&:to_s) + [Device::IO::CANCEL])
+      key      = try_key(keys, options[:timeout] || Device::IO.timeout)
+      selected = selection[key.to_i-1] if key.integer?
+
+      if key == Device::IO::ENTER || key == Device::IO::CANCEL
+        options[:default]
+      else
+        selected
+      end
+    end
+
     # Create a form menu.
     #
     # @param title [String] Text to display on line 0. If nil title won't be
