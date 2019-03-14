@@ -113,14 +113,16 @@ module DaFunk
       time = timeout != 0 ? Time.now + timeout / 1000 : Time.now
       processing = Hash.new(keep: true)
       interation = 0
+      files      = options[:bmps][:attach_loop] if options && options[:bmps].is_a?(Hash)
+      max        = (files.size - 1) if files
+
       while(processing[:keep] && processing[:key] != Device::IO::CANCEL) do
-        if options && options[:bmps] && files = options[:bmps][:attach_loop]
+        if files
           Device::Display.print_bitmap(files[interation])
-          max = files.size - 1
-          interation = (max >= interation) ? 0 : interation + 1
+          interation = (max >= interation) ? interation + 1 : 0
         end
         if processing[:keep] = block.call(processing)
-          processing[:key] = getc(300)
+          processing[:key] = getc(200)
         end
         break if time < Time.now
       end
