@@ -6,7 +6,7 @@ module DaFunk
       attr_accessor :client
     end
 
-    attr_accessor :handshake_response, :client, :host, :port
+    attr_accessor :handshake_response, :handshake_request, :client, :host, :port
 
     def self.ready?
       Device::Network.connected? && self.configured?
@@ -185,7 +185,7 @@ module DaFunk
       if self.client.respond_to?(:handshake?)
         self.client.handshake?
       else
-        if self.connected? && ! @handshake_response
+        if self.connected? && @handshake_request && ! @handshake_response
           timeout = Time.now + Device::Setting.tcp_recv_timeout.to_i
           loop do
             break if @handshake_response = self.client.read
@@ -220,7 +220,8 @@ module DaFunk
         if self.handshake?
           true
         else
-          @client.write(PaymentChannel.handshake_message)
+          @handshake_request = PaymentChannel.handshake_message
+          @client.write(handshake_request)
         end
       end
     end
