@@ -1,5 +1,9 @@
 # DaFunk
 
+### 3.2.1 - 2019-04-11
+
+- Fix Dir removal on Application.delete.
+
 ### 3.2.0 - 2019-03-14
 
 - Support menu_image helper that display image for menu.
