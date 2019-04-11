@@ -79,7 +79,7 @@ module DaFunk
     def delete
       File.delete(self.file) if exists?
       if self.ruby? && Dir.exist?(self.dir) && self.dir != "main"
-        Dir.delete(self.dir)
+        Zip.clean(self.dir)
       end
     end
 
