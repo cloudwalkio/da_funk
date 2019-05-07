@@ -42,16 +42,6 @@ module DaFunk
       @client
     end
 
-    def self.error
-      if self.configured?
-        if ConnectionManagement.fallback?
-          :fallback_communication
-        elsif ConnectionManagement.conn_automatic_management?
-          :attach_registration_fail
-        end
-      end
-    end
-
     def self.payment_channel_limit?
       DaFunk::ParamsDat.exists? && DaFunk::ParamsDat.file["payment_channel_check_limit"] == "1"
     end
@@ -86,11 +76,7 @@ module DaFunk
             if message = @client.check || @client.handshake?
               self.print_info(I18n.t(:attach_connected), display_message)
               message
-            else
-              self.error
             end
-          else
-            self.error
           end
         end
       else
@@ -198,12 +184,8 @@ module DaFunk
 
     def check
       if Device::Network.connected? && self.connected? && self.handshake?
-        message = self.read
+        self.read
       end
-      if message.nil? && ConnectionManagement.primary_try?
-        return :primary_communication
-      end
-      message
     end
 
     private
