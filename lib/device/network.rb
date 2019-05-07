@@ -116,7 +116,6 @@ class Device
     #   Device::Network.mac_address(Device::Network::MEDIA_GPRS)
     #   # => "AA:BB:CC:DD:EE:FF"
     def self.mac_address(media = nil)
-      ContextLog.info "mac_address"
       unless media
         self.adapter.mac_address(media2klass(Device::Setting.media))
       else
