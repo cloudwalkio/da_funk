@@ -1,5 +1,11 @@
 # DaFunk
 
+### 3.3.0 - 2019-05-07
+
+- Remove communication errors from PaymentChannel;
+- Remove unnecessary MAC address log;
+- Implement ConnectionManager.check (from PaymentChannel).
+
 ### 3.2.1 - 2019-04-11
 
 - Fix Dir removal on Application.delete.
