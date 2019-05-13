@@ -32,6 +32,9 @@ module DaFunk
           self.timer = Time.now + option[:seconds]
         end
       end
+    rescue ArgumentError
+      File.delete("main/schedule.dat")
+      Device::System.reboot
     end
 
     def seconds_from_file
