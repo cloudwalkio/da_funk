@@ -1,5 +1,9 @@
 # DaFunk
 
+### 3.4.0 - 2019-05-13
+
+- Do not remove old files and application on params.dat.
+
 ### 3.3.1 - 2019-05-13
 
 - Mock Device::Setting.logical_number from System if empty.
