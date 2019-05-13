@@ -1,5 +1,9 @@
 # DaFunk
 
+### 3.3.1 - 2019-05-13
+
+- Mock Device::Setting.logical_number from System if empty.
+
 ### 3.3.0 - 2019-05-07
 
 - Remove communication errors from PaymentChannel;
