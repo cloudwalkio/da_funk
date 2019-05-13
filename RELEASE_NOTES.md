@@ -1,5 +1,9 @@
 # DaFunk
 
+### 3.5.0 - 2019-05-13
+
+- Fix time range exception on schedule.
+
 ### 3.4.0 - 2019-05-13
 
 - Do not remove old files and application on params.dat.
