@@ -57,7 +57,6 @@ module DaFunk
         end
         new_apps << application
       end
-      DaFunk::Application.delete(@apps - new_apps)
       @apps = new_apps
     end
 
@@ -72,7 +71,6 @@ module DaFunk
         end
         new_files << file_
       end
-      DaFunk::Application.delete(@files - new_files)
       @files = new_files
     end
 
