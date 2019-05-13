@@ -156,6 +156,14 @@ class Device
     def self.heartbeat
       DaFunk::ParamsDat.file["heartbeat"] || method_missing(:heartbeat)
     end
+
+    def self.logical_number
+      if self.file["logical_number"].to_s.strip.empty?
+        self.file["logical_number"] = Device::System.serial
+      else
+        self.file["logical_number"]
+      end
+    end
   end
 end
 
