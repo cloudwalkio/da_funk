@@ -131,15 +131,18 @@ module DaFunk
 
     def menu_image(path, selection, options = {})
       return nil if selection.empty?
+      special_keys = [Device::IO::CANCEL, Device::IO.forward_key, Device::IO.back_key]
 
       Device::Display.print_bitmap(path)
 
-      keys     = ((1..(selection.size)).to_a.map(&:to_s) + [Device::IO::CANCEL])
+      keys     = ((1..(selection.size)).to_a.map(&:to_s) + special_keys)
       key      = try_key(keys, options[:timeout] || Device::IO.timeout)
       selected = selection[key.to_i-1] if key.integer?
 
       if key == Device::IO::ENTER || key == Device::IO::CANCEL
         options[:default]
+      elsif special_keys.include?(key)
+        key
       else
         selected
       end
