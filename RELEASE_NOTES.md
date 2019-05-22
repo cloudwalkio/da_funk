@@ -1,5 +1,10 @@
 # DaFunk
 
+### 3.6.0 - 2019-05-21
+
+- Avoid memory leak on EventListener, avoid cleaning memory duplicating object;
+- Check if ContextLog object exists on ISO8583.
+
 ### 3.5.0 - 2019-05-13
 
 - Fix time range exception on schedule.
