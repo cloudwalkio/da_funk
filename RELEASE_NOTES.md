@@ -1,5 +1,9 @@
 # DaFunk
 
+### 3.7.0 - 2019-05-22
+
+- Added support to get http code status using payment channel interface.
+
 ### 3.6.0 - 2019-05-21
 
 - Avoid memory leak on EventListener, avoid cleaning memory duplicating object;
