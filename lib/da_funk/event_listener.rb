@@ -24,6 +24,7 @@ module DaFunk
 
     def self.add_handler(handler)
       if listener = self.listeners[handler.type]
+        listener.handlers = listener.handlers.dup
         listener.handlers[handler.option] = handler
       end
     end
@@ -33,7 +34,7 @@ module DaFunk
 
     def initialize(type)
       @type     = type
-      @handlers = {}
+      @handlers = Hash.new
       yield self if block_given?
       self.register
       self.start
