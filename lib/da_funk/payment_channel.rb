@@ -145,6 +145,12 @@ module DaFunk
       self.error(e)
     end
 
+    def code
+      if PaymentChannel.transaction_http? && @client
+        @client.code
+      end
+    end
+
     def write(value)
       @client.write(value)
     end
