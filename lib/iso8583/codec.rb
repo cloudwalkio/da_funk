@@ -165,7 +165,7 @@ module ISO8583
   }
   Track2.decoder = PASS_THROUGH_DECODER
 
-  def self._date_codec(fmt) 
+  def self._date_codec(fmt)
     c = Codec.new
     c.encoder = lambda {|date|
       enc = case date
@@ -177,10 +177,10 @@ module ISO8583
                 dt.strftime(fmt)
               rescue => e
                 msg = "Invalid format encoding: #{date}, must be #{fmt}."
-                ContextLog.exception(e, e.backtrace, msg)
+                ContextLog.exception(e, e.backtrace, msg) if Object.defined?(:ContextLog)
                 raise ISO8583Exception.new(msg)
               end
-            else  
+            else
               raise ISO8583Exception.new("Don't know how to encode: #{date.class} to a time.")
             end
       return enc
@@ -190,7 +190,7 @@ module ISO8583
         DateTime.strptime(str, fmt)
       rescue => e
         msg = "Invalid format decoding: #{str}, must be #{fmt}."
-        ContextLog.exception(e, e.backtrace, msg)
+        ContextLog.exception(e, e.backtrace, msg) if Object.defined?(:ContextLog)
         raise ISO8583Exception.new(msg)
       end
     }
