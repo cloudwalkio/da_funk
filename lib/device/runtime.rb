@@ -12,11 +12,13 @@ class Device
     # @param json [String] Parameters to confifure new aplication.
     # @return [Object] From the new runtime instance.
     def self.execute(app, json = nil)
-      ContextLog.info "runtime self.execute #{app}-#{json}"
-      # execution_ret = mrb_eval("Context.start('#{app}', '#{Device.adapter}', '#{json}')")
-      execution_ret = mrb_eval("Context.execute_app('#{app}', '#{json}')")
+      execution_ret = mrb_eval("Context.execute('#{app}', '#{Device.adapter}', '#{json}')", app)
       self.system_reload
       return execution_ret
+    end
+
+    def self.start(app, json = nil)
+      mrb_eval("Context.start('#{app}', '#{Device.adapter}', '#{json}')", app)
     end
 
     # Check if any change has happen to Network, Settings or ParamsDat
