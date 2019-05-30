@@ -44,11 +44,13 @@ module DaFunk
         if ret == DaFunk::Transaction::Download::SUCCESS
           if ((@crc_local = calculate_crc) == @crc)
             unzip
+            restart
           else
             ret = DaFunk::Transaction::Download::COMMUNICATION_ERROR
           end
         elsif ret == DaFunk::Transaction::Download::FILE_NOT_CHANGE
           unzip
+          restart
         end
       else
         ret = DaFunk::Transaction::Download::FILE_NOT_CHANGE
@@ -99,6 +101,19 @@ module DaFunk
       else
         Device::Runtime.execute(name, json)
       end
+    end
+
+    def restart
+      stop
+      start
+    end
+
+    def stop
+      Device::Runtime.stop(name) if ruby? && exists?
+    end
+
+    def start
+      Device::Runtime.start(name) if ruby? && exists?
     end
 
     def posxml?
