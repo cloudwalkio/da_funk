@@ -21,6 +21,10 @@ class Device
       mrb_eval("Context.start('#{app}', '#{Device.adapter}', '#{json}')", app)
     end
 
+    def self.stop(app)
+      mrb_stop(app)
+    end
+
     # Check if any change has happen to Network, Settings or ParamsDat
     # @return [NilClass] From the new runtime instance.
     def self.system_reload
