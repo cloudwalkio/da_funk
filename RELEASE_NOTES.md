@@ -1,5 +1,12 @@
 # DaFunk
 
+### 3.8.0 - 2019-06-06
+
+- Do not send host/port information to CwHttpSocket, let it deal with host and port config from config.dat and/or params.dat;
+- Added infinitepay_authorizer and infinitepay_api on config.dat;
+- Divide Runtime execution in two steps, start (application loading) execute (application execution);
+- Support to cache an application after downloading;
+
 ### 3.7.0 - 2019-05-22
 
 - Added support to get http code status using payment channel interface.
