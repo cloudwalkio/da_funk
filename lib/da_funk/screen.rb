@@ -6,7 +6,6 @@ class Screen
   attr_accessor :x, :y, :max_x, :max_y
 
   def self.setup(max_x = SCREEN_X_SIZE, max_y = SCREEN_Y_SIZE)
-    $stdout.close
     Object.const_set(:STDOUT, self.new(max_x, max_y))
     $stdout = Object::STDOUT
   end
