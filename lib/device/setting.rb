@@ -60,6 +60,8 @@ class Device
       "metadata_timestamp"          => "",
       "payment_channel_attempts"    => "0",
       "payment_channel_date"        => "",
+      "infinitepay_authorizer"      => "0",
+      "infinitepay_api"             => "0",
       "transaction_http_enabled"    => "1",
       "transaction_http_host"       => HTTP_HOST_PRODUCTION,
       "transaction_http_port"       => HTTP_PORT

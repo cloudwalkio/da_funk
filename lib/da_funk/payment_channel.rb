@@ -136,8 +136,7 @@ module DaFunk
       @host   = Device::Setting.host
       @port   = (Device::Setting.apn == "gprsnac.com.br") ? 32304 : 443
       if PaymentChannel.transaction_http?
-        @client = client || CwHttpSocket.new(Device::Setting.transaction_http_host,
-                                             Device::Setting.transaction_http_port)
+        @client = client || CwHttpSocket.new
       else
         @client = client || CwWebSocket::Client.new(@host, @port)
       end
