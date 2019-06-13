@@ -1,5 +1,9 @@
 # DaFunk
 
+### 3.8.1 - 2019-06-13
+
+- Fix ISO8583 binary bitmap generation to CRUBY.
+
 ### 3.8.0 - 2019-06-06
 
 - Do not send host/port information to CwHttpSocket, let it deal with host and port config from config.dat and/or params.dat;
