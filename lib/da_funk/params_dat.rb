@@ -209,6 +209,10 @@ module DaFunk
       end
     end
 
+    def self.ruby_executable_apps
+      self.apps.select(&:ruby?)
+    end
+
     def self.executable_apps
       self.apps.select{|app| app.label != "X"}
     end
