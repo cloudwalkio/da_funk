@@ -1,5 +1,10 @@
 # DaFunk
 
+### 3.8.2 - 2019-06-18
+
+- Implemented Params::ruby_executable_apps, helper to select only ruby applications even if not executable;
+- Fix ISO 8583 HEX Bitmap generation.
+
 ### 3.8.1 - 2019-06-13
 
 - Fix ISO8583 binary bitmap generation to CRUBY.
