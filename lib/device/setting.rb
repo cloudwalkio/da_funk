@@ -64,7 +64,8 @@ class Device
       "infinitepay_api"             => "0",
       "transaction_http_enabled"    => "1",
       "transaction_http_host"       => HTTP_HOST_PRODUCTION,
-      "transaction_http_port"       => HTTP_PORT
+      "transaction_http_port"       => HTTP_PORT,
+      "emv_input_amount_idle"       => "0"
     }
 
     class << self
