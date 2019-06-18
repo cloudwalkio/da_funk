@@ -1,5 +1,9 @@
 # DaFunk
 
+### 3.8.3 - 2019-06-18
+
+- Added emv_input_amount_idle parameter on config.dat.
+
 ### 3.8.2 - 2019-06-18
 
 - Implemented Params::ruby_executable_apps, helper to select only ruby applications even if not executable;

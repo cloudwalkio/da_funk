@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    da_funk (3.8.2)
+    da_funk (3.8.3)
       archive-zip (~> 0.5)
       bundler
       cloudwalk_handshake
@@ -18,9 +18,9 @@ GEM
     cloudwalk (1.14.3)
       bundler
       rake
-    cloudwalk_handshake (1.4.1)
+    cloudwalk_handshake (1.4.2)
       funky-simplehttp (~> 0.6)
-    funky-emv (0.26.0)
+    funky-emv (1.0.0)
       funky-tlv (~> 0.2)
     funky-simplehttp (0.6.0)
     funky-tlv (0.2.3)
@@ -29,8 +29,8 @@ GEM
     parallel (1.17.0)
     parser (2.6.3.0)
       ast (~> 2.4.0)
-    posxml_parser (2.19.0)
-      funky-emv (~> 0.3)
+    posxml_parser (2.20.0)
+      funky-emv (~> 1)
     rainbow (3.0.0)
     rake (12.3.2)
     rubocop (0.71.0)
