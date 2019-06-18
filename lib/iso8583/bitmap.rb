@@ -82,7 +82,7 @@ module ISO8583
     alias_method :to_b, :to_bytes
 
     def to_hex
-      self.to_s.to_i(2).to_s(16).upcase.unpack("H*").first
+      self.to_s.to_i(2).to_s(16).upcase
     end
 
     # Generate a String representation of this bitmap in the form:
