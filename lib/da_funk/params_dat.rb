@@ -126,11 +126,13 @@ module DaFunk
 
     def self.update_apps(force_params = false, force_crc = false, force = false)
       self.download if force_params || ! self.valid
+      main_updated = nil
       if self.valid
         apps_to_update = self.outdated_apps(force_crc, force)
         size_apps = apps_to_update.size
         apps_to_update.each_with_index do |app, index|
-          self.update_app(app, index+1, size_apps, force_crc || force)
+          ret = self.update_app(app, index+1, size_apps, force_crc || force)
+          main_updated ||= (ret && app.main_application?)
         end
 
         files_to_update = self.outdated_files(force_crc, force)
@@ -139,6 +141,18 @@ module DaFunk
           self.update_file(file_, index+1, size_files, force_crc || force)
         end
       end
+    ensure
+      self.restart if main_updated
+    end
+
+    def self.restart
+      Device::Display.clear
+      I18n.pt(:admin_main_update_message)
+      3.times do |i|
+        Device::Display.print("REBOOTING IN #{3 - i}",3,3)
+        sleep(1)
+      end
+      Device::System.restart
     end
 
     def self.format!(keep_config_files = false, keep_files = [])

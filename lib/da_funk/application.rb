@@ -1,11 +1,3 @@
-# Scenario
-# 1. Load from scratch
-# - No file downloaded
-# - with file downloaded
-# 2. Second load
-# - No crc update
-# - With crc update
-
 module DaFunk
   class Application
     class ApplicationError < StandardError; end
@@ -66,7 +58,11 @@ module DaFunk
         zip = self.file
         message = "Problem to unzip #{zip}[#{name}]"
         raise FileNotFoundError.new(message) unless self.exists?
-        raise ApplicationError.new(message) unless Zip.uncompress(zip)
+        if main_application?
+          raise ApplicationError.new(message) unless Zip.uncompress(zip, './main', true, false)
+        else
+          raise ApplicationError.new(message) unless Zip.uncompress(zip)
+        end
       end
     end
 
@@ -93,6 +89,10 @@ module DaFunk
       self.crc_local != @crc
     rescue
       true
+    end
+
+    def main_application?
+      main == 'main'
     end
 
     def execute(json = "")
