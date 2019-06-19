@@ -1,5 +1,9 @@
 # DaFunk
 
+### 3.9.0 - 2019-06-18
+
+- Support to uncompress main application and reboot after it.
+
 ### 3.8.3 - 2019-06-18
 
 - Added emv_input_amount_idle parameter on config.dat.
