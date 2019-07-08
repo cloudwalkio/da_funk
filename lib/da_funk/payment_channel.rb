@@ -162,7 +162,11 @@ module DaFunk
     end
 
     def write(value)
-      @client.write(value)
+      if Object.const_defined?(:CwHttpEvent) && value.is_a?(CwHttpEvent)
+        @client.write(value.message)
+      else
+        @client.write(value)
+      end
     end
 
     def read
