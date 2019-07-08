@@ -3,7 +3,7 @@ module DaFunk
     DEFAULT_HEARBEAT = "180"
 
     class << self
-      attr_accessor :client
+      attr_accessor :client, :app
     end
 
     attr_accessor :handshake_response, :handshake_request, :client, :host, :port
@@ -16,6 +16,17 @@ module DaFunk
       DaFunk::ParamsDat.file["access_token"] &&
         DaFunk::ParamsDat.file["payment_channel_enabled"] == "1" &&
         Device::Setting.logical_number
+    end
+
+    def self.app=(application)
+      @app = application
+      # if Context::CommunicationChannel send application name thought threads
+      if @client == Context::CommunicationChannel
+        @client.app = application
+      else
+        Device::System.klass = application
+      end
+      @app
     end
 
     def self.handshake_message
