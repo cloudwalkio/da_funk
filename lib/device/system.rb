@@ -57,6 +57,11 @@ class Device
       adapter.reboot
     end
 
+    def self.klass=(application_name)
+      DaFunk::PaymentChannel.app = klass
+      @klass=application_name
+    end
+
     def self.app
       self.klass.to_s.downcase
     end
