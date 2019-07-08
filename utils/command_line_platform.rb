@@ -22,6 +22,10 @@ class CommandLinePlatform
     require 'posxml_parser'
     require 'cloudwalk_handshake'
     CloudwalkHandshake.configure!
+  rescue LoadError => e
+    unless e.message.include?('cloudwalk_handshake')
+      raise e
+    end
   end
 
   def self.set_system_values
