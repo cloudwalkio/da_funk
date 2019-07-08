@@ -1,5 +1,12 @@
 # DaFunk
 
+### 3.10.0 - 2019-07-08
+
+- Do not raise load error when cloudwalk_handshake doesn’t exists;
+- Support to app set on PaymentChannel;
+- Set PaymentChannel application on Device::System::klass=;
+- Support CwHttpEvent on PaymentChannel.
+
 ### 3.9.0 - 2019-06-18
 
 - Support to uncompress main application and reboot after it.
