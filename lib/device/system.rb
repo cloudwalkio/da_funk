@@ -58,8 +58,11 @@ class Device
     end
 
     def self.klass=(application_name)
-      DaFunk::PaymentChannel.app = klass
-      @klass=application_name
+      if @klass != application_name
+        DaFunk::PaymentChannel.app = application_name
+        @klass = application_name
+      end
+      @klass
     end
 
     def self.app

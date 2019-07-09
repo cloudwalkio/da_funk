@@ -19,12 +19,14 @@ module DaFunk
     end
 
     def self.app=(application)
-      @app = application
-      # if Context::CommunicationChannel send application name thought threads
-      if @client == Context::CommunicationChannel
-        @client.app = application
-      else
-        Device::System.klass = application
+      if @app != application
+        @app = application
+        # if Context::CommunicationChannel send application name thought threads
+        if @client == Context::CommunicationChannel
+          @client.app = application
+        else
+          Device::System.klass = application
+        end
       end
       @app
     end
