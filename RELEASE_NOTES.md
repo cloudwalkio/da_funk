@@ -1,5 +1,9 @@
 # DaFunk
 
+### 3.10.1 - 2019-07-09
+
+- Fix application set loop on PaymentChannel and System.
+
 ### 3.10.0 - 2019-07-08
 
 - Do not raise load error when cloudwalk_handshake doesn’t exists;
