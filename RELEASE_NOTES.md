@@ -1,5 +1,10 @@
 # DaFunk
 
+### 3.10.2 - 2019-07-09
+
+- Fix main application detection on app update;
+- Support cloudwalk_handshake (1.6.0).
+
 ### 3.10.1 - 2019-07-09
 
 - Fix application set loop on PaymentChannel and System.
