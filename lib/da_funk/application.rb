@@ -92,7 +92,7 @@ module DaFunk
     end
 
     def main_application?
-      main == 'main'
+      name == 'main'
     end
 
     def execute(json = "")
