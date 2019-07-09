@@ -164,7 +164,7 @@ module DaFunk
     end
 
     def write(value)
-      if Object.const_defined?(:CwHttpEvent) && value.is_a?(CwHttpEvent)
+      if Object.const_defined?(:Cloudwalk) && value.is_a?(Cloudwalk::HttpEvent)
         @client.write(value.message)
       else
         @client.write(value)
