@@ -1,5 +1,10 @@
 # DaFunk
 
+### 3.10.3 - 2019-07-26
+
+- Check if ContextLog exists on ISO8583 field.rb;
+- Refactoring ISO8583 Null_Codec decoder to avoid encoding error.
+
 ### 3.10.2 - 2019-07-09
 
 - Fix main application detection on app update;
