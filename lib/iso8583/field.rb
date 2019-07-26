@@ -39,7 +39,7 @@ module ISO8583
       begin
         real_value = codec.decode(raw_value)
       rescue => e
-        ContextLog.exception e, e.backtrace
+        ContextLog.exception e, e.backtrace if Object.defined?(:ContextLog)
         raise ISO8583ParseException.new(e.message+" (#{name})")
       end
 
@@ -47,16 +47,16 @@ module ISO8583
     end
 
 
-    # Encoding needs to consider length representation, the actual encoding (such as charset or BCD) 
-    # and padding. 
-    # The order may be important! This impl calls codec.encode and then pads, in case you need the other 
+    # Encoding needs to consider length representation, the actual encoding (such as charset or BCD)
+    # and padding.
+    # The order may be important! This impl calls codec.encode and then pads, in case you need the other
     # special treatment, you may need to override this method alltogether.
     # In other cases, the padding has to be implemented by the codec, such as BCD with an odd number of nibbles.
     def encode(value)
       begin
-        encoded_value = codec.encode(value) 
+        encoded_value = codec.encode(value)
       rescue ISO8583Exception => e
-        ContextLog.exception(e, e.backtrace, "#{e.message} (#{name})")
+        ContextLog.exception(e, e.backtrace, "#{e.message} (#{name})") if Object.defined?(:ContextLog)
         raise ISO8583Exception.new(e.message+" (#{name})")
       end
 
