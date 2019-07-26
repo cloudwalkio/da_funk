@@ -10,7 +10,7 @@ module ISO8583
   # This file contains a number of preinstantiated Field definitions. You
   # will probably need to create own fields in your implementation, please
   # see Field and Codec for further discussion on how to do this.
-  # The fields currently available are those necessary to implement the 
+  # The fields currently available are those necessary to implement the
   # Berlin Groups Authorization Spec.
   #
   # The following fields are available:
@@ -20,7 +20,7 @@ module ISO8583
   # [+LL_BCD+]       special form to de/encode variable length indicators, two BCD digits
   # [+LLVAR_N+]      two byte variable length ASCII numeral, payload ASCII numerals
   # [+LLLVAR_N+]     three byte variable length ASCII numeral, payload ASCII numerals
-  # [+LLVAR_Z+]      two byte variable length ASCII numeral, payload Track2 data 
+  # [+LLVAR_Z+]      two byte variable length ASCII numeral, payload Track2 data
   # [+LLVAR_AN+]    two byte variable length ASCII numeral, payload ASCII
   # [+LLVAR_ANS+]    two byte variable length ASCII numeral, payload ASCII+special
   # [+LLLVAR_AN+]   three byte variable length ASCII numeral, payload ASCII
@@ -40,7 +40,7 @@ module ISO8583
   # [+Hhmmss+]       Date, formatted in ASCII hhmmss
 
 
-  # Special form to de/encode variable length indicators, two bytes ASCII numerals 
+  # Special form to de/encode variable length indicators, two bytes ASCII numerals
   LL         = Field.new
   LL.name    = "LL"
   LL.length  = 2

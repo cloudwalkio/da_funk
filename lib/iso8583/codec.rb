@@ -13,7 +13,7 @@ module ISO8583
   # your own Codec sooner or later. The codecs used by Field instances are
   # typically instances of Codec, it may or may not be usefull to subclass
   # Codec.
-  # 
+  #
   # Say, for example, a text field needs to be encoded in EBCDIC in the
   # message, this is how a corresponding codec would be constructed:
   #
@@ -42,29 +42,29 @@ module ISO8583
   # See also: Field, link:files/lib/fields_rb.html
   #
   # The following codecs are already implemented:
-  # [+ASCII_Number+]      encodes either a Number or String representation of 
-  #                       a number to the ASCII represenation of the number, 
+  # [+ASCII_Number+]      encodes either a Number or String representation of
+  #                       a number to the ASCII represenation of the number,
   #                       decodes ASCII  numerals to a number
   # [+A_Codec+]           passes through ASCII string checking they conform to [A-Za-z]
-  #                       during encoding, no validity check during decoding. 
+  #                       during encoding, no validity check during decoding.
   # [+AN_Codec+]          passes through ASCII string checking they conform to [A-Za-z0-9]
-  #                       during encoding, no validity check during decoding. 
-  # [+ANP_Codec+]         passes through ASCII string checking they conform to [A-Za-z0-9 ] 
-  #                       during encoding, no validity check during decoding. 
+  #                       during encoding, no validity check during decoding.
+  # [+ANP_Codec+]         passes through ASCII string checking they conform to [A-Za-z0-9 ]
+  #                       during encoding, no validity check during decoding.
   # [+ANS_Codec+]         passes through ASCII string checking they conform to [\x20-\x7E]
   #                       during encoding, no validity check during decoding.
   # [+Null_Codec+]        passes anything along untouched.
   # [<tt>Track2</tt>]     rudimentary check that string conforms to Track2
-  # [+MMDDhhmmssCodec+]   encodes Time, Datetime or String to the described date format, checking 
-  #                       that it is a valid date. Decodes to a DateTime instance, decoding and 
+  # [+MMDDhhmmssCodec+]   encodes Time, Datetime or String to the described date format, checking
+  #                       that it is a valid date. Decodes to a DateTime instance, decoding and
   #                       encoding perform validity checks!
-  # [+MMDDCodec+]   encodes Time, Datetime or String to the described date format, checking 
-  #                       that it is a valid date. Decodes to a DateTime instance, decoding and 
+  # [+MMDDCodec+]   encodes Time, Datetime or String to the described date format, checking
+  #                       that it is a valid date. Decodes to a DateTime instance, decoding and
   #                       encoding perform validity checks!
-  # [+YYMMDDhhmmssCodec+] encodes Time, Datetime or String to the described date format, checking 
-  #                       that it is a valid date. Decodes to a DateTime instance, decoding and 
+  # [+YYMMDDhhmmssCodec+] encodes Time, Datetime or String to the described date format, checking
+  #                       that it is a valid date. Decodes to a DateTime instance, decoding and
   #                       encoding perform validity checks!
-  # [+YYMMCodec+]         encodes Time, Datetime or String to the described date format (exp date), 
+  # [+YYMMCodec+]         encodes Time, Datetime or String to the described date format (exp date),
   #                       checking that it is a valid date. Decodes to a DateTime instance, decoding
   #                       and encoding perform validity checks!
   #
@@ -147,8 +147,8 @@ module ISO8583
     str
   }
   Null_Codec.decoder = lambda {|str|
-    str.gsub(/\000*$/, '')
-  } 
+    str
+  }
 
   Track2 = Codec.new
   Track2.encoder = lambda{|track2|
