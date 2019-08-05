@@ -59,7 +59,7 @@ module DaFunk
         message = "Problem to unzip #{zip}[#{name}]"
         raise FileNotFoundError.new(message) unless self.exists?
         if main_application?
-          raise ApplicationError.new(message) unless Zip.uncompress(zip, './main', true, false)
+          raise ApplicationError.new(message) unless Zip.uncompress(zip, ".", true, false)
         else
           raise ApplicationError.new(message) unless Zip.uncompress(zip)
         end
