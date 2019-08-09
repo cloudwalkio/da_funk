@@ -214,9 +214,7 @@ module ISO8583
         bitmap.set(bmp_num)
         puts "BMP [#{bmp_num.inspect}][#{@values[bmp_num].inspect}]"
         enc_value = @values[bmp_num].encode
-        puts enc_value.force_encoding('UTF-8').encoding
-        puts message.encoding
-        message << enc_value
+        message << enc_value.force_encoding('UTF-8')
       end
 
       if use_hex_bitmap
