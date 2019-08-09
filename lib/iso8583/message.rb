@@ -209,8 +209,10 @@ module ISO8583
     def _body
       bitmap  = Bitmap.new
       message = ""
+      puts "body [#{@values.inspect}]"
       @values.keys.sort.each do |bmp_num|
         bitmap.set(bmp_num)
+        puts "BMP [#{bmp_num.inspect}][#{@values[bmp_num].inspect}]"
         enc_value = @values[bmp_num].encode
         message << enc_value
       end
