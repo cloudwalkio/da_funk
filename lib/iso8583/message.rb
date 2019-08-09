@@ -213,6 +213,8 @@ module ISO8583
       @values.keys.sort.each do |bmp_num|
         bitmap.set(bmp_num)
         puts "BMP [#{bmp_num.inspect}][#{@values[bmp_num].inspect}]"
+        puts @values[bmp_num].encode.encoding
+        puts message.encoding
         enc_value = @values[bmp_num].encode
         message << enc_value
       end
