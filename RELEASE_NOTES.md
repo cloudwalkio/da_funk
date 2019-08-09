@@ -1,5 +1,10 @@
 # DaFunk
 
+### 3.10.4 - 2019-08-09
+
+- Removed the name from the path for uncompress main. It was crashing the unzip process and breaking the update;
+- Fix ISO8583 bmp encoding error.
+
 ### 3.10.3 - 2019-07-26
 
 - Check if ContextLog exists on ISO8583 field.rb;
