@@ -1,5 +1,9 @@
 # DaFunk
 
+### 3.10.5 - 2019-08-10
+
+- Force encoding of mti value on ISO8583 message to_b.
+
 ### 3.10.4 - 2019-08-09
 
 - Removed the name from the path for uncompress main. It was crashing the unzip process and breaking the update;
