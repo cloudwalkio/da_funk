@@ -1,5 +1,9 @@
 # DaFunk
 
+### 3.10.6 - 2019-08-11
+
+- Fix more encoding problems ISO8583 Bitmap and Message.
+
 ### 3.10.5 - 2019-08-10
 
 - Force encoding of mti value on ISO8583 message to_b.
