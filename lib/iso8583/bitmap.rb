@@ -1,3 +1,5 @@
+# encoding: utf-8
+#
 # Copyright 2009 by Tim Becker (tim.becker@kuriostaet.de)
 # MIT License, for details, see the LICENSE file accompaning
 # this distribution
@@ -76,13 +78,18 @@ module ISO8583
         end
         bitmap_hex.reverse.upcase
       else
-        [to_s].pack("B*")
+        [to_s].pack("B*").force_encoding('UTF-8')
       end
     end
     alias_method :to_b, :to_bytes
 
     def to_hex
-      self.to_s.to_i(2).to_s(16).upcase
+      value = self.to_s.to_i(2).to_s(16).upcase
+      if value.respond_to? :force_encoding
+        value.force_encoding('UTF-8')
+      else
+        value
+      end
     end
 
     # Generate a String representation of this bitmap in the form:

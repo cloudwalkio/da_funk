@@ -1,3 +1,5 @@
+# encoding: utf-8
+#
 # Copyright 2009 by Tim Becker (tim.becker@kuriostaet.de)
 # MIT License, for details, see the LICENSE file accompaning
 # this distribution
@@ -180,7 +182,7 @@ module ISO8583
     def to_b
       raise ISO8583Exception.new "no MTI set!" unless mti
       mti_enc = self.class._mti_format.encode(mti).force_encoding('UTF-8')
-      mti_enc << _body.join
+      mti_enc << _body.join.force_encoding('UTF-8')
     end
 
     # Returns a nicely formatted representation of this
