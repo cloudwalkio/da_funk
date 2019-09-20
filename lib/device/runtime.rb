@@ -1,5 +1,7 @@
 class Device
   class Runtime
+    include DaFunk::Helper
+
     def self.adapter
       Device.adapter::Runtime
     end
@@ -12,6 +14,7 @@ class Device
     # @param json [String] Parameters to confifure new aplication.
     # @return [Object] From the new runtime instance.
     def self.execute(app, json = nil)
+      processing(:processing)
       execution_ret = mrb_eval("Context.execute('#{app}', '#{Device.adapter}', '#{json}')", app)
       self.system_reload
       return execution_ret
