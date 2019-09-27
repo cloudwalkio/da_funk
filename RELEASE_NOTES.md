@@ -1,5 +1,11 @@
 # DaFunk
 
+### 3.11.0 - 2019-09-26
+
+- Implemented processing method helper which can show processing image or text while runtime is starting a ruby application.
+- Update cloudwalk_handshake (1.8.1)
+- Update posxml_parser (2.24.0)
+
 ### 3.10.6 - 2019-08-11
 
 - Fix more encoding problems ISO8583 Bitmap and Message.
