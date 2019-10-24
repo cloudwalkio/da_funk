@@ -1,5 +1,9 @@
 # DaFunk
 
+### 3.11.1 - 2019-10-24
+
+- Fixed method call on ISO8583Exception rescue.
+
 ### 3.11.0 - 2019-09-26
 
 - Implemented processing method helper which can show processing image or text while runtime is starting a ruby application.
