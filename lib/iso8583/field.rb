@@ -56,7 +56,7 @@ module ISO8583
       begin
         encoded_value = codec.encode(value)
       rescue ISO8583Exception => e
-        ContextLog.exception(e, e.backtrace, "#{e.message} (#{name})") if Object.defined?(:ContextLog)
+        ContextLog.exception(e, e.backtrace, "#{e.message} (#{name})") if Object.const_defined?(:ContextLog)
         raise ISO8583Exception.new(e.message+" (#{name})")
       end
 
