@@ -145,6 +145,49 @@ module DaFunk
       end
     end
 
+    # Wait for touchscreen or keyboard event.
+    #
+    # @param menu_itens [Hash] Hash in this format:
+    # {
+    #   menu_item_index => {:x => range..range, :y => range..range},
+    #   menu_item_index => {:x => range..range, :y => range..range}
+    # }
+    #
+    # @param timeout [Fixnum] in miliseconds.
+    #
+    # @example
+    #
+    #   menu_itens = {
+    #     1 => {:x => 0..225, :y => 10..98},
+    #     2 => {:x => 290..300, :y => 50..100}
+    #   }
+    #
+    #   wait_touchscreen_or_keyboard_event(menu_itens, 30_000)
+    #
+    # @return array with event happened and key
+    def wait_touchscreen_or_keyboard_event(menu_itens, timeout)
+      time = Time.now + timeout / 1000
+      keys = ((1..(menu_itens.size)).to_a.map(&:to_s) + [Device::IO::CANCEL]).flatten
+
+      loop do
+        break([:timeout, Device::IO::KEY_TIMEOUT]) if Time.now > time
+        x, y = getxy_stream(100)
+        if x && y
+          menu_itens.each do |key, value|
+            if value[:x].include?(x) && value[:y].include?(y)
+              return([:touchscreen, key])
+            end
+          end
+        elsif key = getc(100)
+          if key != Device::IO::KEY_TIMEOUT
+            if keys.include?(key)
+              break([:keyboard, key])
+            end
+          end
+        end
+      end
+    end
+
     # Create a form menu.
     #
     # @param title [String] Text to display on line 0. If nil title won't be
