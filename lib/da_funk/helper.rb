@@ -145,6 +145,52 @@ module DaFunk
       end
     end
 
+    # Create a menu with touchscreen and keyboard selection support.
+    #
+    # @param path [String] file with path to be displayed
+    #
+    # @param menu_itens [Hash] Hash in this format:
+    # {
+    #   menu_item_index => {:x => range..range, :y => range..range},
+    #   menu_item_index => {:x => range..range, :y => range..range}
+    # }
+    #
+    # @param options [Hash] Hash containing options to change the menu behaviour.
+    #
+    # @example
+    #   options = {
+    #     # Input Timeout in miliseconds
+    #     :timeout => 30_000
+    #   }
+    #
+    #   menu_itens = {
+    #     1 => {:x => 0..225, :y => 10..98},
+    #     2 => {:x => 290..300, :y => 50..100}
+    #   }
+    #
+    #   menu_image_touchscreen_or_keyboard('image.bmp', menu_itens, options)
+    #
+    # @return menu_item_index selected will be returned
+    # @return if timeout nil will be returned
+    def menu_image_touchscreen_or_keyboard(path, menu_itens, options = {})
+      return nil if menu_itens.empty?
+
+      Device::Display.print_bitmap(path)
+
+      timeout = options[:timeout] || Device::IO.timeout
+      event, key = wait_touchscreen_or_keyboard_event(menu_itens, timeout)
+
+      if event == :keyboard
+        if key == Device::IO::CANCEL
+          options[:default]
+        else
+          menu_itens.keys[key.to_i-1]
+        end
+      elsif event == :touchscreen
+        menu_itens.keys[key.to_i]
+      end
+    end
+
     # Wait for touchscreen or keyboard event.
     #
     # @param menu_itens [Hash] Hash in this format:
