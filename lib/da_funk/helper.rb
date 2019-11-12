@@ -184,10 +184,11 @@ module DaFunk
         if key == Device::IO::CANCEL
           options[:default]
         else
-          menu_itens.keys[key.to_i-1]
+          index = key.to_i-1 == -1 ? 0 : key.to_i-1
+          menu_itens.keys[index]
         end
       elsif event == :touchscreen
-        menu_itens.keys[key.to_i]
+        menu_itens.select {|k, v| k == key}.shift[0]
       end
     end
 
