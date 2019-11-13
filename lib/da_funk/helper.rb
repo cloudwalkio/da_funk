@@ -178,7 +178,8 @@ module DaFunk
       Device::Display.print_bitmap(path)
 
       timeout = options[:timeout] || Device::IO.timeout
-      event, key = wait_touchscreen_or_keyboard_event(menu_itens, timeout)
+      options[:special_keys] = [Device::IO::CANCEL]
+
       event, key = wait_touchscreen_or_keyboard_event(menu_itens, timeout, options)
 
       if event == :keyboard
