@@ -179,6 +179,7 @@ module DaFunk
 
       timeout = options[:timeout] || Device::IO.timeout
       event, key = wait_touchscreen_or_keyboard_event(menu_itens, timeout)
+      event, key = wait_touchscreen_or_keyboard_event(menu_itens, timeout, options)
 
       if event == :keyboard
         if key == Device::IO::CANCEL
@@ -212,7 +213,7 @@ module DaFunk
     #   wait_touchscreen_or_keyboard_event(menu_itens, 30_000)
     #
     # @return array with event happened and key
-    def wait_touchscreen_or_keyboard_event(menu_itens, timeout)
+    def wait_touchscreen_or_keyboard_event(menu_itens, timeout, options = {})
       time = Time.now + timeout / 1000
       keys = ((1..(menu_itens.size)).to_a.map(&:to_s) + [Device::IO::CANCEL]).flatten
 
