@@ -1,5 +1,10 @@
 # DaFunk
 
+### 3.12.0 - 2019-11-14
+
+- Added DaFunk::Helper#wait_touchscreen_or_keyboard_event.
+- Added Added DaFunk::Helper#menu_image_touchscreen_or_keyboard.
+
 ### 3.11.1 - 2019-10-24
 
 - Fixed method call on ISO8583Exception rescue.
