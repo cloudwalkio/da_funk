@@ -1,5 +1,9 @@
 # DaFunk
 
+### 3.12.1 - 2019-11-18
+
+- Bug fix local jump error: unexpected return. Error found on methods added to touch screen operations (Helper).
+
 ### 3.12.0 - 2019-11-14
 
 - Added DaFunk::Helper#wait_touchscreen_or_keyboard_event.
