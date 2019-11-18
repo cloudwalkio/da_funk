@@ -102,7 +102,7 @@ module DaFunk
       keys = [keys].flatten
       time = Time.now + timeout / 1000 if (timeout != 0)
       while (! keys.include?(key)) do
-        return Device::IO::KEY_TIMEOUT if (timeout != 0 && time < Time.now)
+        break(key = Device::IO::KEY_TIMEOUT) if (timeout != 0 && time < Time.now)
         key = getc(timeout)
       end
       key
@@ -222,11 +222,8 @@ module DaFunk
         break([:timeout, Device::IO::KEY_TIMEOUT]) if Time.now > time
         x, y = getxy_stream(100)
         if x && y
-          menu_itens.each do |key, value|
-            if value[:x].include?(x) && value[:y].include?(y)
-              return([:touchscreen, key])
-            end
-          end
+          event = parse_touchscreen_event(menu_itens)
+          break(event) if event
         elsif key = getc(100)
           if key != Device::IO::KEY_TIMEOUT
             if keys.include?(key)
@@ -439,6 +436,14 @@ module DaFunk
     end
 
     private
+    def parse_touchscreen_event(menu_itens)
+      menu_itens.each do |key, value|
+        if value[:x].include?(x) && value[:y].include?(y)
+          return([:touchscreen, key])
+        end
+      end
+    end
+
     def form_default(options = {})
       options[:default] ||= ""
       options[:mode]    ||= Device::IO::IO_INPUT_ALPHA
