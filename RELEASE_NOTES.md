@@ -1,5 +1,9 @@
 # DaFunk
 
+### 3.12.2 - 2019-11-18
+
+- Bug fix undefined method 'x' on parse_touchscreen_event. This method was not receiving x and y which were local variables.
+
 ### 3.12.1 - 2019-11-18
 
 - Bug fix local jump error: unexpected return. Error found on methods added to touch screen operations (Helper).
