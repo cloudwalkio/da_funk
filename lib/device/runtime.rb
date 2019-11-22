@@ -15,13 +15,15 @@ class Device
     # @return [Object] From the new runtime instance.
     def self.execute(app, json = nil)
       processing(:processing)
-      execution_ret = mrb_eval("Context.execute('#{app}', '#{Device.adapter}', '#{json}')", app)
+      buf = "#{json.dup}" if json.is_a?(String)
+      mrb_eval("Context.execute('#{app.dup}', '#{Device.adapter}', '#{buf}')", "#{app.dup}")
+    ensure
       self.system_reload
-      return execution_ret
     end
 
     def self.start(app, json = nil)
-      mrb_eval("Context.start('#{app}', '#{Device.adapter}', '#{json}')", app)
+      buf = "#{json.dup}" if json.is_a?(String)
+      mrb_eval("Context.start('#{app.dup}', '#{Device.adapter}', '#{buf}')", "#{app.dup}")
     end
 
     def self.stop(app)
