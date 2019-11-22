@@ -1,5 +1,9 @@
 # DaFunk
 
+### 3.12.3 - 2019-11-22
+
+- Duplicate string before mrb_eval to avoid possible memory leak.
+
 ### 3.12.2 - 2019-11-18
 
 - Bug fix undefined method 'x' on parse_touchscreen_event. This method was not receiving x and y which were local variables.
