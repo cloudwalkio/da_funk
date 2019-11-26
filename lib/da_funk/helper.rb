@@ -220,7 +220,7 @@ module DaFunk
 
       loop do
         break([:timeout, Device::IO::KEY_TIMEOUT]) if Time.now > time
-        x, y = getxy_stream(100)
+        x, y = getxy(100)
         if x && y
           event = parse_touchscreen_event(menu_itens, x, y)
           break(event) if event
