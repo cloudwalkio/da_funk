@@ -1,5 +1,9 @@
 # DaFunk
 
+### 3.12.4 - 2019-11-28
+
+- Bug fix on wait_touchscreen_or_keyboard_event. Use getxy instead getxy_stream to clean up events queue.
+
 ### 3.12.3 - 2019-11-22
 
 - Duplicate string before mrb_eval to avoid possible memory leak.
