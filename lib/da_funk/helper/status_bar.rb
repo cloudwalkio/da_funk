@@ -5,6 +5,7 @@ module DaFunk
       SLOT_CONNECTION = 0
       SLOT_BATTERY    = 7
       SLOT_LINK       = 1
+      SLOT_UPDATE     = 2
 
       BATTERY_IMAGES = {
         0..24    => "./shared/battery0.png",
@@ -44,6 +45,15 @@ module DaFunk
           self.change_connection
           self.change_battery
           self.change_link
+          self.change_update
+        end
+      end
+
+      def self.change_update
+        if File.exists?('./shared/system_update')
+          PAX::Display.print_status_bar(SLOT_UPDATE, "./shared/system_update_download4.png")
+        else
+          PAX::Display.print_status_bar(SLOT_UPDATE, nil)
         end
       end
 
