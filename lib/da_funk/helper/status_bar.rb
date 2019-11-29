@@ -51,7 +51,7 @@ module DaFunk
 
       def self.change_update
         if File.exists?('./shared/system_update')
-          PAX::Display.print_status_bar(SLOT_UPDATE, "./shared/system_update_download4.png")
+          PAX::Display.print_status_bar(SLOT_UPDATE, "./shared/system_update_download.png")
         else
           PAX::Display.print_status_bar(SLOT_UPDATE, nil)
         end
