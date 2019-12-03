@@ -218,9 +218,11 @@ module DaFunk
       time = Time.now + timeout / 1000
       keys = ((1..(menu_itens.size)).to_a.map(&:to_s) + options[:special_keys]).flatten
 
+      touch_clear
+
       loop do
         break([:timeout, Device::IO::KEY_TIMEOUT]) if Time.now > time
-        x, y = getxy(100)
+        x, y = getxy_stream(100)
         if x && y
           event = parse_touchscreen_event(menu_itens, x, y)
           break(event) if event
