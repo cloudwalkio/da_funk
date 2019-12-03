@@ -22,6 +22,7 @@ GEM
       funky-simplehttp (~> 0.6)
     funky-emv (1.2.1)
       funky-tlv (~> 0.2)
+    funky-mock (0.1.0)
     funky-simplehttp (0.6.0)
     funky-tlv (0.2.3)
     io-like (0.3.0)
@@ -52,6 +53,7 @@ PLATFORMS
 DEPENDENCIES
   cloudwalk
   da_funk!
+  funky-mock
   funky-simplehttp
   rubocop
   yard
