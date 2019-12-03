@@ -1,5 +1,12 @@
 # DaFunk
 
+### 3.13.0 - 2019-12-03
+
+- Added funky-mock library;
+- Add status bar spinner to system update;
+- Support background update;
+- Refactoring touch events handling.
+
 ### 3.12.4 - 2019-11-28
 
 - Bug fix on wait_touchscreen_or_keyboard_event. Use getxy instead getxy_stream to clean up events queue.
