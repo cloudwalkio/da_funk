@@ -20,7 +20,7 @@ GEM
       rake
     cloudwalk_handshake (1.9.0)
       funky-simplehttp (~> 0.6)
-    funky-emv (1.2.1)
+    funky-emv (1.2.2)
       funky-tlv (~> 0.2)
     funky-mock (0.1.0)
     funky-simplehttp (0.6.0)
