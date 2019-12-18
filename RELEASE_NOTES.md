@@ -1,5 +1,10 @@
 # DaFunk
 
+### 3.13.1 - 2019-12-18
+
+- Update funky-emv (1.2.2);
+- Update cloudwalk_handshake (1.9.0);
+
 ### 3.13.0 - 2019-12-03
 
 - Added funky-mock library;
