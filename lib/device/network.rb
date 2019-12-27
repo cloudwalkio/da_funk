@@ -191,6 +191,7 @@ class Device
 
     def self.attach(options = nil)
       Device::Network.connected?
+      Context::ThreadPubSub.publish('communication_update')
       if self.code != SUCCESS
         ThreadScheduler.pausing_communication do
           self.code = Device::Network.init(*self.config)
@@ -207,6 +208,7 @@ class Device
           self.code = hash[:ret]
 
           if self.code == SUCCESS
+            self.load_metadata
             self.code = Device::Network.dhcp_client(20000) if (wifi? || ethernet?)
           else
             self.code = ERR_USER_CANCEL if hash[:key] == Device::IO::CANCEL
@@ -214,7 +216,14 @@ class Device
           end
         end
       end
+      Context::ThreadPubSub.publish('communication_update')
       self.code
+    end
+
+    def self.load_metadata
+      if Object.const_defined?(:CwMetadata)
+        CwMetadata.load_variable if CwMetadata.respond_to?(:load_variable)
+      end
     end
 
     def self.shutdown
