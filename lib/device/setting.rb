@@ -65,7 +65,8 @@ class Device
       "transaction_http_enabled"    => "1",
       "transaction_http_host"       => HTTP_HOST_PRODUCTION,
       "transaction_http_port"       => HTTP_PORT,
-      "emv_input_amount_idle"       => "0"
+      "emv_input_amount_idle"       => "0",
+      "network_init"                => ""
     }
 
     class << self
