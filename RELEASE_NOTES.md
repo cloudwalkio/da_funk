@@ -1,5 +1,12 @@
 # DaFunk
 
+### 3.14.0 - 2019-12-30
+
+- Update cloudwalk_handshake (1.10.0);
+- Load metadata after successfully attach;
+- Support Device::Setting::network_init to improve network initialisation control;
+- Notify all threads that modifications on network was made;
+
 ### 3.13.1 - 2019-12-18
 
 - Update funky-emv (1.2.2);
