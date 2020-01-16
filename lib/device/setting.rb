@@ -134,6 +134,7 @@ class Device
 
     # helper
     def self.payment_channel_set_attempts(time = nil, attempts = nil)
+      setup
       if time
         str = "%d-%02d-%02d"
         update_attributes({
