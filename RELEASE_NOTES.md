@@ -1,5 +1,11 @@
 # DaFunk
 
+### 3.15.0 - 2020-01-16
+
+- Load/update config.dat file before set payment channel attempts;
+- Update cloudwalk_handshake (1.11.0);
+- posxml_parser (2.26.0);
+
 ### 3.14.0 - 2019-12-30
 
 - Update cloudwalk_handshake (1.10.0);
