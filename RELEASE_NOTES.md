@@ -1,5 +1,9 @@
 # DaFunk
 
+### 3.15.1 - 2020-01-17
+
+- Just removed some debug points
+
 ### 3.15.0 - 2020-01-16
 
 - Load/update config.dat file before set payment channel attempts;
