@@ -29,6 +29,10 @@ class FileDb
     @hash.each(&block)
   end
 
+  def each_with_index(&block)
+    @hash.each_with_index(&block)
+  end
+
   def save
     string = @hash.inject("") do |str, line| #|line_key, line_value|
       str << "#{line[0]}=#{line[1]}\n"
