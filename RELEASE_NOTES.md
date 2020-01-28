@@ -1,5 +1,10 @@
 # DaFunk
 
+### 3.16.0 - 2020-01-28
+
+- Added FileDb#each_with_index method;
+- Changed DaFunk::Helper#menu return, now it will return nil if key pressed is CANCEL.
+
 ### 3.15.1 - 2020-01-17
 
 - Just removed some debug points
