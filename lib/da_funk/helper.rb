@@ -278,7 +278,9 @@ module DaFunk
         end
       end
 
-      if key == Device::IO::ENTER || key == Device::IO::CANCEL
+      return nil if key == Device::IO::CANCEL
+
+      if key == Device::IO::ENTER
         options[:default]
       else
         selected
