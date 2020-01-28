@@ -1,5 +1,9 @@
 # DaFunk
 
+### 3.16.1 - 2020-01-28
+
+- Added beep only when we've a successful interaction on the touch menu, avoiding beep when the click was outside the screen button.
+
 ### 3.16.0 - 2020-01-28
 
 - Added beep handling when touchscreen successful event.
