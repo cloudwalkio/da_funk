@@ -1,5 +1,10 @@
 # DaFunk
 
+### 3.16.2 - 2020-01-29
+
+- Moved responsability of beep sound for touch event to DaFunk::Helper#parse_touchscreen_event;
+- Call Audio class from adapter instead PAX.
+
 ### 3.16.1 - 2020-01-28
 
 - Added beep only when we've a successful interaction on the touch menu, avoiding beep when the click was outside the screen button.
