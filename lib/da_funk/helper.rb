@@ -190,7 +190,6 @@ module DaFunk
           menu_itens.keys[index]
         end
       elsif event == :touchscreen
-        PAX::Audio.beep(7, 60)
         menu_itens.select {|k, v| k == key}.shift[0]
       end
     end
@@ -444,6 +443,7 @@ module DaFunk
     def parse_touchscreen_event(menu_itens, x, y)
       menu_itens.each do |key, value|
         if value[:x].include?(x) && value[:y].include?(y)
+          Device::Audio.beep(7, 60)
           return([:touchscreen, key])
         end
       end
