@@ -1,5 +1,9 @@
 # DaFunk
 
+### 3.16.3 - 2020-01-31
+
+- Changed setting emv_input_amount_idle to emv_contactless_amount.
+
 ### 3.16.2 - 2020-01-29
 
 - Moved responsability of beep sound for touch event to DaFunk::Helper#parse_touchscreen_event;
