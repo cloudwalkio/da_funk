@@ -1,5 +1,11 @@
 # DaFunk
 
+### 3.17.0 - 2020-02-10
+
+- Added support to infinitepay endpoints config on config.dat file;
+- Update cloudwalk (1.15.0);
+- Update cloudwalk_handshake (1.13.0);
+
 ### 3.16.3 - 2020-01-31
 
 - Changed setting emv_input_amount_idle to emv_contactless_amount.
