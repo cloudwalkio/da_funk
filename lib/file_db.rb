@@ -12,6 +12,8 @@ class FileDb
     if File.exist?(@path)
       file = File.open(@path)
       self.parse(file.read)
+    else
+      nil
     end
   ensure
     file.close if file
