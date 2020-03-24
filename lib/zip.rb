@@ -4,7 +4,7 @@ module Zip
   end
 
   def self.uncompress(filezip, path = ".", application = true, clear_dir = true)
-    dir = "#{path}/#{filezip.split(".").first}" if application
+    dir = "#{path}/#{File.basename(filezip).split(".").first}" if application
     clean(dir) if clear_dir
     Miniz.unzip(filezip, path)
   end
