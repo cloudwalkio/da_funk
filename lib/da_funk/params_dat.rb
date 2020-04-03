@@ -104,15 +104,17 @@ module DaFunk
       nil
     end
 
-    def self.download
-      if attach
+    def self.download(enable_txt_ui = true)
+      if attach(attach_options(enable_txt_ui))
         parse
         ret = try(3) do |attempt|
-          Device::Display.clear
-          I18n.pt(:downloading_content, :args => ["PARAMS", 1, 1])
+          if enable_txt_ui
+            Device::Display.clear
+            I18n.pt(:downloading_content, :args => ["PARAMS", 1, 1])
+          end
           getc(100)
           ret = DaFunk::Transaction::Download.request_param_file(FILE_NAME)
-          unless check_download_error(ret)
+          unless check_download_error(ret, enable_txt_ui)
             getc(2000)
             false
           else
@@ -124,21 +126,21 @@ module DaFunk
       end
     end
 
-    def self.update_apps(force_params = false, force_crc = false, force = false)
-      self.download if force_params || ! self.valid
+    def self.update_apps(force_params = false, force_crc = false, force = false, enable_txt_ui = true)
+      self.download(enable_txt_ui) if force_params || ! self.valid
       main_updated = nil
       if self.valid
         apps_to_update = self.outdated_apps(force_crc, force)
         size_apps = apps_to_update.size
         apps_to_update.each_with_index do |app, index|
-          ret = self.update_app(app, index+1, size_apps, force_crc || force)
+          ret = self.update_app(app, index+1, size_apps, force_crc || force, enable_txt_ui)
           main_updated ||= (ret && app.main_application?)
         end
 
         files_to_update = self.outdated_files(force_crc, force)
         size_files = files_to_update.size
         files_to_update.each_with_index do |file_, index|
-          self.update_file(file_, index+1, size_files, force_crc || force)
+          self.update_file(file_, index+1, size_files, force_crc || force, enable_txt_ui)
         end
       end
     ensure
@@ -179,26 +181,30 @@ module DaFunk
       File.file?(path) && ! keep
     end
 
-    def self.update_app(application, index = 1, all = 1, force = false)
-      if attach && application
+    def self.update_app(application, index = 1, all = 1, force = false, enable_txt_ui = true)
+      if attach(attach_options(enable_txt_ui)) && application
         try(3) do |attempt|
-          Device::Display.clear
-          I18n.pt(:downloading_content, :args => [I18n.t(:apps), index, all])
+          if enable_txt_ui
+            Device::Display.clear
+            I18n.pt(:downloading_content, :args => [I18n.t(:apps), index, all])
+          end
           getc(100)
-          ret = check_download_error(application.download(force))
+          ret = check_download_error(application.download(force), enable_txt_ui)
           getc(1000)
           ret
         end
       end
     end
 
-    def self.update_file(file_parameter, index = 1, all = 1, force = false)
-      if attach && file_parameter
+    def self.update_file(file_parameter, index = 1, all = 1, force = false, enable_txt_ui = true)
+      if attach(attach_options(enable_txt_ui)) && file_parameter
         try(3) do |attempt|
-          Device::Display.clear
-          I18n.pt(:downloading_content, :args => [I18n.t(:files), index, all])
+          if enable_txt_ui
+            Device::Display.clear
+            I18n.pt(:downloading_content, :args => [I18n.t(:files), index, all])
+          end
           getc(100)
-          ret = check_download_error(file_parameter.download(force))
+          ret = check_download_error(file_parameter.download(force), enable_txt_ui)
           file_parameter.unzip if ret
           getc(1000)
           ret

@@ -14,11 +14,11 @@ module DaFunk
       string
     end
 
-    def attach_options
+    def attach_options(enable_txt_ui = true)
       if DaFunk::PaymentChannel.client == Context::CommunicationChannel
-        {:print_last => true}
+        {:print_last => true, :enable_txt_ui => enable_txt_ui}
       else
-        {:print_last => false}
+        {:print_last => false, :enable_txt_ui => enable_txt_ui}
       end
     end
 
@@ -35,54 +35,62 @@ module DaFunk
 
     def attach(options = attach_options)
       if Device::Network.configured?
-        print_attach(:attach_connecting, options)
+        print_attach(:attach_connecting, options) if options[:enable_txt_ui]
         unless Device::Network.connected?
           if Device::Network.attach(options) == Device::Network::SUCCESS
             Device::Setting.network_configured = 1
-            print_attach(:attach_connected, options)
+            print_attach(:attach_connected, options) if options[:enable_txt_ui]
           else
             Device::Setting.network_configured = 0 if DaFunk::ParamsDat.file["connection_management"] == "0"
-            print_attach(:attach_fail, options.merge(:args => [Device::Network.code.to_s]))
-            getc(10000)
+            if options[:enable_txt_ui]
+              print_attach(:attach_fail, options.merge(:args => [Device::Network.code.to_s]))
+              getc(10000)
+            end
             return false
           end
         else
-          print_attach(:attach_already_connected, options)
+          print_attach(:attach_already_connected, options) if options[:enable_txt_ui]
         end
         true
       else
-        print_attach(:attach_device_not_configured, options)
-        getc(2000)
+        if options[:enable_txt_ui]
+          print_attach(:attach_device_not_configured, options)
+          getc(2000)
+        end
         false
       end
     end
 
-    def check_download_error(ret)
+    def check_download_error(ret, enable_txt_ui = true)
       value = true
+      ui = {}
+
       case ret
       when DaFunk::Transaction::Download::SERIAL_NUMBER_NOT_FOUND
-        I18n.pt(:download_serial_number_not_found, :args => [ret])
+        ui[:i18n] = :download_serial_number_not_found
         value =  false
       when DaFunk::Transaction::Download::FILE_NOT_FOUND
-        I18n.pt(:download_file_not_found, :args => [ret])
+        ui[:i18n] = :download_file_not_found
         value = false
       when DaFunk::Transaction::Download::FILE_NOT_CHANGE
-        I18n.pt(:download_file_is_the_same, :args => [ret])
+        ui[:i18n] = :download_file_is_the_same
       when DaFunk::Transaction::Download::SUCCESS
-        I18n.pt(:download_success, :args => [ret])
+        ui[:i18n] = :download_success
       when DaFunk::Transaction::Download::COMMUNICATION_ERROR
-        I18n.pt(:download_communication_failure, :args => [ret])
+        ui[:i18n] = :download_communication_failure
         value = false
       when DaFunk::Transaction::Download::MAPREDUCE_RESPONSE_ERROR
-        I18n.pt(:download_encoding_error, :args => [ret])
+        ui[:i18n] = :download_encoding_error
         value = false
       when DaFunk::Transaction::Download::IO_ERROR
-        I18n.pt(:download_io_error, :args => [ret])
+        ui[:i18n] = :download_io_error
         value = false
       else
-        I18n.pt(:download_communication_failure, :args => [ret])
+        ui[:i18n] = :download_communication_failure
         value = false
       end
+
+      I18n.pt(ui[:i18n], :args => [ret]) if enable_txt_ui
 
       value
     end
