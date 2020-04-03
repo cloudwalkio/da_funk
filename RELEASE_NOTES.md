@@ -1,5 +1,15 @@
 # DaFunk
 
+### 3.18.0 - 2020-04-03
+
+- Added enable_txt_ui parameter on the following methods
+ - DaFunk::ParamsDat#download;
+ - DaFunk::ParamsDat#update_apps;
+ - DaFunk::ParamsDat#update_app;
+ - DaFunk::ParamsDat#update_file;
+ - DaFunk::Helper#attach_options;
+ - DaFunk::Helper#check_download_error;
+
 ### 3.17.0 - 2020-02-10
 
 - Added support to infinitepay endpoints config on config.dat file;
