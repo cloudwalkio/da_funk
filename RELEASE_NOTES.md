@@ -1,5 +1,9 @@
 # DaFunk
 
+### 3.18.1 - 2020-05-20
+
+- Fix issue on DaFunk::Helper#menu_image_touchscreen_or_keyboard it was not checking for special keys
+
 ### 3.18.0 - 2020-04-03
 
 - Added enable_txt_ui parameter on the following methods
