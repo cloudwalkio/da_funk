@@ -184,15 +184,21 @@ module DaFunk
       return nil if menu_itens.empty?
 
       Device::Display.print_bitmap(path)
-
       timeout = options[:timeout] || Device::IO.timeout
-      options[:special_keys] = [Device::IO::CANCEL]
+
+      if options.include?(:special_keys)
+        options[:special_keys] += options[:special_keys]
+      else
+        options[:special_keys] = [Device::IO::CANCEL]
+      end
 
       event, key = wait_touchscreen_or_keyboard_event(menu_itens, timeout, options)
 
       if event == :keyboard
         if key == Device::IO::CANCEL
           options[:default]
+        elsif options[:special_keys].include?(key)
+          key
         else
           index = key.to_i-1 == -1 ? 0 : key.to_i-1
           menu_itens.keys[index]
