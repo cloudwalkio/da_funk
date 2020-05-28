@@ -3,10 +3,28 @@ module DaFunk
     DEFAULT_HEARBEAT = "180"
 
     class << self
-      attr_accessor :client, :app
+      attr_accessor :current, :app
     end
 
     attr_accessor :handshake_response, :handshake_request, :client, :host, :port
+
+    # Backward compatibility
+    def self.client
+      self.current
+    end
+
+    # Backward compatibility
+    def self.client=(obj)
+      self.current = obj
+    end
+
+    def self.current
+      @current
+    end
+
+    def self.current=(obj)
+      @current = obj
+    end
 
     def self.ready?
       Device::Network.connected? && self.configured?
@@ -22,8 +40,8 @@ module DaFunk
       if @app != application
         @app = application
         # if Context::CommunicationChannel send application name thought threads
-        if @client == Context::CommunicationChannel
-          @client.app = application
+        if self.current == Context::CommunicationChannel
+          self.current.app = application
         else
           Device::System.klass = application
         end
@@ -48,11 +66,11 @@ module DaFunk
         self.print_info(I18n.t(:attach_attaching), display_message)
         create
         self.print_info(I18n.t(:attach_authenticate), display_message)
-        @client.handshake
+        self.current.handshake
       else
         client_clear!
       end
-      @client
+      self.current
     end
 
     def self.payment_channel_limit?
@@ -84,9 +102,9 @@ module DaFunk
       if self.dead?
         unless self.channel_limit_exceed?
           PaymentChannel.connect(display_message)
-          if @client
+          if self.current
             self.print_info(I18n.t(:attach_waiting), display_message)
-            if message = @client.check || @client.handshake?
+            if message = self.current.check || self.current.handshake?
               self.print_info(I18n.t(:attach_connected), display_message)
               message
             end
@@ -133,16 +151,16 @@ module DaFunk
     end
 
     def self.create
-      if @client != Context::CommunicationChannel
+      if self.current != Context::CommunicationChannel
         payment_channel_increment_attempts
-        @client = PaymentChannel.new
+        self.current = PaymentChannel.new
       else
-        @client.connect
+        self.current.connect
       end
     end
 
     def self.client_clear!
-      @client = nil unless @client == Context::CommunicationChannel
+      self.current = nil unless self.current == Context::CommunicationChannel
     end
 
     def initialize(client = nil)
@@ -182,7 +200,7 @@ module DaFunk
     def close
       @client.close if @client
       @client = nil
-      PaymentChannel.client = nil
+      PaymentChannel.current = nil
     end
 
     def connected?
@@ -215,7 +233,7 @@ module DaFunk
       if Context.development?
         ContextLog.exception(exception, exception.backtrace, "PaymentChannel error")
       end
-      PaymentChannel.client = nil
+      PaymentChannel.current = nil
       @client = nil
     end
 
