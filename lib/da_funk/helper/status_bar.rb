@@ -58,14 +58,14 @@ module DaFunk
       end
 
       def self.change_link
-        if Device::Network.connected?
-          if DaFunk::PaymentChannel.alive?
+        info = (!! DaFunk::PaymentChannel.alive?)
+        if self.link.nil? || self.link != info
+          self.link = info
+          if info
             PAX::Display.print_status_bar(SLOT_LINK, "./shared/link.png")
           else
             PAX::Display.print_status_bar(SLOT_LINK, "./shared/unlink.png")
           end
-        else
-          PAX::Display.print_status_bar(SLOT_LINK, "./shared/unlink.png")
         end
       end
 
