@@ -1,5 +1,10 @@
 # DaFunk
 
+### 3.20.0 - 2020-05-28
+
+- Rename PaymentChannel::client to ::current;
+- Fix status bar change link to cache old value.
+
 ### 3.18.1 - 2020-05-20
 
 - Fix issue on DaFunk::Helper#menu_image_touchscreen_or_keyboard it was not checking for special keys
