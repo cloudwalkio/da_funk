@@ -15,7 +15,7 @@ module DaFunk
     end
 
     def attach_options(enable_txt_ui = true)
-      if DaFunk::PaymentChannel.client == Context::CommunicationChannel
+      if DaFunk::PaymentChannel.current == Context::CommunicationChannel
         {:print_last => true, :enable_txt_ui => enable_txt_ui}
       else
         {:print_last => false, :enable_txt_ui => enable_txt_ui}
