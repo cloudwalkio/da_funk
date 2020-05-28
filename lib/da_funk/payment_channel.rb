@@ -111,9 +111,7 @@ module DaFunk
           end
         end
       else
-        if @client
-          @client.check
-        end
+        self.current&.check
       end
     end
 
@@ -122,11 +120,11 @@ module DaFunk
     end
 
     def self.alive?
-      Device::Network.connected? && @client && @client.connected?
+      Device::Network.connected? && self.current&.connected?
     end
 
     def self.close!
-      @client && @client.close
+      self.current&.close
     ensure
       client_clear!
     end
@@ -198,13 +196,13 @@ module DaFunk
     end
 
     def close
-      @client.close if @client
+      @client&.close
       @client = nil
       PaymentChannel.current = nil
     end
 
     def connected?
-      self.client && self.client.connected?
+      self.client&.connected?
     end
 
     def handshake?
