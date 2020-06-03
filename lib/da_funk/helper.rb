@@ -441,18 +441,6 @@ module DaFunk
       end
     end
 
-    def processing(image, message = {})
-      Device::Display.print_bitmap(to_bmp(image)) if bmp_exists?(image)
-    end
-
-    def bmp_exists?(bmp)
-      File.exists?(to_bmp(bmp))
-    end
-
-    def to_bmp(image)
-      "./shared/#{image.to_s}.bmp"
-    end
-
     private
     def parse_touchscreen_event(menu_itens, x, y)
       menu_itens.each do |key, value|
