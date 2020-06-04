@@ -14,7 +14,6 @@ class Device
     # @param json [String] Parameters to confifure new aplication.
     # @return [Object] From the new runtime instance.
     def self.execute(app, json = nil)
-      processing(:processing)
       buf = "#{json.dup}" if json.is_a?(String)
       mrb_eval("Context.execute('#{app.dup}', '#{Device.adapter}', '#{buf}')", "#{app.dup}")
     ensure
