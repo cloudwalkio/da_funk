@@ -4,7 +4,6 @@ module DaFunk
       STATUS_TIMEOUT  = 60
       SLOT_CONNECTION = 0
       SLOT_BATTERY    = 7
-      SLOT_LINK       = 1
       SLOT_UPDATE     = 2
 
       BATTERY_IMAGES = {
@@ -37,14 +36,13 @@ module DaFunk
       }
 
       class << self
-        attr_accessor :signal, :battery, :power, :managment, :link
+        attr_accessor :signal, :battery, :power, :managment
       end
 
       def self.check
         if self.valid?
           self.change_connection
           self.change_battery
-          self.change_link
           self.change_update
         end
       end
@@ -54,18 +52,6 @@ module DaFunk
           PAX::Display.print_status_bar(SLOT_UPDATE, "./shared/system_update_download.png")
         else
           PAX::Display.print_status_bar(SLOT_UPDATE, nil)
-        end
-      end
-
-      def self.change_link
-        info = (!! DaFunk::PaymentChannel.alive?)
-        if self.link.nil? || self.link != info
-          self.link = info
-          if info
-            PAX::Display.print_status_bar(SLOT_LINK, "./shared/link.png")
-          else
-            PAX::Display.print_status_bar(SLOT_LINK, "./shared/unlink.png")
-          end
         end
       end
 
