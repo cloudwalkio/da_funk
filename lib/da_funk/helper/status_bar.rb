@@ -100,6 +100,7 @@ module DaFunk
       def self.change_battery
         bat  = Device::System.battery
         dock = Device::System.power_supply
+
         if self.battery != bat || self.power != dock
           self.battery = bat
           self.power   = dock
@@ -108,7 +109,7 @@ module DaFunk
                                            get_image_path(:battery_percentual, self.battery))
           if self.power
             Device::Display.print_status_bar(
-              SLOT_BATTERY, get_image_path(:battery_charge, self.battery))
+              SLOT_BATTERY_LEVEL, get_image_path(:battery_charge, self.battery))
           else
             Device::Display.print_status_bar(SLOT_BATTERY_LEVEL,
                                              get_image_path(:battery, self.battery))
