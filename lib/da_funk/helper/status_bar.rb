@@ -1,10 +1,12 @@
 module DaFunk
   module Helper
     class StatusBar
-      STATUS_TIMEOUT  = 60
-      SLOT_CONNECTION = 0
-      SLOT_BATTERY    = 7
-      SLOT_UPDATE     = 2
+      STATUS_TIMEOUT          = 60
+      SLOT_MEDIA              = 0
+      SLOT_SIGNAL_LEVEL       = 1
+      SLOT_UPDATE             = 2
+      SLOT_BATTERY_PERCENTUAL = 6
+      SLOT_BATTERY_LEVEL      = 7
 
       BATTERY_IMAGES = {
         0..24    => "./shared/battery0.png",
@@ -57,13 +59,16 @@ module DaFunk
 
       def self.change_connection
         sig = Device::Network.signal
+
         if self.signal != sig
           self.signal = sig
           if Device::Network.gprs?
-            Device::Display.print_status_bar(SLOT_CONNECTION,
+            Device::Display.print_status_bar(SLOT_MEDIA, "./shared/GPRS.png")
+            Device::Display.print_status_bar(SLOT_SIGNAL_LEVEL,
                                              get_image_path(:gprs, self.signal))
           elsif Device::Network.wifi?
-            Device::Display.print_status_bar(SLOT_CONNECTION,
+            Device::Display.print_status_bar(SLOT_MEDIA, "./shared/WIFI.png")
+            Device::Display.print_status_bar(SLOT_SIGNAL_LEVEL,
                                              get_image_path(:wifi, self.signal))
           end
         end
@@ -79,8 +84,10 @@ module DaFunk
             Device::Display.print_status_bar(
               SLOT_BATTERY, get_image_path(:battery_charge, self.battery))
           else
-            Device::Display.print_status_bar(
-              SLOT_BATTERY, get_image_path(:battery, self.battery))
+            Device::Display.print_status_bar(SLOT_BATTERY_PERCENTUAL,
+                                             get_image_path(:battery, self.battery))
+            Device::Display.print_status_bar(SLOT_BATTERY_LEVEL,
+                                             get_image_path(:battery, self.battery))
           end
         end
       end
