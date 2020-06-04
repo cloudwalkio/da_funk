@@ -81,19 +81,25 @@ module DaFunk
       end
 
       def self.change_connection
-        sig = Device::Network.signal
+        if Device::Network.connected?
+          sig = Device::Network.signal
 
-        if self.signal != sig
-          self.signal = sig
-          if Device::Network.gprs?
-            Device::Display.print_status_bar(SLOT_MEDIA, "./shared/GPRS.png")
-            Device::Display.print_status_bar(SLOT_SIGNAL_LEVEL,
-                                             get_image_path(:gprs, self.signal))
-          elsif Device::Network.wifi?
-            Device::Display.print_status_bar(SLOT_MEDIA, "./shared/WIFI.png")
-            Device::Display.print_status_bar(SLOT_SIGNAL_LEVEL,
-                                             get_image_path(:wifi, self.signal))
+          if self.signal != sig
+            self.signal = sig
+
+            if Device::Network.gprs?
+              Device::Display.print_status_bar(SLOT_MEDIA, "./shared/GPRS.png")
+              Device::Display.print_status_bar(SLOT_SIGNAL_LEVEL,
+                                               get_image_path(:gprs, self.signal))
+            elsif Device::Network.wifi?
+              Device::Display.print_status_bar(SLOT_MEDIA, "./shared/WIFI.png")
+              Device::Display.print_status_bar(SLOT_SIGNAL_LEVEL,
+                                               get_image_path(:wifi, self.signal))
+            end
           end
+        else
+          Device::Display.print_status_bar(SLOT_MEDIA, nil)
+          Device::Display.print_status_bar(SLOT_SIGNAL_LEVEL, "./shared/searching.png")
         end
       end
 
