@@ -28,6 +28,21 @@ module DaFunk
         100 => "./shared/battery100c.png"
       }
 
+      BATTERY_PERCENTAGE_IMAGES = {
+        0..4     => "./shared/battery1_percent.png",
+        5..9     => "./shared/battery5_percent.png",
+        10..19   => "./shared/battery10_percent.png",
+        20..29   => "./shared/battery20_percent.png",
+        30..39   => "./shared/battery30_percent.png",
+        40..49   => "./shared/battery40_percent.png",
+        50..59   => "./shared/battery50_percent.png",
+        60..69   => "./shared/battery60_percent.png",
+        70..79   => "./shared/battery70_percent.png",
+        80..89   => "./shared/battery80_percent.png",
+        90..99   => "./shared/battery90_percent.png",
+        100..100 => "./shared/battery100_percent.png",
+      }
+
       WIFI_IMAGES = {
         0..0    => "./shared/wifi0.png",
         1..25   => "./shared/wifi25.png",
@@ -88,12 +103,13 @@ module DaFunk
         if self.battery != bat || self.power != dock
           self.battery = bat
           self.power   = dock
+
+          Device::Display.print_status_bar(SLOT_BATTERY_PERCENTUAL,
+                                           get_image_path(:battery_percentual, self.battery))
           if self.power
             Device::Display.print_status_bar(
               SLOT_BATTERY, get_image_path(:battery_charge, self.battery))
           else
-            Device::Display.print_status_bar(SLOT_BATTERY_PERCENTUAL,
-                                             get_image_path(:battery, self.battery))
             Device::Display.print_status_bar(SLOT_BATTERY_LEVEL,
                                              get_image_path(:battery, self.battery))
           end
@@ -111,6 +127,8 @@ module DaFunk
           BATTERY_IMAGES.each {|k,v| return v if k.include? sig }
         when :battery_charge
           BATTERY_CHARGE_IMAGES[sig]
+        when :battery_percentual
+          BATTERY_PERCENTAGE_IMAGES.each {|k,v| return v if k.include? sig }
         else
           nil
         end
