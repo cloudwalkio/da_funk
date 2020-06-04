@@ -9,11 +9,18 @@ module DaFunk
       SLOT_BATTERY_LEVEL      = 7
 
       BATTERY_IMAGES = {
-        0..24    => "./shared/battery0.png",
-        25..49   => "./shared/battery25.png",
-        50..74   => "./shared/battery50.png",
-        75..99   => "./shared/battery75.png",
-        100..100 => "./shared/battery100.png"
+        0..4     => "./shared/battery0.png",
+        5..9     => "./shared/baterry5.png",
+        10..19   => "./shared/battery10.png",
+        20..29   => "./shared/battery20.png",
+        30..39   => "./shared/battery30.png",
+        40..49   => "./shared/battery40.png",
+        50..59   => "./shared/battery50.png",
+        60..69   => "./shared/battery60.png",
+        70..79   => "./shared/battery70.png",
+        80..89   => "./shared/battery80.png",
+        90..99   => "./shared/battery90.png",
+        100..100 => "./shared/battery100.png",
       }
 
       BATTERY_CHARGE_IMAGES = {
@@ -22,10 +29,11 @@ module DaFunk
       }
 
       WIFI_IMAGES = {
-        0..29   => "./shared/wifi0.png",
-        30..59  => "./shared/wifi30.png",
-        60..79  => "./shared/wifi60.png",
-        80..200 => "./shared/wifi100.png"
+        0..0    => "./shared/wifi0.png",
+        1..25   => "./shared/wifi25.png",
+        26..50  => "./shared/wifi50.png",
+        59..75  => "./shared/wifi75.png",
+        76..200 => "./shared/wifi100.png"
       }
 
       MOBILE_IMAGES = {
