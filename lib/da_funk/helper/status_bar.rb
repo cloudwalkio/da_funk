@@ -1,18 +1,26 @@
 module DaFunk
   module Helper
     class StatusBar
-      STATUS_TIMEOUT  = 60
-      SLOT_CONNECTION = 0
-      SLOT_BATTERY    = 7
-      SLOT_LINK       = 1
-      SLOT_UPDATE     = 2
+      STATUS_TIMEOUT          = 60
+      SLOT_MEDIA              = 0
+      SLOT_SIGNAL_LEVEL       = 1
+      SLOT_UPDATE             = 2
+      SLOT_BATTERY_PERCENTUAL = 6
+      SLOT_BATTERY_LEVEL      = 7
 
       BATTERY_IMAGES = {
-        0..24    => "./shared/battery0.png",
-        25..49   => "./shared/battery25.png",
-        50..74   => "./shared/battery50.png",
-        75..99   => "./shared/battery75.png",
-        100..100 => "./shared/battery100.png"
+        0..4     => "./shared/battery0.png",
+        5..9     => "./shared/baterry5.png",
+        10..19   => "./shared/battery10.png",
+        20..29   => "./shared/battery20.png",
+        30..39   => "./shared/battery30.png",
+        40..49   => "./shared/battery40.png",
+        50..59   => "./shared/battery50.png",
+        60..69   => "./shared/battery60.png",
+        70..79   => "./shared/battery70.png",
+        80..89   => "./shared/battery80.png",
+        90..99   => "./shared/battery90.png",
+        100..100 => "./shared/battery100.png",
       }
 
       BATTERY_CHARGE_IMAGES = {
@@ -20,11 +28,27 @@ module DaFunk
         100 => "./shared/battery100c.png"
       }
 
+      BATTERY_PERCENTAGE_IMAGES = {
+        0..4     => "./shared/battery1_percent.png",
+        5..9     => "./shared/battery5_percent.png",
+        10..19   => "./shared/battery10_percent.png",
+        20..29   => "./shared/battery20_percent.png",
+        30..39   => "./shared/battery30_percent.png",
+        40..49   => "./shared/battery40_percent.png",
+        50..59   => "./shared/battery50_percent.png",
+        60..69   => "./shared/battery60_percent.png",
+        70..79   => "./shared/battery70_percent.png",
+        80..89   => "./shared/battery80_percent.png",
+        90..99   => "./shared/battery90_percent.png",
+        100..100 => "./shared/battery100_percent.png",
+      }
+
       WIFI_IMAGES = {
-        0..29   => "./shared/wifi0.png",
-        30..59  => "./shared/wifi30.png",
-        60..79  => "./shared/wifi60.png",
-        80..200 => "./shared/wifi100.png"
+        0..0    => "./shared/wifi0.png",
+        1..25   => "./shared/wifi25.png",
+        26..50  => "./shared/wifi50.png",
+        59..75  => "./shared/wifi75.png",
+        76..200 => "./shared/wifi100.png"
       }
 
       MOBILE_IMAGES = {
@@ -37,14 +61,13 @@ module DaFunk
       }
 
       class << self
-        attr_accessor :signal, :battery, :power, :managment, :link
+        attr_accessor :signal, :battery, :power, :managment
       end
 
       def self.check
         if self.valid?
           self.change_connection
           self.change_battery
-          self.change_link
           self.change_update
         end
       end
@@ -57,44 +80,45 @@ module DaFunk
         end
       end
 
-      def self.change_link
-        info = (!! DaFunk::PaymentChannel.alive?)
-        if self.link.nil? || self.link != info
-          self.link = info
-          if info
-            PAX::Display.print_status_bar(SLOT_LINK, "./shared/link.png")
-          else
-            PAX::Display.print_status_bar(SLOT_LINK, "./shared/unlink.png")
-          end
-        end
-      end
-
       def self.change_connection
-        sig = Device::Network.signal
-        if self.signal != sig
-          self.signal = sig
-          if Device::Network.gprs?
-            Device::Display.print_status_bar(SLOT_CONNECTION,
-                                             get_image_path(:gprs, self.signal))
-          elsif Device::Network.wifi?
-            Device::Display.print_status_bar(SLOT_CONNECTION,
-                                             get_image_path(:wifi, self.signal))
+        if Device::Network.connected?
+          sig = Device::Network.signal
+
+          if self.signal != sig
+            self.signal = sig
+
+            if Device::Network.gprs?
+              Device::Display.print_status_bar(SLOT_MEDIA, "./shared/GPRS.png")
+              Device::Display.print_status_bar(SLOT_SIGNAL_LEVEL,
+                                               get_image_path(:gprs, self.signal))
+            elsif Device::Network.wifi?
+              Device::Display.print_status_bar(SLOT_MEDIA, "./shared/WIFI.png")
+              Device::Display.print_status_bar(SLOT_SIGNAL_LEVEL,
+                                               get_image_path(:wifi, self.signal))
+            end
           end
+        else
+          Device::Display.print_status_bar(SLOT_MEDIA, nil)
+          Device::Display.print_status_bar(SLOT_SIGNAL_LEVEL, "./shared/searching.png")
         end
       end
 
       def self.change_battery
         bat  = Device::System.battery
         dock = Device::System.power_supply
+
         if self.battery != bat || self.power != dock
           self.battery = bat
           self.power   = dock
+
+          Device::Display.print_status_bar(SLOT_BATTERY_PERCENTUAL,
+                                           get_image_path(:battery_percentual, self.battery))
           if self.power
             Device::Display.print_status_bar(
-              SLOT_BATTERY, get_image_path(:battery_charge, self.battery))
+              SLOT_BATTERY_LEVEL, get_image_path(:battery_charge, self.battery))
           else
-            Device::Display.print_status_bar(
-              SLOT_BATTERY, get_image_path(:battery, self.battery))
+            Device::Display.print_status_bar(SLOT_BATTERY_LEVEL,
+                                             get_image_path(:battery, self.battery))
           end
         end
       end
@@ -110,6 +134,8 @@ module DaFunk
           BATTERY_IMAGES.each {|k,v| return v if k.include? sig }
         when :battery_charge
           BATTERY_CHARGE_IMAGES[sig]
+        when :battery_percentual
+          BATTERY_PERCENTAGE_IMAGES.each {|k,v| return v if k.include? sig }
         else
           nil
         end
