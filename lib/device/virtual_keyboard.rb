@@ -4,8 +4,6 @@ class Device
       attr_accessor :attributes, :type, :word
     end
 
-    self.type = :keyboard_capital
-
     self.attributes = {
       :keyboard_capital => [
         {:x => 0..34,  :y => 191..209, :char => 'q'},
@@ -119,11 +117,12 @@ class Device
       ],
     }
 
-    def self.type_word(timeout = Device::IO.timeout)
       timeout = Time.now + timeout / 1000
 
       change_keyboard
       touch_clear
+    def self.type_text(options = {})
+      set_parameters(options)
 
       loop do
         break(Device::IO::KEY_TIMEOUT) if Time.now > timeout
@@ -175,6 +174,13 @@ class Device
 
     def self.change_keyboard?(key)
       [:keyboard_uppercase, :keyboard_symbol_number, :keyboard_capital].include?(key)
+    end
+
+    def self.set_parameters(options)
+      self.type        = :keyboard_capital
+      options[:line]   = options[:line] || 3
+      options[:column] = options[:column] || 0
+      change_keyboard
     end
   end
 end
