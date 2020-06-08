@@ -117,59 +117,48 @@ class Device
       ],
     }
 
-      timeout = Time.now + timeout / 1000
-
-      change_keyboard
-      touch_clear
     def self.type_text(options = {})
+      Device::Display.clear
+      text    = options[:text] || ''
+      timeout = Time.now + (options[:timeout] || Device::IO.timeout) / 1000
       set_parameters(options)
 
       loop do
         break(Device::IO::KEY_TIMEOUT) if Time.now > timeout
 
         x, y = getxy_stream(100)
-
         if x && y
           touch_clear
-          ret = parse(x, y)
+          key = self.attributes[self.type].select {|v| v[:x].include?(x) && v[:y].include?(y)}
 
-          Device::Display.print_line(self.word, 0, 0)
-          break if ret == :enter
+          unless key.empty?
+            Device::Audio.beep(7, 60)
+            key = key.first
+
+            if change_keyboard?(key[:char])
+              self.type = key[:char]
+              change_keyboard
+            elsif key[:char] == :erase
+              Device::Display.clear options[:line]
+              text = text[0..-2]
+            elsif key[:char] == :space
+              text += ' '
+            elsif key[:char] == :enter
+              break(text)
+            else
+              text << key[:char]
+            end
+          end
+          Device::Display.clear options[:line]
+          Device::Display.print_line(text, options[:line], options[:column])
         elsif getc(100) == Device::IO::CANCEL
           break(Device::IO::CANCEL)
         end
       end
-    rescue => e
-      ContextLog.exception(e, e.backtrace)
-    end
-
-    def self.parse(x, y)
-      key = self.attributes[self.type].select {|v| v[:x].include?(x) && v[:y].include?(y)}
-
-      return if key.empty?
-
-      Device::Audio.beep(7, 60)
-      key = key.first
-
-      if change_keyboard?(key)
-        self.type = key
-        change_keyboard
-      elsif key == :erase
-        unless self.word.nil?
-          self.word = "" if self.word.size == 1
-          self.word = self.word[0..self.word.size-2]
-        end
-      elsif key == :space
-        self.word += " "
-      end
-
-      key
     end
 
     def self.change_keyboard
       Device::Display.print_bitmap("./shared/#{self.type.to_s}.bmp")
-    ensure
-      Device::Display.print_line(self.word)
     end
 
     def self.change_keyboard?(key)
