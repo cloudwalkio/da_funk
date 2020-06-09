@@ -122,31 +122,45 @@ class Device
           touch_clear
 
           key = self.attributes[self.type].select {|v| v[:x].include?(x) && v[:y].include?(y)}
-
-          unless key.empty?
-            Device::Audio.beep(7, 60)
-            key = key.first
-
-            if change_keyboard?(key[:char])
-              self.type = key[:char]
-              change_keyboard
-            elsif key[:char] == :erase
-              Device::Display.clear options[:line]
-              text = text[0..-2]
-            elsif key[:char] == :space
-              text += ' '
-            elsif key[:char] == :enter
-              break(text)
-            else
-              text << key[:char]
-            end
-          end
-          Device::Display.clear options[:line]
-          Device::Display.print_line(text, options[:line], options[:column])
+          break(self.text) if parse(key, options) == :enter
         elsif getc(100) == Device::IO::CANCEL
           break(Device::IO::CANCEL)
         end
       end
+    end
+
+    def self.parse(key, options)
+      return if key.empty?
+
+      Device::Audio.beep(7, 60)
+      key = key.first
+
+      if change_keyboard?(key[:char])
+        self.type = key[:char]
+        change_keyboard
+      elsif key_erase?(key[:char])
+        Device::Display.clear options[:line]
+        self.text = self.text[0..-2]
+      elsif key_space?(key[:char])
+        self.text += ' '
+      elsif ! key_enter?(key[:char])
+        self.text << key[:char]
+      end
+      Device::Display.print_line("#{self.text}", options[:line], options[:column])
+
+      key[:char]
+    end
+
+    def self.key_erase?(key)
+      key == :erase
+    end
+
+    def self.key_space?(key)
+      key == :space
+    end
+
+    def self.key_enter?(key)
+      key == :enter
     end
 
     def self.change_keyboard
