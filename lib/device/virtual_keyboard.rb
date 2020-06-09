@@ -1,7 +1,7 @@
 class Device
   class VirtualKeyboard
     class << self
-      attr_accessor :attributes, :type
+      attr_accessor :attributes, :type, :text
     end
 
     self.attributes = {
