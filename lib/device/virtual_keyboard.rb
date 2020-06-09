@@ -112,10 +112,7 @@ class Device
     }
 
     def self.type_text(options = {})
-      Device::Display.clear
-      text    = options[:text] || ''
-      timeout = Time.now + (options[:timeout] || Device::IO.timeout) / 1000
-      set_parameters(options)
+      timeout, self.text = set_parameters(options)
 
       loop do
         break(Device::IO::KEY_TIMEOUT) if Time.now > timeout
@@ -123,6 +120,7 @@ class Device
         x, y = getxy_stream(100)
         if x && y
           touch_clear
+
           key = self.attributes[self.type].select {|v| v[:x].include?(x) && v[:y].include?(y)}
 
           unless key.empty?
@@ -163,7 +161,10 @@ class Device
       self.type        = :keyboard_capital
       options[:line]   = options[:line] || 3
       options[:column] = options[:column] || 0
+      Device::Display.clear
       change_keyboard
+
+      [Time.now + (options[:timeout] || Device::IO.timeout) / 1000, options[:text] || '']
     end
   end
 end
