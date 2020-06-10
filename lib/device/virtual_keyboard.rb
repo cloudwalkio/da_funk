@@ -113,72 +113,60 @@ class Device
       ]
     }
 
-    def self.type_text(line, column, options = {})
-      timeout, self.text = set_parameters(options)
+    def self.type_text(params = {})
+      timeout = parameters(params)
 
       loop do
-        break(Device::IO::KEY_TIMEOUT) if Time.now > timeout
+        line_x, line_y = getxy_stream(100)
 
-        x, y = getxy_stream(100)
-        if x && y
+        if line_x && line_y
           touch_clear
-
-          key = attributes[type].select { |v| v[:x].include?(x) && v[:y].include?(y) }
-          break(text) if parse(key, line, column) == :enter
-        elsif getc(100) == Device::IO::CANCEL
-          break(Device::IO::CANCEL)
+          break(text) if parse(line_x, line_y, params) == :enter
+        else
+          break(Device::IO::CANCEL) if getc(100) == Device::IO::CANCEL
+          break(Device::IO::KEY_TIMEOUT) if Time.now > timeout
         end
       end
     end
 
-    def self.parse(key, line, column)
-      return if key.empty?
+    def self.parse(line_x, line_y, params)
+      key = attributes[type].select do |value|
+        value[:x].include?(line_x) && value[:y].include?(line_y)
+      end.first
+      return if key.nil?
 
       Device::Audio.beep(7, 60)
-      key = key.first
-
-      if change_keyboard?(key[:char])
-        self.type = key[:char]
-        change_keyboard
-      elsif key_erase?(key[:char])
-        Device::Display.clear line
-        self.text = self.text[0..-2]
-      elsif key_space?(key[:char])
-        self.text += ' '
-      elsif !key_enter?(key[:char])
-        self.text << key[:char]
-      end
-      Device::Display.print_line("#{self.text}", line, column)
+      show_text(key, params)
 
       key[:char]
     end
 
-    def self.key_erase?(key)
-      key == :erase
-    end
-
-    def self.key_space?(key)
-      key == :space
-    end
-
-    def self.key_enter?(key)
-      key == :enter
+    def self.show_text(key, params)
+      case key[:char]
+      when :keyboard_uppercase, :keyboard_symbol_number, :keyboard_capital
+        self.type = key[:char]
+        change_keyboard
+      when :erase
+        Device::Display.clear params[:line]
+        self.text = self.text[0..-2]
+      when :space
+        self.text += ' '
+      else
+        self.text << key[:char] unless key[:char] == :enter
+      end
+      Device::Display.print_line("#{self.text}", params[:line], params[:column])
     end
 
     def self.change_keyboard
       Device::Display.print_bitmap("./shared/#{type}.bmp")
     end
 
-    def self.change_keyboard?(key)
-      %i[keyboard_uppercase keyboard_symbol_number keyboard_capital].include?(key)
-    end
-
-    def self.set_parameters(options)
-      self.type        = :keyboard_capital
+    def self.parameters(options)
+      self.type = :keyboard_capital
+      self.text = ''
       Device::Display.clear
       change_keyboard
-
-      [Time.now + (options[:timeout] || Device::IO.timeout) / 1000, options[:text] || '']
+      Time.now + (options[:timeout] || Device::IO.timeout) / 1000
     end
   end
 end
