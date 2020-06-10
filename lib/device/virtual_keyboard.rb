@@ -134,6 +134,9 @@ class Device
 
       [key, self.text]
     end
+
+    def self.text_not_ready?(key)
+      key != :enter && key != Device::IO::ENTER && key != Device::IO::CANCEL
     end
 
     def self.parse(line_x, line_y, params)
