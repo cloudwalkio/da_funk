@@ -119,17 +119,21 @@ class Device
       time = Time.now + (params[:timeout] || Device::IO.timeout) / 1000
       key = nil
 
-      loop do
+      while text_not_ready?(key)
         line_x, line_y = getxy_stream(100)
 
         if line_x && line_y
           touch_clear
-          break(text) if parse(line_x, line_y, params) == :enter
+          key = parse(line_x, line_y, params)
         else
-          break(Device::IO::CANCEL) if getc(100) == Device::IO::CANCEL
-          break(Device::IO::KEY_TIMEOUT) if Time.now > timeout
+          break(Device::IO::KEY_TIMEOUT) if Time.now > time
+
+          key = getc(100)
         end
       end
+
+      [key, self.text]
+    end
     end
 
     def self.parse(line_x, line_y, params)
