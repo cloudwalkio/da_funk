@@ -114,7 +114,6 @@ class Device
     }
 
     def self.type_text(params = {})
-      timeout = parameters(params)
 
       loop do
         line_x, line_y = getxy_stream(100)
@@ -161,12 +160,6 @@ class Device
       Device::Display.print_bitmap("./shared/#{type}.bmp")
     end
 
-    def self.parameters(options)
-      self.type = :keyboard_capital
-      self.text = ''
-      Device::Display.clear
-      change_keyboard
-      Time.now + (options[:timeout] || Device::IO.timeout) / 1000
     end
   end
 end
