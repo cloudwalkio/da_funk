@@ -146,8 +146,8 @@ class Device
         self.type = key[:char]
         change_keyboard
       when :erase
-        Device::Display.clear params[:line]
-        self.text = self.text[0..-2]
+        self.text += '' if text.nil?
+        self.text = text[0..-2]
       when :space
         self.text += ' '
       else
