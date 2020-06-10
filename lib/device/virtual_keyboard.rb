@@ -160,6 +160,12 @@ class Device
       Device::Display.print_bitmap("./shared/#{type}.bmp")
     end
 
+    def self.wifi_password
+      self.text = if Device::Setting.wifi_password == 'false'
+                    ''
+                  else
+                    Device::Setting.wifi_password
+                  end
     end
   end
 end
