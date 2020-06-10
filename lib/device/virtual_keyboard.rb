@@ -175,8 +175,6 @@ class Device
 
     def self.set_parameters(options)
       self.type        = :keyboard_capital
-      options[:line]   = options[:line] || 3
-      options[:column] = options[:column] || 0
       Device::Display.clear
       change_keyboard
 
