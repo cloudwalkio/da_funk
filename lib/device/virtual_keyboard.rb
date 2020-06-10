@@ -111,7 +111,7 @@ class Device
       ],
     }
 
-    def self.type_text(options = {})
+    def self.type_text(line, column, options = {})
       timeout, self.text = set_parameters(options)
 
       loop do
@@ -122,14 +122,14 @@ class Device
           touch_clear
 
           key = self.attributes[self.type].select {|v| v[:x].include?(x) && v[:y].include?(y)}
-          break(self.text) if parse(key, options) == :enter
+          break(self.text) if parse(key, line, column) == :enter
         elsif getc(100) == Device::IO::CANCEL
           break(Device::IO::CANCEL)
         end
       end
     end
 
-    def self.parse(key, options)
+    def self.parse(key, line, column)
       return if key.empty?
 
       Device::Audio.beep(7, 60)
@@ -139,14 +139,14 @@ class Device
         self.type = key[:char]
         change_keyboard
       elsif key_erase?(key[:char])
-        Device::Display.clear options[:line]
+        Device::Display.clear line
         self.text = self.text[0..-2]
       elsif key_space?(key[:char])
         self.text += ' '
       elsif ! key_enter?(key[:char])
         self.text << key[:char]
       end
-      Device::Display.print_line("#{self.text}", options[:line], options[:column])
+      Device::Display.print_line("#{self.text}", line, column)
 
       key[:char]
     end
