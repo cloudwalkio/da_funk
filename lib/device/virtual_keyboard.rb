@@ -114,6 +114,10 @@ class Device
     }
 
     def self.type_text(params = {})
+      change_keyboard
+      Device::Display.print_line("#{self.text}", params[:line], params[:column])
+      time = Time.now + (params[:timeout] || Device::IO.timeout) / 1000
+      key = nil
 
       loop do
         line_x, line_y = getxy_stream(100)
