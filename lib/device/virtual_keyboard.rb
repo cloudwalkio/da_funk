@@ -157,7 +157,12 @@ class Device
     end
 
     def self.change_keyboard
-      Device::Display.print_bitmap("./shared/#{type}.bmp")
+      if type.nil?
+        self.type = :keyboard_capital
+        Device::Display.print_bitmap('./shared/keyboard_capital.bmp')
+      else
+        Device::Display.print_bitmap("./shared/#{type}.bmp")
+      end
     end
 
     def self.wifi_password
