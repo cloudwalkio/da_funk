@@ -130,9 +130,9 @@ class Device
     end
 
     def self.parse(line_x, line_y, params)
-      key = attributes[type].select do |value|
+      key = attributes[type].find do |value|
         value[:x].include?(line_x) && value[:y].include?(line_y)
-      end.first
+      end
       return if key.nil?
 
       Device::Audio.beep(7, 60)
