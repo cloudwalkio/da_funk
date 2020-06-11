@@ -114,19 +114,29 @@ class Device
     }
 
     def self.type_text(params = {})
-      timeout = parameters(params)
+      change_keyboard
+      Device::Display.print_line("#{self.text}", params[:line], params[:column])
+      time = Time.now + (params[:timeout] || Device::IO.timeout) / 1000
+      key = nil
 
-      loop do
+      while text_not_ready?(key)
         line_x, line_y = getxy_stream(100)
 
         if line_x && line_y
           touch_clear
-          break(text) if parse(line_x, line_y, params) == :enter
+          key = parse(line_x, line_y, params)
         else
-          break(Device::IO::CANCEL) if getc(100) == Device::IO::CANCEL
-          break(Device::IO::KEY_TIMEOUT) if Time.now > timeout
+          break(Device::IO::KEY_TIMEOUT) if Time.now > time
+
+          key = getc(100)
         end
       end
+
+      [key, self.text]
+    end
+
+    def self.text_not_ready?(key)
+      key != :enter && key != Device::IO::ENTER && key != Device::IO::CANCEL
     end
 
     def self.parse(line_x, line_y, params)
@@ -147,8 +157,8 @@ class Device
         self.type = key[:char]
         change_keyboard
       when :erase
-        Device::Display.clear params[:line]
-        self.text = self.text[0..-2]
+        self.text += '' if text.nil?
+        self.text = text[0..-2]
       when :space
         self.text += ' '
       else
@@ -158,15 +168,20 @@ class Device
     end
 
     def self.change_keyboard
-      Device::Display.print_bitmap("./shared/#{type}.bmp")
+      if type.nil?
+        self.type = :keyboard_capital
+        Device::Display.print_bitmap('./shared/keyboard_capital.bmp')
+      else
+        Device::Display.print_bitmap("./shared/#{type}.bmp")
+      end
     end
 
-    def self.parameters(options)
-      self.type = :keyboard_capital
-      self.text = ''
-      Device::Display.clear
-      change_keyboard
-      Time.now + (options[:timeout] || Device::IO.timeout) / 1000
+    def self.wifi_password
+      self.text = if Device::Setting.wifi_password == 'false'
+                    ''
+                  else
+                    Device::Setting.wifi_password
+                  end
     end
   end
 end
