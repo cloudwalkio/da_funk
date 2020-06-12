@@ -303,7 +303,10 @@ module DaFunk
 
     # TODO Scalone: Refactor.
     def pagination(title, options, collection, &block)
+      timeout = Device::IO.timeout
+      touchscreen_options = {}
       start_line, options[:limit], options[:header] = pagination_limit(title, options)
+
       if collection.size > (options[:limit] - options[:header]) # minus pagination header
         key   = Device::IO.back_key
         pages = pagination_page(collection, options[:limit] - options[:header]) # minus pagination header
@@ -313,7 +316,13 @@ module DaFunk
           pagination_header(title, page, pages.size, start_line, options[:default], options[:header])
           values = pages[page].to_a
           block.call(values, start_line + options[:header])
-          key  = try_key(pagination_keys(values.size, true))
+
+          params = {special_keys: pagination_keys(values.size, true)}
+          if options.include?(:touchscreen_options)
+            touchscreen_options = options[:touchscreen_options]
+          end
+
+          _, key = wait_touchscreen_or_keyboard_event(touchscreen_options, timeout, params)
           page = pagination_key_page(page, key, pages.size)
         end
       else
@@ -321,7 +330,8 @@ module DaFunk
         print_title(title, options[:default]) if title
         values = collection.to_a
         block.call(values, start_line)
-        key = try_key(pagination_keys(collection.size, false))
+        params = {special_keys: pagination_keys(collection.size, false)}
+        _, key = wait_touchscreen_or_keyboard_event(touchscreen_options, timeout, params)
       end
       result = values[key.to_i-1] if key.integer?
       if result.is_a? Array
