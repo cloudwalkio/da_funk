@@ -296,6 +296,8 @@ module DaFunk
 
       if key == Device::IO::ENTER
         options[:default]
+      elsif key == Device::IO::KEY_TIMEOUT
+        options[:timeout]
       else
         selected
       end
