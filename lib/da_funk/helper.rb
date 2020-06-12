@@ -322,7 +322,7 @@ module DaFunk
             touchscreen_options = options[:touchscreen_options]
           end
 
-          event, key = wait_touchscreen_or_keyboard_event(touchscreen_options, timeout, params)
+          _, key = wait_touchscreen_or_keyboard_event(touchscreen_options, timeout, params)
           page = pagination_key_page(page, key, pages.size)
         end
       else
@@ -331,7 +331,7 @@ module DaFunk
         values = collection.to_a
         block.call(values, start_line)
         params = {special_keys: pagination_keys(collection.size, false)}
-        event, key = wait_touchscreen_or_keyboard_event(touchscreen_options, timeout, params)
+        _, key = wait_touchscreen_or_keyboard_event(touchscreen_options, timeout, params)
       end
       result = values[key.to_i-1] if key.integer?
       if result.is_a? Array
