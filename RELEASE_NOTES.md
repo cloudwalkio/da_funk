@@ -1,5 +1,22 @@
 # DaFunk
 
+### 3.21.0 - 2020-06-12
+
+- Removed unnecessary processing method call;
+- Status bar refactored:
+  - Removed link icon;
+  - Added support to SLOT_MEDIA to print WIFI or GPRS;
+  - Renamed SLOT_CONNECTION to SLOT_SIGNAL_LEVEL;
+  - Added support to SLOT_BATTERY_PERCENTUAL to print percentual of battery level;
+  - Renamed SLOT_BATTERY to SLOT_BATTERY_LEVEL;
+  - Update battery and wifi images;
+  - Added BATTERY_PERCENTAGE_IMAGES;
+  - Show searching icon when network is not connected;
+- Added support to virtual keyboard;
+- Added support to touchscreen event on DaFunk::Helper#menu;
+- Added support to return timeout parameter on DaFunk::Helper#menu when timeout is achieved;
+- Update funky-emv 1.3.0.
+
 ### 3.20.0 - 2020-05-28
 
 - Rename PaymentChannel::client to ::current;
