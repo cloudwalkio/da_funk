@@ -1,5 +1,9 @@
 # DaFunk
 
+### 3.21.1 - 2020-06-16
+
+- Fix error when timeout on DaFunk::menu_image_touchscreen_or_keyboard.
+
 ### 3.21.0 - 2020-06-12
 
 - Removed unnecessary processing method call;
