@@ -179,7 +179,7 @@ module DaFunk
     #   menu_image_touchscreen_or_keyboard('image.bmp', menu_itens, options)
     #
     # @return menu_item_index selected will be returned
-    # @return if timeout nil will be returned
+    # @return if timeout Device::IO::KEY_TIMEOUT will be returned
     def menu_image_touchscreen_or_keyboard(path, menu_itens, options = {})
       return nil if menu_itens.empty?
 
@@ -205,6 +205,8 @@ module DaFunk
         end
       elsif event == :touchscreen
         menu_itens.select {|k, v| k == key}.shift[0]
+      elsif event == :timeout
+        Device::IO::KEY_TIMEOUT
       end
     end
 
