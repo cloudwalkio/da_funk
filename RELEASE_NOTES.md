@@ -1,5 +1,10 @@
 # DaFunk
 
+### 3.21.2 - 2020-06-16
+
+- Fixed timeout return on DaFunK::Helper#menu, it should return Device::IO::KEY_TIMEOUT not options[:timeout];
+- Set cloudwalk endpoint as default.
+
 ### 3.21.1 - 2020-06-16
 
 - Fix error when timeout on DaFunk::menu_image_touchscreen_or_keyboard.
