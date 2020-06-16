@@ -276,7 +276,7 @@ module DaFunk
     #   }
     #
     #   menu("Option menu", selection, options)
-    #
+    # @return nil if user canceled or Device::IO::KEY_TIMEOUT if timeout or option selected
     def menu(title, selection, options = {})
       return nil if selection.empty?
       options[:number]    = true if options[:number].nil?
@@ -299,7 +299,7 @@ module DaFunk
       if key == Device::IO::ENTER
         options[:default]
       elsif key == Device::IO::KEY_TIMEOUT
-        options[:timeout]
+        Device::IO::KEY_TIMEOUT
       else
         selected
       end
@@ -307,7 +307,7 @@ module DaFunk
 
     # TODO Scalone: Refactor.
     def pagination(title, options, collection, &block)
-      timeout = Device::IO.timeout
+      timeout = options[:timeout].nil? ? options[:timeout] : Device::IO.timeout
       touchscreen_options = {}
       start_line, options[:limit], options[:header] = pagination_limit(title, options)
 
