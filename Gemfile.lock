@@ -18,15 +18,15 @@ GEM
     cloudwalk (1.15.0)
       bundler
       rake
-    cloudwalk_handshake (1.13.1)
+    cloudwalk_handshake (1.14.0)
       funky-simplehttp (~> 0.6)
-    funky-emv (1.3.0)
+    funky-emv (1.4.0)
       funky-tlv (~> 0.2)
     funky-mock (0.1.0)
     funky-simplehttp (0.6.0)
     funky-tlv (0.2.3)
     io-like (0.3.1)
-    parallel (1.19.1)
+    parallel (1.19.2)
     parser (2.7.1.3)
       ast (~> 2.4.0)
     posxml_parser (2.26.0)
