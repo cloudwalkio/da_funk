@@ -1,5 +1,11 @@
 # DaFunk
 
+### 3.22.0 - 2020-06-18
+
+- Update libs:
+  - cloudwalk_handshake (1.14.0)
+  - funky-emv (1.4.0)
+
 ### 3.21.2 - 2020-06-16
 
 - Fixed timeout return on DaFunK::Helper#menu, it should return Device::IO::KEY_TIMEOUT not options[:timeout];
