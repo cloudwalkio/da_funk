@@ -191,7 +191,6 @@ class Device
 
     def self.attach(options = nil)
       Device::Network.connected?
-      Context::ThreadPubSub.publish('communication_update')
       if self.code != SUCCESS
         ThreadScheduler.pausing_communication do
           self.code = Device::Network.init(*self.config)
