@@ -1,5 +1,10 @@
 # DaFunk
 
+### 3.23.0 - 2020-06-22
+
+- Remove ThreadPubSub publication before attach;
+- Update funky-emv (1.4.1).
+
 ### 3.22.0 - 2020-06-18
 
 - Update libs:
