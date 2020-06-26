@@ -83,6 +83,8 @@ module DaFunk
     # After: "1 - App,pc2_app.zip,ruby,E0A0;"
     def self.parse
       return unless self.setup
+
+      Device::Signature.convert
       parse_apps
       parse_files
 
