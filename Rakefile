@@ -69,7 +69,8 @@ FILES = FileList[
   "lib/device/support.rb",
   "lib/device/system.rb",
   "lib/device/magnetic.rb",
-  "lib/device/virtual_keyboard.rb"
+  "lib/device/virtual_keyboard.rb",
+  "lib/device/signature.rb"
 ]
 
 DaFunk::RakeTask.new do |t|
