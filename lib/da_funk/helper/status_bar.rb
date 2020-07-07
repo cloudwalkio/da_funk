@@ -7,6 +7,20 @@ module DaFunk
       SLOT_UPDATE             = 2
       SLOT_BATTERY_PERCENTUAL = 6
       SLOT_BATTERY_LEVEL      = 7
+      SLOT_MESSAGE_CONNECTION = {
+        true  => {
+          :slot1 => 2,
+          :slot2 => 3,
+          :message1 => './shared/conectado_01.png',
+          :message2 => './shared/conectado_02.png'
+        },
+        false => {
+          :slot1 => 2,
+          :slot2 => 3,
+          :message1 => './shared/buscando_01.png',
+          :message2 => './shared/buscando_02.png'
+        }
+      }
 
       BATTERY_IMAGES = {
         0..4     => "./shared/battery0.png",
@@ -61,7 +75,7 @@ module DaFunk
       }
 
       class << self
-        attr_accessor :signal, :battery, :power, :managment
+        attr_accessor :signal, :battery, :power, :managment, :connected
       end
 
       def self.check
@@ -75,8 +89,26 @@ module DaFunk
       def self.change_update
         if File.exists?('./shared/system_update')
           PAX::Display.print_status_bar(SLOT_UPDATE, "./shared/system_update_download.png")
+          PAX::Display.print_status_bar(3, nil)
         else
-          PAX::Display.print_status_bar(SLOT_UPDATE, nil)
+          change_message
+        end
+      end
+
+      def self.change_message
+        connected = Device::Network.connected?
+
+        if connected != self.connected
+          self.connected = connected
+
+          slot_message_1 = SLOT_MESSAGE_CONNECTION[self.connected][:slot1]
+          slot_message_2 = SLOT_MESSAGE_CONNECTION[self.connected][:slot2]
+
+          message_1 = SLOT_MESSAGE_CONNECTION[self.connected][:message1]
+          message_2 = SLOT_MESSAGE_CONNECTION[self.connected][:message2]
+
+          Device::Display.print_status_bar(slot_message_1, message_1)
+          Device::Display.print_status_bar(slot_message_2, message_2)
         end
       end
 
