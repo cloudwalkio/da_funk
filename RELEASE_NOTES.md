@@ -1,5 +1,9 @@
 # DaFunk
 
+### 4.0.0 - 2020-07-22
+
+- Update cloudwalk (2.0.0) mruby 2.1.0.
+
 ### 3.23.0 - 2020-06-22
 
 - Remove ThreadPubSub publication before attach;
