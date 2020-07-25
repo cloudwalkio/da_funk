@@ -1,5 +1,12 @@
 # DaFunk
 
+### 3.24.0 - 2020-07-25
+
+- Added Device::Signature class;
+- Added support of converting signature after updating params.dat;
+- Added support to network state on status bar;
+- Added support to physical number keys on virtual keyboard.
+
 ### 3.23.0 - 2020-06-22
 
 - Remove ThreadPubSub publication before attach;
