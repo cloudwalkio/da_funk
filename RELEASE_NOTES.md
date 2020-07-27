@@ -1,5 +1,9 @@
 # DaFunk
 
+### 3.24.1 - 2020-07-27
+
+- Infinitepay authorizer setting 1 as default.
+
 ### 3.24.0 - 2020-07-25
 
 - Added Device::Signature class;
