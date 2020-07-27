@@ -60,7 +60,7 @@ class Device
       "metadata_timestamp"          => "",
       "payment_channel_attempts"    => "0",
       "payment_channel_date"        => "",
-      "infinitepay_authorizer"      => "0",
+      "infinitepay_authorizer"      => "1",
       "infinitepay_api"             => "0",
       "infinitepay_cw_endpoint"     => "1",
       "infinitepay_google_endpoint" => "0",
