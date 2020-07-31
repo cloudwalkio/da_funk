@@ -140,7 +140,11 @@ module DaFunk
       if posxml?
         "./shared/#{path}"
       else
-        "#{path.gsub("#{Device::Setting.company_name}_", "")}.zip"
+        if ruby?
+          path
+        else
+          "#{path.gsub("#{Device::Setting.company_name}_", "")}.zip"
+        end
       end
     end
 
