@@ -1,5 +1,9 @@
 # DaFunk
 
+### 3.24.2 - 2020-08-01
+
+- Do not remove company name to file path when ruby app
+
 ### 3.24.1 - 2020-07-27
 
 - Infinitepay authorizer setting 1 as default.
