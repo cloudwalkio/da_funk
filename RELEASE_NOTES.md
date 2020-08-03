@@ -1,5 +1,9 @@
 # DaFunk
 
+### 3.24.3 - 2020-08-03
+
+- Fixed path name on DaFunk::Application
+
 ### 3.24.2 - 2020-08-01
 
 - Do not remove company name to file path when ruby app
