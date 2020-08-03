@@ -141,7 +141,7 @@ module DaFunk
         "./shared/#{path}"
       else
         if ruby?
-          path
+          "#{path}.zip"
         else
           "#{path.gsub("#{Device::Setting.company_name}_", "")}.zip"
         end
