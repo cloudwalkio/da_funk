@@ -1,5 +1,9 @@
 # DaFunk
 
+### 3.24.4 - 2020-08-07
+
+- Add defensive code to gsub calls.
+
 ### 3.24.3 - 2020-08-03
 
 - Fixed path name on DaFunk::Application

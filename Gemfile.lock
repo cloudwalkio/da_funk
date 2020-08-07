@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    da_funk (3.24.3)
+    da_funk (3.24.4)
       archive-zip (~> 0.5)
       bundler
       cloudwalk_handshake
