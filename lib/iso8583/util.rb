@@ -23,7 +23,7 @@ module ISO8583
   #   hex2b "abcd12" => "\xa\cd\12"
   #
   def hex2b(hex_string)
-    string = hex_string.gsub(/\s+/, "")
+    string = hex_string.to_s.gsub(/\s+/, "")
     raise ISO8583Exception.new("Invalid Hex chars: #{hex_string}") unless string =~ /^[A-Fa-f0-9]*$/
     raise ISO8583Exception.new("Uneven number of Hex chars #{hex_string}") unless ( (string.length % 2) == 0)
     [string].pack("H*")
