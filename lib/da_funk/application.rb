@@ -23,7 +23,7 @@ module DaFunk
       company    = check_company(remote)
       @remote    = remote.sub("#{company}_", "")
       @name      = remote.sub("#{company}_", "").split(".")[0]
-      @file      = check_path(@remote)
+      @file      = check_path("#{@remote}")
     end
 
     def crc_local
@@ -143,7 +143,7 @@ module DaFunk
         if ruby?
           "#{path}.zip"
         else
-          "#{path.gsub("#{Device::Setting.company_name}_", "")}.zip"
+          "#{path.to_s.gsub("#{Device::Setting.company_name}_", "")}.zip"
         end
       end
     end
