@@ -62,6 +62,7 @@ class Device
       "payment_channel_date"        => "",
       "infinitepay_cw_endpoint"     => "1",
       "infinitepay_google_endpoint" => "0",
+      "switch_http_enabled"         => "0",
       "transaction_http_enabled"    => "1",
       "transaction_http_host"       => HTTP_HOST_PRODUCTION,
       "transaction_http_port"       => HTTP_PORT,
