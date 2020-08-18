@@ -1,5 +1,10 @@
 # DaFunk
 
+### 3.25.0 - 2020-08-18
+
+- Added switch_http_enabled setting;
+- Removed infinitepay_authorizer and infinitepay_api settings.
+
 ### 3.24.4 - 2020-08-07
 
 - Add defensive code to gsub calls.
