@@ -90,25 +90,28 @@ module DaFunk
         if File.exists?('./shared/system_update')
           PAX::Display.print_status_bar(SLOT_UPDATE, "./shared/system_update_download.png")
           PAX::Display.print_status_bar(3, nil)
+          self.connected = false
         else
           change_message
         end
       end
 
       def self.change_message
-        connected = Device::Network.connected?
+        unless File.exists?('./shared/system_update')
+          connected = Device::Network.connected?
 
-        if connected != self.connected
-          self.connected = connected
+          if connected != self.connected
+            self.connected = connected
 
-          slot_message_1 = SLOT_MESSAGE_CONNECTION[self.connected][:slot1]
-          slot_message_2 = SLOT_MESSAGE_CONNECTION[self.connected][:slot2]
+            slot_message_1 = SLOT_MESSAGE_CONNECTION[self.connected][:slot1]
+            slot_message_2 = SLOT_MESSAGE_CONNECTION[self.connected][:slot2]
 
-          message_1 = SLOT_MESSAGE_CONNECTION[self.connected][:message1]
-          message_2 = SLOT_MESSAGE_CONNECTION[self.connected][:message2]
+            message_1 = SLOT_MESSAGE_CONNECTION[self.connected][:message1]
+            message_2 = SLOT_MESSAGE_CONNECTION[self.connected][:message2]
 
-          Device::Display.print_status_bar(slot_message_1, message_1)
-          Device::Display.print_status_bar(slot_message_2, message_2)
+            Device::Display.print_status_bar(slot_message_1, message_1)
+            Device::Display.print_status_bar(slot_message_2, message_2)
+          end
         end
       end
 
