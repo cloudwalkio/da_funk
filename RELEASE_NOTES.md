@@ -1,5 +1,9 @@
 # DaFunk
 
+### 3.25.1 - 2020-08-28
+
+- Set DaFunk::Helper::StatusBar#connected as false on system update process so it will cache again.
+
 ### 3.25.0 - 2020-08-18
 
 - Added switch_http_enabled setting;
