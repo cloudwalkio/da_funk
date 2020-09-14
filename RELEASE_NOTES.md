@@ -1,5 +1,10 @@
 # DaFunk
 
+### 3.26.0 - 2020-09-14
+
+- Fixed error on virtual keyboard, chars y and Y were duplicated;
+- Update cloudwalk_handshake (1.20.0).
+
 ### 3.25.1 - 2020-08-28
 
 - Set DaFunk::Helper::StatusBar#connected as false on system update process so it will cache again.
