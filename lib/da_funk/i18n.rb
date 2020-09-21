@@ -73,7 +73,11 @@ class I18n
 
   def self.pt(symbol, options = {})
     if options[:line] || options[:column]
-      Device::Display.print_line(t(symbol, options), options[:line] || 0, options[:column] || 0)
+      line = options[:line] || 0
+      t(symbol, options).split("\n").each do |message|
+        Device::Display.print_line(message, line, options[:column] || 0)
+        line+=1
+      end
     else
       puts(t(symbol, options))
     end
