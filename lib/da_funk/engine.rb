@@ -1,8 +1,13 @@
 module DaFunk
   class Engine
     def self.check
-      DaFunk::EventListener.check
-      ThreadScheduler.keep_alive
+      if Device::Setting.boot == '1'
+        DaFunk::EventListener.check(:file_exists) #to check if system update is in progress
+        Device::Setting.boot = '0'
+      else
+        DaFunk::EventListener.check
+        ThreadScheduler.keep_alive
+      end
     end
 
     def self.app_loop(&block)
