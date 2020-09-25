@@ -151,10 +151,14 @@ module DaFunk
 
     def self.restart
       Device::Display.clear
-      I18n.pt(:admin_main_update_message)
-      3.times do |i|
-        Device::Display.print("REBOOTING IN #{3 - i}",3,3)
-        sleep(1)
+      if File.exists?('./shared/init_reboot.bmp')
+        Device::Display.print_bitmap('./shared/init_reboot.bmp')
+      else
+        I18n.pt(:admin_main_update_message)
+        3.times do |i|
+          Device::Display.print("REBOOTING IN #{3 - i}",3,3)
+          sleep(1)
+        end
       end
       Device::System.restart
     end
