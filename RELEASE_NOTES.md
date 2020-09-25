@@ -1,5 +1,10 @@
 # DaFunk
 
+### 3.28.0 - 2020-09-25
+
+- Check if system update file is present after device restart in order to continue with system update process;
+- Implemented block to write and break line if message has '\n'.
+
 ### 3.27.0 - 2020-09-25
 
 - Print bitmap if exists on DaFunk::ParamsDat#restart;
