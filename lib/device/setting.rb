@@ -67,7 +67,8 @@ class Device
       "transaction_http_host"       => HTTP_HOST_PRODUCTION,
       "transaction_http_port"       => HTTP_PORT,
       "emv_contactless_amount"      => "0",
-      "network_init"                => ""
+      "network_init"                => "",
+      "main_app_version"            => ""
     }
 
     class << self
