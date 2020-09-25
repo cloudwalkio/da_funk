@@ -1,5 +1,10 @@
 # DaFunk
 
+### 3.27.0 - 2020-09-25
+
+- Print bitmap if exists on DaFunk::ParamsDat#restart;
+- Add main application version on config.dat file.
+
 ### 3.26.0 - 2020-09-14
 
 - Fixed error on virtual keyboard, chars y and Y were duplicated;
