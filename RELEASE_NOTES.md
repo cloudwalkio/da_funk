@@ -1,5 +1,10 @@
 # DaFunk
 
+### 3.28.1 - 2020-09-26
+
+- Close socket in case of ssl exceptions;
+- Do not assign nil to PaymentChannel#current and client on error because this is already being done on PaymentChannel#close.
+
 ### 3.28.0 - 2020-09-25
 
 - Check if system update file is present after device restart in order to continue with system update process;
