@@ -231,6 +231,7 @@ module DaFunk
       if Context.development?
         ContextLog.exception(exception, exception.backtrace, "PaymentChannel error")
       end
+      self.close
       PaymentChannel.current = nil
       @client = nil
     end
