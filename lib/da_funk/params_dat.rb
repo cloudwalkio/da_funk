@@ -163,6 +163,7 @@ module DaFunk
       Device::Display.clear
       if File.exists?('./shared/init_reboot.bmp')
         Device::Display.print_bitmap('./shared/init_reboot.bmp')
+        getc(3000)
       else
         I18n.pt(:admin_main_update_message)
         3.times do |i|
