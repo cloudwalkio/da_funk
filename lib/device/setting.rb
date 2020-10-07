@@ -152,16 +152,16 @@ class Device
 
     # Custom Attributes
     def self.tcp_recv_timeout
-      DaFunk::ParamsDat.file["tcp_recv_timeout"] || method_missing(:tcp_recv_timeout)
+      DaFunk::ParamsDat.file["tcp_recv_timeout"] || @file&.dig("tcp_recv_timeout")
     end
 
     def self.attach_gprs_timeout
-      value = (DaFunk::ParamsDat.file["attach_gprs_timeout"] || method_missing(:attach_gprs_timeout))
+      value = (DaFunk::ParamsDat.file["attach_gprs_timeout"] || @file&.dig("attach_gprs_timeout"))
       value.to_s.empty? ? nil : value.to_s.to_i
     end
 
     def self.heartbeat
-      DaFunk::ParamsDat.file["heartbeat"] || method_missing(:heartbeat)
+      DaFunk::ParamsDat.file["heartbeat"] || @file&.dig("heartbeat")
     end
 
     def self.logical_number

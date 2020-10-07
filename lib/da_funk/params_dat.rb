@@ -5,7 +5,7 @@ module DaFunk
     include DaFunk::Helper
 
     class << self
-      attr_accessor :file, :apps, :valid, :files
+      attr_accessor :file, :apps, :valid, :files, :checksum
     end
 
     self.apps = Array.new
@@ -20,7 +20,17 @@ module DaFunk
     end
 
     def self.setup
+      @checksum = calculate_checksum
       @file = FileDb.new(FILE_NAME)
+    end
+
+    def self.calculate_checksum
+      Device::Crypto.crc16_hex(File.read(FILE_NAME)) if exists?
+    end
+
+    def self.corrupted?
+      return true unless exists?
+      @checksum != calculate_checksum
     end
 
     def self.exists?
@@ -153,6 +163,7 @@ module DaFunk
       Device::Display.clear
       if File.exists?('./shared/init_reboot.bmp')
         Device::Display.print_bitmap('./shared/init_reboot.bmp')
+        getc(3000)
       else
         I18n.pt(:admin_main_update_message)
         3.times do |i|
