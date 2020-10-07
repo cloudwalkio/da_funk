@@ -1,5 +1,11 @@
 # DaFunk
 
+### 3.28.2 - 2020-10-07
+
+- Added support of params.dat file restore if it was corrupted;
+- Wait 3 seconds before restart after main update;
+- Fixed method_missing exception;
+
 ### 3.28.1 - 2020-09-26
 
 - Close socket in case of ssl exceptions;
