@@ -3,8 +3,7 @@ module DaFunk
     def self.random_bytes(n = nil)
       n = n ? n.to_int : 16
       chars = [('a'..'z'), ('A'..'Z')].map(&:to_a).flatten
-      string = (0...n-1).map { chars[rand(chars.length)] }.join
-      string.unpack('C*').pack('C*')
+      (0...n).map { chars[rand(chars.length)] }.join
     end
 
     def self.uuid
