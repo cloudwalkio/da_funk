@@ -1,7 +1,7 @@
 module DaFunk
   class SecureRandom
     def self.random_bytes(n = nil)
-      n = n ? n.to_int * 2 : 16 * 2
+      n = n ? n.to_int : 16
       chars = [('a'..'z'), ('A'..'Z')].map(&:to_a).flatten
       string = (0...n-1).map { chars[rand(chars.length)] }.join
       string.unpack('C*').pack('C*')
