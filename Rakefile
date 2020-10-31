@@ -56,6 +56,7 @@ FILES = FileList[
   "lib/da_funk/notification_event.rb",
   "lib/da_funk/notification_callback.rb",
   "lib/da_funk/notification.rb",
+  "lib/da_funk/secure_random.rb",
 
   "lib/device.rb",
   "lib/device/audio.rb",
