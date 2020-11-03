@@ -18,7 +18,7 @@ GEM
     cloudwalk (1.15.0)
       bundler
       rake
-    cloudwalk_handshake (1.21.2)
+    cloudwalk_handshake (1.21.3)
       funky-simplehttp (~> 0.6)
     funky-emv (1.4.1)
       funky-tlv (~> 0.2)
