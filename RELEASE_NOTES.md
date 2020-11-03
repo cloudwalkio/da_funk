@@ -1,5 +1,10 @@
 # DaFunk
 
+### 3.29.0 - 2020-11-03
+
+- Added support to Ruby SecureRandom;
+- Update cloudwalk_handshake (1.21.3).
+
 ### 3.28.2 - 2020-10-07
 
 - Added support of params.dat file restore if it was corrupted;
