@@ -1,9 +1,10 @@
 module DaFunk
   class SecureRandom
+    CHARS = [('a'..'z'), ('A'..'Z')].map(&:to_a).flatten
+
     def self.random_bytes(n = nil)
       n = n ? n.to_int : 16
-      chars = [('a'..'z'), ('A'..'Z')].map(&:to_a).flatten
-      (0...n).map { chars[rand(chars.length)] }.join
+      (0...n).map { CHARS[rand(CHARS.length)] }.join
     end
 
     def self.uuid
