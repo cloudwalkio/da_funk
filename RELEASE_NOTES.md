@@ -1,5 +1,9 @@
 # DaFunk
 
+### 3.29.1 - 2020-11-04
+
+- Fix battery charging status. When power supply is connected the SDK always returns 50% of battery, in this case it won't show the percentage until the SDK returns 100%.
+
 ### 3.29.0 - 2020-11-03
 
 - Added support to Ruby SecureRandom;
