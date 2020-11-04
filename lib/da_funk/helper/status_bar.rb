@@ -146,8 +146,13 @@ module DaFunk
           self.battery = bat
           self.power   = dock
 
-          Device::Display.print_status_bar(SLOT_BATTERY_PERCENTUAL,
-                                           get_image_path(:battery_percentual, self.battery))
+          if self.power && self.battery == 50
+            Device::Display.print_status_bar(SLOT_BATTERY_PERCENTUAL, nil)
+          else
+            percentual = get_image_path(:battery_percentual, self.battery)
+            Device::Display.print_status_bar(SLOT_BATTERY_PERCENTUAL, percentual)
+          end
+
           if self.power
             Device::Display.print_status_bar(
               SLOT_BATTERY_LEVEL, get_image_path(:battery_charge, self.battery))
