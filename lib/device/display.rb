@@ -78,6 +78,15 @@ class Device
         MAIN_BMP
       end
     end
+
+    private
+    def self.main_image_format
+      if DaFunk::Transaction::Reversal.exists?
+        "main_#{Device::System.model}_reversal.bmp"
+      else
+        "main_#{Device::System.model}.bmp"
+      end
+    end
   end
 end
 
