@@ -53,6 +53,7 @@ FILES = FileList[
   "lib/da_funk/application.rb",
   "lib/da_funk/transaction/iso.rb",
   "lib/da_funk/transaction/download.rb",
+  "lib/da_funk/transaction/reversal.rb",
   "lib/da_funk/notification_event.rb",
   "lib/da_funk/notification_callback.rb",
   "lib/da_funk/notification.rb",
