@@ -71,9 +71,9 @@ class Device
     end
 
     def self.main_image
-      if adapter.respond_to?(:main_image) &&
-        File.exists?("./shared/#{adapter.main_image}")
-        adapter.main_image
+      file = main_image_format
+      if File.exists?("./shared/#{file}")
+        file
       else
         MAIN_BMP
       end
