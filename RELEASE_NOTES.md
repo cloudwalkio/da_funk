@@ -1,5 +1,12 @@
 # DaFunk
 
+### 3.30.0 - 2020-11-16
+
+- Replace GPRS icon to 3G;
+- Added new method main_image_format on Device::Display;
+- Use main_image_format method to get the image name instead adapter;
+- Added new class DaFunk::Transaction::Reversal.
+
 ### 3.29.1 - 2020-11-04
 
 - Fix battery charging status. When power supply is connected the SDK always returns 50% of battery, in this case it won't show the percentage until the SDK returns 100%.
