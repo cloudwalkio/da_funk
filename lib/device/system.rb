@@ -45,6 +45,15 @@ class Device
       adapter.battery
     end
 
+    # Checks the type of the battery capacity return (percentage or scale).
+    def self.battery_capacity_type
+      begin
+        adapter.battery_capacity_type
+      rescue StandardError => exception
+        'scale'
+      end
+    end
+
     def self.beep
       adapter.beep
     end
