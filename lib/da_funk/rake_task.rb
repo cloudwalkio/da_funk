@@ -31,7 +31,7 @@ module DaFunk
       @resources_out     ||= @resources.pathmap("%{resources,#{File.join(root_path, "out")}}p")
       @tests_res_out     ||= @tests_resources.pathmap("%{test/resources,out}p")
       @mruby             ||= "cloudwalk run -b"
-      @mrbc              = get_mrbc_bin(@mrbc)
+      @mrbc                = get_mrbc_bin(@mrbc)
 
       define
     end
@@ -44,14 +44,21 @@ module DaFunk
       end
     end
 
+    # Searches for a mrbc binary.
     def get_mrbc_bin(from_user)
-      if (! system("type mrbc > /dev/null 2>&1 ")) && from_user
+      device = "/dev/null"
+
+      if %w[i386-mingw32 x64-mingw32].include?(RUBY_PLATFORM) && !ENV['SHELL']
+        device = "NUL" # Windows Command Prompt
+      end
+
+      if !system("type mrbc > #{device} 2>&1") && from_user
         from_user
-      elsif system("type mrbc > /dev/null 2>&1 ")
+      elsif system("type mrbc > #{device} 2>&1")
         "env mrbc"
       elsif ENV["MRBC"]
         ENV["MRBC"]
-      elsif system("type cloudwalk > /dev/null 2>&1 ")
+      elsif system("type cloudwalk > #{device} 2>&1")
         "env cloudwalk compile"
       else
         puts "$MRBC isn't set or mrbc/cloudwalk isn't on $PATH"
@@ -64,7 +71,7 @@ module DaFunk
       command_line     = File.join(File.dirname(__FILE__), "..", "..", "utils", "command_line_platform.rb")
       command_line_obj = File.join(root_path, "out", "main", "command_line_platform.mrb")
       all_files        = FileList["test/test_helper.rb"] + libs + files + [command_line] + [File.join(File.dirname(__FILE__), "..", "..", "utils", "test_run.rb")]
-      if platform_call("#{mrbc} -g -o #{command_line_obj} #{command_line}") && platform_call("#{mrbc} -g -o #{test_out} #{all_files.uniq}")
+      if platform_call("#{@mrbc} -g -o #{command_line_obj} #{command_line}") && platform_call("#{@mrbc} -g -o #{test_out} #{all_files.uniq}")
         puts "cd #{File.dirname(out_path)}"
         FileUtils.cd File.dirname(out_path)
         platform_call("#{mruby} #{File.join(name, "test.mrb")}")
@@ -108,7 +115,7 @@ module DaFunk
 
       desc "Compile app to mrb and process resources"
       task :build => :resources do
-        platform_call "#{mrbc} #{debug_flag} -o #{main_out} #{libs} "
+        platform_call "#{@mrbc} #{debug_flag} -o #{main_out} #{libs} "
       end
 
       desc "Compile, build and pack app and resources"
