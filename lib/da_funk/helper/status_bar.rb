@@ -36,7 +36,7 @@ module DaFunk
       # TODO: review the 'print_status_bar' API to reduce the number of files
       # to eleven?
       BATTERY_PERCENTAGE_IMAGES = [
-         './shared/0%.png',  './shared/1%.png',  './shared/2%.png',
+         './shared/1%.png',  './shared/1%.png',  './shared/2%.png',
          './shared/3%.png',  './shared/4%.png',  './shared/5%.png',
          './shared/6%.png',  './shared/7%.png',  './shared/8%.png',
          './shared/9%.png', './shared/10%.png', './shared/11%.png',
@@ -78,8 +78,8 @@ module DaFunk
       ].freeze
 
       BATTERY_IMAGES = {
-        0..9     => "./shared/battery0.png",
-        10..19   => "./shared/battery10.png",
+        0..4     => "./shared/battery0.png",
+        5..19    => "./shared/battery10.png",
         20..29   => "./shared/battery20.png",
         30..39   => "./shared/battery30.png",
         40..49   => "./shared/battery40.png",
@@ -180,8 +180,15 @@ module DaFunk
 
         if self.battery != capacity || self.power != charging
 
-          self.battery = capacity
-          self.power   = charging
+          if self.battery.nil? # basic integrity check
+            self.battery = capacity
+          elsif self.power
+            capacity >= self.battery && self.battery = capacity
+          else
+            capacity <= self.battery && self.battery = capacity
+          end
+
+          self.power = charging
 
           rsc = self.get_image_path(self.power ? :battery_charge : :battery, self.battery)
 
