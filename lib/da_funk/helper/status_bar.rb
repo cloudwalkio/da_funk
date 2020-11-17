@@ -182,10 +182,14 @@ module DaFunk
 
           if self.battery.nil? # basic integrity check
             self.battery = capacity
-          elsif self.power
+          elsif charging
             capacity >= self.battery && self.battery = capacity
           else
             capacity <= self.battery && self.battery = capacity
+          end
+
+          if self.power == charging && capacity != self.battery
+            return nil
           end
 
           self.power = charging
@@ -194,7 +198,7 @@ module DaFunk
 
           Device::Display.print_status_bar(SLOT_BATTERY_LEVEL, rsc)
 
-          if capacity_type == 'percentage'
+          if capacity_type == 'percentage' || !self.power
             rsc = self.get_image_path(:battery_percentual, self.battery)
 
             Device::Display.print_status_bar(SLOT_BATTERY_PERCENTUAL, rsc)
