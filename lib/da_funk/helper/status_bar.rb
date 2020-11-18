@@ -200,9 +200,11 @@ module DaFunk
 
           if capacity_type == 'percentage' || !self.power
             rsc = self.get_image_path(:battery_percentual, self.battery)
-
-            Device::Display.print_status_bar(SLOT_BATTERY_PERCENTUAL, rsc)
+          else
+            rsc = nil
           end
+
+          Device::Display.print_status_bar(SLOT_BATTERY_PERCENTUAL, rsc)
         end
       end
 
