@@ -157,11 +157,13 @@ module DaFunk
             self.signal = sig
 
             if Device::Network.gprs?
-              Device::Display.print_status_bar(SLOT_MEDIA, "./shared/GPRS.png")
-              Device::Display.print_status_bar(SLOT_SIGNAL_LEVEL, self.get_image_path(:gprs, self.signal))
+              Device::Display.print_status_bar(SLOT_MEDIA, "./shared/3G.png")
+              Device::Display.print_status_bar(SLOT_SIGNAL_LEVEL,
+                                               get_image_path(:gprs, self.signal))
             elsif Device::Network.wifi?
               Device::Display.print_status_bar(SLOT_MEDIA, "./shared/WIFI.png")
-              Device::Display.print_status_bar(SLOT_SIGNAL_LEVEL, self.get_image_path(:wifi, self.signal))
+              Device::Display.print_status_bar(SLOT_SIGNAL_LEVEL, 
+                                               self.get_image_path(:wifi, self.signal))
             end
           end
         else
