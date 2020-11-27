@@ -81,7 +81,8 @@ class Device
 
     private
     def self.main_image_format
-      if DaFunk::Transaction::Reversal.exists?
+      major, min, patch = Device.version.to_s.split('.').map { |v| v.to_i }
+      if DaFunk::Transaction::Reversal.exists? && major >= 8
         "main_#{Device::System.model}_reversal.bmp"
       else
         "main_#{Device::System.model}.bmp"
