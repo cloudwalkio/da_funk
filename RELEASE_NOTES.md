@@ -1,5 +1,10 @@
 # DaFunk
 
+### 3.31.0 - 2020-11-27
+
+- Added support to new battery view (Exact percentage);
+- Added support to new main screen when there's a pending sale.
+
 ### 3.30.0 - 2020-11-16
 
 - Replace GPRS icon to 3G;
