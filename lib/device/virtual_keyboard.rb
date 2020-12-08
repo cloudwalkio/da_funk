@@ -159,9 +159,11 @@ class Device
       phisical_keys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', "\017"]
       change_keyboard
       Device::Display.print_line("#{self.text}", params[:line], params[:column])
-      time = Time.now + (params[:timeout] || Device::IO.timeout) / 1000
-      key = nil
+      if params[:timeout_enabled]
+        time = Time.now + (params[:timeout] || Device::IO.timeout) / 1000
+      end
 
+      key = nil
       while text_not_ready?(key)
         line_x, line_y = getxy_stream(100)
 
@@ -169,8 +171,9 @@ class Device
           touch_clear
           key = parse(line_x, line_y, params)
         else
-          break(Device::IO::KEY_TIMEOUT) if Time.now > time
-
+          if params[:timeout_enabled]
+            break(Device::IO::KEY_TIMEOUT) if Time.now > time
+          end
           key = getc(100)
           if phisical_keys.include?(key)
             if key == Device::IO::BACK
