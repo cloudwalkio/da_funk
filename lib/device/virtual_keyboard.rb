@@ -215,7 +215,9 @@ class Device
       when :space
         self.text += ' '
       else
-        self.text << key[:char] unless key[:char] == :enter
+        if self.text && self.text.size < 20
+          self.text << key[:char] unless key[:char] == :enter
+        end
       end
       Device::Display.print_line("#{self.text}", params[:line], params[:column])
     end
