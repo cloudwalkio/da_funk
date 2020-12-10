@@ -18,21 +18,6 @@ module DaFunk
       SLOT_BATTERY_PERCENTUAL = 6
       SLOT_BATTERY_LEVEL = 7
 
-      SLOT_MESSAGE_CONNECTION = {
-        true  => {
-          :slot1 => 2,
-          :slot2 => 3,
-          :message1 => './shared/conectado_01.png',
-          :message2 => './shared/conectado_02.png'
-        },
-        false => {
-          :slot1 => 2,
-          :slot2 => 3,
-          :message1 => './shared/buscando_01.png',
-          :message2 => './shared/buscando_02.png'
-        }
-      }
-
       # TODO: review the 'print_status_bar' API to reduce the number of files
       # to eleven?
       BATTERY_PERCENTAGE_IMAGES = [
@@ -72,6 +57,11 @@ module DaFunk
         './shared/99%.png', './shared/100%.png'
       ].freeze
 
+      MEDIA_PATH = {
+        :gprs => './shared/3G.png',
+        :wifi => './shared/WIFI.png'
+      }
+
       BATTERY_CHARGING = [
         "./shared/battery_charging.png",
         "./shared/battery_charged.png"
@@ -109,7 +99,8 @@ module DaFunk
       }
 
       class << self
-        attr_accessor :signal, :battery, :power, :managment, :connected
+        attr_accessor :current_signal, :current_message, :battery, :power, :managment
+        attr_accessor :current_media
       end
 
       def self.check
@@ -124,51 +115,56 @@ module DaFunk
         if File.exists?('./shared/system_update')
           PAX::Display.print_status_bar(SLOT_UPDATE, "./shared/system_update_download.png")
           PAX::Display.print_status_bar(3, nil)
-          self.connected = false
         else
           self.change_message
         end
       end
 
       def self.change_message
-        unless File.exists?('./shared/system_update')
-          connected = Device::Network.connected?
-
-          if connected != self.connected
-            self.connected = connected
-
-            slot_message_1 = SLOT_MESSAGE_CONNECTION[self.connected][:slot1]
-            slot_message_2 = SLOT_MESSAGE_CONNECTION[self.connected][:slot2]
-
-            message_1 = SLOT_MESSAGE_CONNECTION[self.connected][:message1]
-            message_2 = SLOT_MESSAGE_CONNECTION[self.connected][:message2]
-
-            Device::Display.print_status_bar(slot_message_1, message_1)
-            Device::Display.print_status_bar(slot_message_2, message_2)
+        if ThreadScheduler.pause?(ThreadScheduler::THREAD_EXTERNAL_COMMUNICATION, 200)
+          if self.current_message != :pause
+            self.current_message = :pause
+            Device::Display.print_status_bar(2, './shared/semsinal_01.png')
+            Device::Display.print_status_bar(3, './shared/semsinal_02.png')
+          end
+        elsif Device::Network.connected?
+          if self.current_message != :connected
+            self.current_message = :connected
+            Device::Display.print_status_bar(2, './shared/conectado_01.png')
+            Device::Display.print_status_bar(3, './shared/conectado_02.png')
+          end
+        else
+          if self.current_message != :searching
+            self.current_message = :searching
+            Device::Display.print_status_bar(2, './shared/buscando_01.png')
+            Device::Display.print_status_bar(3, './shared/buscando_02.png')
           end
         end
       end
 
       def self.change_connection
-        if Device::Network.connected?
-          sig = Device::Network.signal
-
-          if self.signal != sig
-            self.signal = sig
-
-            if Device::Network.gprs?
-              Device::Display.print_status_bar(SLOT_MEDIA, "./shared/3G.png")
-              Device::Display.print_status_bar(SLOT_SIGNAL_LEVEL,
-                                               get_image_path(:gprs, self.signal))
-            elsif Device::Network.wifi?
-              Device::Display.print_status_bar(SLOT_MEDIA, "./shared/WIFI.png")
-              Device::Display.print_status_bar(SLOT_SIGNAL_LEVEL, 
-                                               self.get_image_path(:wifi, self.signal))
-            end
+        if ThreadScheduler.pause?(ThreadScheduler::THREAD_EXTERNAL_COMMUNICATION, 200)
+          Device::Display.print_status_bar(SLOT_MEDIA, nil)
+          Device::Display.print_status_bar(SLOT_SIGNAL_LEVEL, nil)
+          self.current_media = nil
+          self.current_signal = nil
+        elsif Device::Network.connected?
+          media  = Device::Network.gprs? ? :gprs : :wifi
+          signal = Device::Network.signal
+          if media != self.current_media
+            self.current_media = media
+            Device::Display.print_status_bar(SLOT_MEDIA, MEDIA_PATH[self.current_media])
+          end
+          if signal != self.current_signal
+            self.current_signal = signal
+            Device::Display.print_status_bar(SLOT_SIGNAL_LEVEL,
+                                              self.get_image_path(self.current_media, self.current_signal))
           end
         else
           Device::Display.print_status_bar(SLOT_MEDIA, nil)
           Device::Display.print_status_bar(SLOT_SIGNAL_LEVEL, "./shared/searching.png")
+          self.current_media = nil
+          self.current_signal = nil
         end
       end
 
