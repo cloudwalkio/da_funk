@@ -204,7 +204,6 @@ class Device
         self.code = hash[:ret]
 
         if self.code == SUCCESS
-          self.load_metadata
           self.code = Device::Network.dhcp_client(20000) if (wifi? || ethernet?)
         else
           self.code = ERR_USER_CANCEL if hash[:key] == Device::IO::CANCEL
@@ -213,13 +212,6 @@ class Device
       end
       self.code
     end
-
-    def self.load_metadata
-      if Object.const_defined?(:CwMetadata)
-        CwMetadata.load_variable if CwMetadata.respond_to?(:load_variable)
-      end
-    end
-
     def self.shutdown
       if self.adapter.started?
         Device::Network.disconnect
