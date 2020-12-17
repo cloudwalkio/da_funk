@@ -1,21 +1,23 @@
 module DaFunk
   class ConnectionManagement
     class << self
-      attr_accessor :drops, :primary_timeout
+      attr_accessor :drops, :primary_timeout, :last_time_check
     end
     self.drops = 0
     DEFAULT_DROP_LIMIT = 2
 
     def self.check
-      if Device::Network.connected?
-        if primary_try?
-          :primary_communication
-        end
-      else
-        if fallback?
-          :fallback_communication
+      if must_check?
+        if Device::Network.connected?
+          if primary_try?
+            :primary_communication
+          end
         else
-          :attach_registration_fail
+          if fallback?
+            :fallback_communication
+          else
+            :attach_registration_fail
+          end
         end
       end
     end
@@ -125,6 +127,19 @@ module DaFunk
     def self.schedule_primary_timeout
       self.primary_timeout = (Time.now + self.conn_fallback_timer)
     end
+
+    def self.must_check?
+      if self.last_time_check
+        if self.last_time_check < Time.now
+          self.last_time_check = Time.now + @value
+          true
+        end
+      else
+        @value = DaFunk::ParamsDat.file['conn_check_timer']
+        @value = @value.nil? ? 300 : @value * 60
+        self.last_time_check = Time.now + @value
+        true
+      end
+    end
   end
 end
-
