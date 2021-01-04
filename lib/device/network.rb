@@ -159,9 +159,7 @@ class Device
     #   Device::Setting.mode           = selected[:mode]
     def self.scan
       if wifi?
-        ThreadScheduler.pausing_communication do
-          adapter.scan if Device::Network.init(*self.config)
-        end
+        adapter.scan if Device::Network.init(*self.config)
       end
     end
 
@@ -192,39 +190,28 @@ class Device
     def self.attach(options = nil)
       Device::Network.connected?
       if self.code != SUCCESS
-        ThreadScheduler.pausing_communication do
-          self.code = Device::Network.init(*self.config)
-          self.code = Device::Network.connect
-          Device::Network.connected? if self.code != SUCCESS
+        self.code = Device::Network.init(*self.config)
+        self.code = Device::Network.connect
+        Device::Network.connected? if self.code != SUCCESS
 
-          hash = try_user(self.attach_timeout, options) do |process|
-            Device::Network.connected?
-            process[:ret] = self.code
-            # TODO develop an interface to keep waiting communication module dial
-            # based on platform returns
-            process[:ret] == PROCESSING || process[:ret] == 2 || process[:ret] == -3307 # if true keep trying
-          end
-          self.code = hash[:ret]
+        hash = try_user(self.attach_timeout, options) do |process|
+          Device::Network.connected?
+          process[:ret] = self.code
+          # TODO develop an interface to keep waiting communication module dial
+          # based on platform returns
+          process[:ret] == PROCESSING || process[:ret] == 2 || process[:ret] == -3307 # if true keep trying
+        end
+        self.code = hash[:ret]
 
-          if self.code == SUCCESS
-            self.load_metadata
-            self.code = Device::Network.dhcp_client(20000) if (wifi? || ethernet?)
-          else
-            self.code = ERR_USER_CANCEL if hash[:key] == Device::IO::CANCEL
-            Device::Network.shutdown
-          end
+        if self.code == SUCCESS
+          self.code = Device::Network.dhcp_client(20000) if (wifi? || ethernet?)
+        else
+          self.code = ERR_USER_CANCEL if hash[:key] == Device::IO::CANCEL
+          Device::Network.shutdown
         end
       end
-      Context::ThreadPubSub.publish('communication_update')
       self.code
     end
-
-    def self.load_metadata
-      if Object.const_defined?(:CwMetadata)
-        CwMetadata.load_variable if CwMetadata.respond_to?(:load_variable)
-      end
-    end
-
     def self.shutdown
       if self.adapter.started?
         Device::Network.disconnect
@@ -276,4 +263,3 @@ class Device
     end
   end
 end
-

@@ -82,34 +82,76 @@ class Device
       ],
 
       keyboard_symbol_number: [
-        { x: 0..35,  y: 190..210, char: '(' },
-        { x: 0..68,  y: 190..210, char: ')' },
-        { x: 0..104, y: 190..210, char: '1' },
-        { x: 0..138, y: 190..210, char: '2' },
-        { x: 0..169, y: 190..210, char: '3' },
-        { x: 0..203, y: 190..210, char: '+' },
-        { x: 0..239, y: 190..210, char: '-' },
-        { x: 0..35,  y: 220..245, char: '?' },
-        { x: 0..68,  y: 220..245, char: '$' },
-        { x: 0..104, y: 220..245, char: '4' },
-        { x: 0..138, y: 220..245, char: '5' },
-        { x: 0..169, y: 220..245, char: '6' },
-        { x: 0..203, y: 220..245, char: '*' },
-        { x: 0..239, y: 220..245, char: '/' },
-        { x: 0..35,  y: 255..275, char: '!' },
-        { x: 0..68,  y: 255..275, char: ';' },
-        { x: 0..104, y: 255..275, char: '7' },
-        { x: 0..138, y: 255..275, char: '8' },
-        { x: 0..169, y: 255..275, char: '9' },
-        { x: 0..203, y: 255..275, char: '=' },
-        { x: 0..239, y: 255..275, char: :erase },
-        { x: 0..35,  y: 290..315, char: :keyboard_capital },
-        { x: 0..68,  y: 290..315, char: '@' },
-        { x: 0..104, y: 290..315, char: '%' },
-        { x: 0..138, y: 290..315, char: '0' },
-        { x: 0..169, y: 290..315, char: '#' },
-        { x: 0..203, y: 290..315, char: '_' },
-        { x: 0..239, y: 290..315, char: :enter }
+        { x: 0..34,  y: 191..209, char: '1' },
+        { x: 0..46,  y: 191..209, char: '2' },
+        { x: 0..65,  y: 191..209, char: '3' },
+        { x: 0..96,  y: 191..209, char: '4' },
+        { x: 0..115, y: 191..209, char: '5' },
+        { x: 0..145, y: 191..209, char: '6' },
+        { x: 0..161, y: 191..209, char: '7' },
+        { x: 0..191, y: 191..209, char: '8' },
+        { x: 0..216, y: 191..209, char: '9' },
+        { x: 0..255, y: 191..209, char: '0' },
+        { x: 0..31,  y: 223..241, char: '%' },
+        { x: 0..52,  y: 223..241, char: '#' },
+        { x: 0..77,  y: 223..241, char: '$' },
+        { x: 0..97,  y: 223..241, char: '_' },
+        { x: 0..121, y: 223..241, char: '&' },
+        { x: 0..143, y: 223..241, char: '-' },
+        { x: 0..168, y: 223..241, char: '+' },
+        { x: 0..186, y: 223..241, char: '(' },
+        { x: 0..215, y: 223..241, char: ')' },
+        { x: 0..236, y: 223..241, char: '/' },
+        { x: 0..42,  y: 223..274, char: :keyboard_symbol_number_2 },
+        { x: 0..60,  y: 223..274, char: '*' },
+        { x: 0..84,  y: 223..274, char: '"' },
+        { x: 0..107, y: 223..274, char: "'" },
+        { x: 0..130, y: 223..274, char: ':' },
+        { x: 0..152, y: 223..274, char: ';' },
+        { x: 0..171, y: 223..274, char: '!' },
+        { x: 0..197, y: 223..274, char: '?' },
+        { x: 0..255, y: 223..274, char: :erase },
+        { x: 0..36,  y: 223..315, char: :keyboard_capital },
+        { x: 0..63,  y: 223..315, char: '@' },
+        { x: 0..88,  y: 223..315, char: ',' },
+        { x: 0..152, y: 223..315, char: :space },
+        { x: 0..168, y: 223..315, char: '.' },
+        { x: 0..255, y: 223..315, char: :enter }
+      ],
+
+      keyboard_symbol_number_2: [
+        { x: 0..34,  y: 191..209, char: '1' },
+        { x: 0..46,  y: 191..209, char: '2' },
+        { x: 0..69,  y: 191..209, char: '3' },
+        { x: 0..96,  y: 191..209, char: '4' },
+        { x: 0..115, y: 191..209, char: '5' },
+        { x: 0..145, y: 191..209, char: '6' },
+        { x: 0..161, y: 191..209, char: '7' },
+        { x: 0..191, y: 191..209, char: '8' },
+        { x: 0..216, y: 191..209, char: '9' },
+        { x: 0..255, y: 191..209, char: '0' },
+        { x: 0..35,  y: 223..241, char: '^' },
+        { x: 0..63,  y: 223..241, char: '[' },
+        { x: 0..97,  y: 223..241, char: ']' },
+        { x: 0..128, y: 223..241, char: '{' },
+        { x: 0..158, y: 223..241, char: '}' },
+        { x: 0..193, y: 223..241, char: '<' },
+        { x: 0..255, y: 223..241, char: '>' },
+        { x: 0..39,  y: 223..274, char: :keyboard_symbol_number },
+        { x: 0..63,  y: 223..274, char: '\\' },
+        { x: 0..86,  y: 223..274, char: '-' },
+        { x: 0..106, y: 223..274, char: '+' },
+        { x: 0..130, y: 223..274, char: '=' },
+        { x: 0..149, y: 223..274, char: '_' },
+        { x: 0..175, y: 223..274, char: '˜' },
+        { x: 0..195, y: 223..274, char: '|' },
+        { x: 0..255, y: 223..274, char: :erase },
+        { x: 0..34,  y: 223..310, char: :keyboard_capital },
+        { x: 0..61,  y: 223..310, char: '@' },
+        { x: 0..87,  y: 223..310, char: ',' },
+        { x: 0..146, y: 223..313, char: :space },
+        { x: 0..168, y: 223..311, char: '.' },
+        { x: 0..194, y: 223..319, char: :enter }
       ]
     }
 
@@ -117,9 +159,11 @@ class Device
       phisical_keys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', "\017"]
       change_keyboard
       Device::Display.print_line("#{self.text}", params[:line], params[:column])
-      time = Time.now + (params[:timeout] || Device::IO.timeout) / 1000
-      key = nil
+      if params[:timeout_enabled]
+        time = Time.now + (params[:timeout] || Device::IO.timeout) / 1000
+      end
 
+      key = nil
       while text_not_ready?(key)
         line_x, line_y = getxy_stream(100)
 
@@ -127,8 +171,9 @@ class Device
           touch_clear
           key = parse(line_x, line_y, params)
         else
-          break(Device::IO::KEY_TIMEOUT) if Time.now > time
-
+          if params[:timeout_enabled]
+            break(Device::IO::KEY_TIMEOUT) if Time.now > time
+          end
           key = getc(100)
           if phisical_keys.include?(key)
             if key == Device::IO::BACK
@@ -161,7 +206,7 @@ class Device
 
     def self.show_text(key, params)
       case key[:char]
-      when :keyboard_uppercase, :keyboard_symbol_number, :keyboard_capital
+      when :keyboard_uppercase, :keyboard_symbol_number, :keyboard_symbol_number_2, :keyboard_capital
         self.type = key[:char]
         change_keyboard
       when :erase
@@ -170,7 +215,9 @@ class Device
       when :space
         self.text += ' '
       else
-        self.text << key[:char] unless key[:char] == :enter
+        if self.text && self.text.size < 20
+          self.text << key[:char] unless key[:char] == :enter
+        end
       end
       Device::Display.print_line("#{self.text}", params[:line], params[:column])
     end
