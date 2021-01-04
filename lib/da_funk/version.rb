@@ -1,4 +1,4 @@
 module DaFunk
-  VERSION="3.31.0"
+  VERSION="3.32.0"
 end
 

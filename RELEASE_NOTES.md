@@ -1,5 +1,17 @@
 # DaFunk
 
+### 3.32.0 - 2021-01-04
+
+- Remapped virtual keyboard to add support to new layout;
+- Make timeout of virtual keyboard parametrized;
+- Limit size of string to 20 on virtual keyboard;
+- Refactoring status bar:
+  - Check if thread is paused which means communication it's being configured. In this case 'sem sinal' message should be displayed;
+  - Do not show media type an media icon if thread is paused;
+- Removed thread pause from attach and scan calls, let the application that is doing the configuration take care of that;
+- Move reload of metadata to communication thread;
+- Added support to check network conn status from time to time, default is each 5 minutes.
+
 ### 3.31.0 - 2020-11-27
 
 - Added support to new battery view (Exact percentage);
