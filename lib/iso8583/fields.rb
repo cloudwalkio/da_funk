@@ -16,7 +16,7 @@ module ISO8583
   # The following fields are available:
   #
   # [+LL+]           special form to de/encode variable length indicators, two bytes ASCII numerals
-  # [+LLL+]          special form to de/encode variable length indicators, two bytes ASCII numerals
+  # [+LLL+]          special form to de/encode variable length indicators, three bytes ASCII numerals
   # [+LL_BCD+]       special form to de/encode variable length indicators, two BCD digits
   # [+LLVAR_N+]      two byte variable length ASCII numeral, payload ASCII numerals
   # [+LLLVAR_N+]     three byte variable length ASCII numeral, payload ASCII numerals
