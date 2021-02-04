@@ -174,7 +174,8 @@ class Device
         if line_x && line_y
           ret = parse_touchscreen(touch_map, line_x, line_y)
           break(ret) if ret.include?(:touch_action)
-        elsif key = getc(100)
+        else
+          key = getc(100)
           if key == BACK
             text = text[0..-2]
             Device::Display.clear options[:line]
