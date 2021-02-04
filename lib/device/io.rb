@@ -161,7 +161,7 @@ class Device
       end
     end
 
-    def self.get_format_or_touchscreen_action(min, max, touch_map, options = {})
+    def self.get_format_or_touchscreen_action(max, touch_map, options = {})
       set_default_format_option(options)
       key = text = options[:value] || ""
       time = Time.now + (options[:timeout] || 30000) / 1000
