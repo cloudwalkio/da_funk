@@ -161,6 +161,58 @@ class Device
       end
     end
 
+    def self.get_format_or_touchscreen_action(min, max, touch_map, options = {})
+      set_default_format_option(options)
+      key = text = options[:value] || ""
+      time = Time.now + (options[:timeout] || 30000) / 1000
+      ret = {}
+      touch_clear
+      Device::Display.clear options[:line]
+      Device::Display.print_line format(text, options), options[:line], options[:column]
+      loop do
+        line_x, line_y = getxy_stream(100)
+        if line_x && line_y
+          ret = parse_touchscreen(touch_map, line_x, line_y)
+          break(ret) if ret.include?(:touch_action)
+        elsif key = getc(100)
+          if key == BACK
+            text = text[0..-2]
+            Device::Display.clear options[:line]
+            Device::Display.print_line format(text, options), options[:line], options[:column]
+          elsif options[:timeout_enabled] && time < Time.now
+            ret[:timeout] = Device::IO::KEY_TIMEOUT
+            break(ret)
+          elsif key == ENTER
+            ret[:text] = text
+            break(ret)
+          elsif key == CANCEL
+            ret[:cancel] = Device::IO::CANCEL
+            break(ret)
+          elsif key == F1 || key == DOWN || key == UP || key == ALPHA
+            change_next(text, check_mask_type(text, options))
+            next
+          elsif text.size >= max
+            next
+          elsif insert_key?(key, options)
+            text << key
+            Device::Display.clear options[:line]
+            Device::Display.print_line format(text, options), options[:line], options[:column]
+          end
+        end
+      end
+    end
+
+    def self.parse_touchscreen(touch_map, line_x, line_y)
+      ret = {}
+      touch_map.each do |key, value|
+        if value[:x].include?(line_x) && value[:y].include?(line_y)
+          Device::Audio.beep(7, 60)
+          ret[:touch_action] = key
+        end
+      end
+      ret
+    end
+
     def self.set_default_format_option(options)
       options[:mode]   ||= IO_INPUT_LETTERS
       options[:line]   ||= 2
