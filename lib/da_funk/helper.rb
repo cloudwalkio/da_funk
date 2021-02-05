@@ -61,38 +61,77 @@ module DaFunk
       end
     end
 
-    def check_download_error(ret, enable_txt_ui = true)
-      value = true
+    def check_download_error(download_ret, enable_txt_ui = true)
+      value = false
+
+      if download_ret == DaFunk::Transaction::Download::FILE_NOT_CHANGE
+        if enable_txt_ui
+          I18n.pt(:download_file_is_the_same, :args => [download_ret])
+          getc(1000)
+        end
+        value = true
+      elsif download_ret == DaFunk::Transaction::Download::SUCCESS
+        if enable_txt_ui
+          I18n.pt(:download_success, :args => [download_ret])
+          getc(1000)
+        end
+        value = true
+      end
+      value
+    end
+
+    def show_download_error(download_ret, enable_txt_ui = true)
       ui = {}
 
-      case ret
+      case download_ret
       when DaFunk::Transaction::Download::SERIAL_NUMBER_NOT_FOUND
+        unless enable_txt_ui
+          Device::Display.print_bitmap('./shared/config_fail.bmp')
+          getc(5000)
+        end
         ui[:i18n] = :download_serial_number_not_found
-        value =  false
+        ContextLog.info "[I] Download error, serial number not registered"
       when DaFunk::Transaction::Download::FILE_NOT_FOUND
+        unless enable_txt_ui
+          Device::Display.print_bitmap('./shared/config_fail.bmp')
+          getc(5000)
+        end
         ui[:i18n] = :download_file_not_found
-        value = false
-      when DaFunk::Transaction::Download::FILE_NOT_CHANGE
-        ui[:i18n] = :download_file_is_the_same
-      when DaFunk::Transaction::Download::SUCCESS
-        ui[:i18n] = :download_success
+        ContextLog.info "[I] Download error, file not found"
       when DaFunk::Transaction::Download::COMMUNICATION_ERROR
+        unless enable_txt_ui
+          Device::Display.print_bitmap('./shared/network_system_error.bmp')
+          getc(5000)
+        end
         ui[:i18n] = :download_communication_failure
-        value = false
+        ContextLog.info "[I] Download error, connection problem"
       when DaFunk::Transaction::Download::MAPREDUCE_RESPONSE_ERROR
+        unless enable_txt_ui
+          Device::Display.print_bitmap('./shared/config_fail.bmp')
+          getc(5000)
+        end
         ui[:i18n] = :download_encoding_error
-        value = false
+        ContextLog.info "[I] Download error, encoding problem"
       when DaFunk::Transaction::Download::IO_ERROR
+        unless enable_txt_ui
+          Device::Display.print_bitmap('./shared/config_fail.bmp')
+          getc(5000)
+        end
         ui[:i18n] = :download_io_error
-        value = false
+        ContextLog.info "[I] Download error, IO error"
       else
+        unless enable_txt_ui
+          Device::Display.print_bitmap('./shared/network_system_error.bmp')
+          getc(5000)
+        end
         ui[:i18n] = :download_communication_failure
-        value = false
+        ContextLog.info "[I] Download error, connection problem"
       end
 
-      I18n.pt(ui[:i18n], :args => [ret]) if enable_txt_ui
-
-      value
+      if enable_txt_ui
+        I18n.pt(ui[:i18n], :args => [download_ret])
+        getc(5000)
+      end
     end
 
     def try(tries, &block)
