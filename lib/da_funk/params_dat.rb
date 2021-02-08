@@ -1,6 +1,10 @@
 module DaFunk
   class ParamsDat
-    FILE_NAME = "./main/params.dat"
+    FILE_NAME                   = "./main/params.dat"
+    SEARCHING_IMAGE_PATH        = './shared/searching_updates_app.bmp'
+    UPDATING_IMAGE_PATH         = './shared/updating.bmp'
+    ATTACH_IMAGE_PATH           = './shared/network_conectar_init.bmp'
+    CONNECTION_ERROR_IMAGE_PATH = './shared/network_system_error.bmp'
 
     include DaFunk::Helper
 
@@ -117,31 +121,40 @@ module DaFunk
     end
 
     def self.download(enable_txt_ui = true)
+      ret          = false
+      download_ret = false
+      Device::Display.print_bitmap(ATTACH_IMAGE_PATH) unless enable_txt_ui
       if attach(attach_options(enable_txt_ui))
         parse
-        ret = try(3) do |attempt|
+        try(3) do |attempt|
           if enable_txt_ui
             Device::Display.clear
             I18n.pt(:downloading_content, :args => ["PARAMS", 1, 1])
+            getc(100)
           end
-          getc(100)
-          ret = DaFunk::Transaction::Download.request_param_file(FILE_NAME)
-          unless check_download_error(ret, enable_txt_ui)
-            getc(2000)
-            false
-          else
-            true
-          end
+          Device::Display.print_bitmap(SEARCHING_IMAGE_PATH) unless enable_txt_ui
+          download_ret = DaFunk::Transaction::Download.request_param_file(FILE_NAME)
+          ret = check_download_error(download_ret, enable_txt_ui)
         end
+        show_download_error(download_ret, enable_txt_ui) unless ret
         parse if ret
-        ret
+      else
+        unless enable_txt_ui
+          Device::Display.print_bitmap(CONNECTION_ERROR_IMAGE_PATH)
+          getc(5000)
+        end
       end
+      ret
     end
 
     def self.update_apps(force_params = false, force_crc = false, force = false, enable_txt_ui = true)
-      self.download(enable_txt_ui) if force_params || ! self.valid
+      ret = true
+      if force_params || ! self.valid
+        ret = self.download(enable_txt_ui)
+      end
+
       main_updated = nil
-      if self.valid
+      if self.valid && ret
         apps_to_update = self.outdated_apps(force_crc, force)
         size_apps = apps_to_update.size
         apps_to_update.each_with_index do |app, index|
@@ -149,12 +162,15 @@ module DaFunk
           main_updated ||= (ret && app.main_application?)
         end
 
-        files_to_update = self.outdated_files(force_crc, force)
-        size_files = files_to_update.size
-        files_to_update.each_with_index do |file_, index|
-          self.update_file(file_, index+1, size_files, force_crc || force, enable_txt_ui)
+        if ret
+          files_to_update = self.outdated_files(force_crc, force)
+          size_files = files_to_update.size
+          files_to_update.each_with_index do |file_, index|
+            ret = self.update_file(file_, index+1, size_files, force_crc || force, enable_txt_ui)
+          end
         end
       end
+      ret
     ensure
       self.restart if main_updated
     end
@@ -199,34 +215,58 @@ module DaFunk
     end
 
     def self.update_app(application, index = 1, all = 1, force = false, enable_txt_ui = true)
+      ret          = false
+      download_ret = false
+      Device::Display.print_bitmap(ATTACH_IMAGE_PATH) unless enable_txt_ui
       if attach(attach_options(enable_txt_ui)) && application
         try(3) do |attempt|
           if enable_txt_ui
             Device::Display.clear
             I18n.pt(:downloading_content, :args => [I18n.t(:apps), index, all])
+            getc(100)
           end
-          getc(100)
-          ret = check_download_error(application.download(force), enable_txt_ui)
-          getc(1000)
-          ret
+          Device::Display.print_bitmap(UPDATING_IMAGE_PATH) unless enable_txt_ui
+          download_ret = application.download(force)
+          ret = check_download_error(download_ret, enable_txt_ui)
+        end
+        show_download_error(download_ret, enable_txt_ui) unless ret
+      else
+        unless enable_txt_ui
+          Device::Display.print_bitmap(CONNECTION_ERROR_IMAGE_PATH)
+          getc(5000)
         end
       end
+      ret
     end
 
     def self.update_file(file_parameter, index = 1, all = 1, force = false, enable_txt_ui = true)
+      ret          = false
+      download_ret = false
+      Device::Display.print_bitmap(ATTACH_IMAGE_PATH) unless enable_txt_ui
       if attach(attach_options(enable_txt_ui)) && file_parameter
         try(3) do |attempt|
           if enable_txt_ui
             Device::Display.clear
             I18n.pt(:downloading_content, :args => [I18n.t(:files), index, all])
+            getc(100)
           end
-          getc(100)
-          ret = check_download_error(file_parameter.download(force), enable_txt_ui)
-          file_parameter.unzip if ret
-          getc(1000)
+          Device::Display.print_bitmap(UPDATING_IMAGE_PATH) unless enable_txt_ui
+          download_ret = file_parameter.download(force)
+          ret = check_download_error(download_ret, enable_txt_ui)
+          if ret
+            file_parameter.unzip
+            getc(1000)
+          end
           ret
         end
+        show_download_error(download_ret, enable_txt_ui) unless ret
+      else
+        unless enable_txt_ui
+          Device::Display.print_bitmap(CONNECTION_ERROR_IMAGE_PATH)
+          getc(5000)
+        end
       end
+      ret
     end
 
     def self.apps
