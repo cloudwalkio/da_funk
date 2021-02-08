@@ -1,5 +1,11 @@
 # DaFunk
 
+### 3.33.0 - 2021-02-08
+
+- Added method Device::IO#get_format_or_touchscreen_action;
+- Added support to images on ParamsDat#download, ParamsDat#update_app and ParamsDat#update_file;
+- Return result of ParamsDat#update_apps call to the caller.
+
 ### 3.32.0 - 2021-01-04
 
 - Remapped virtual keyboard to add support to new layout;
