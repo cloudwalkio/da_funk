@@ -1,7 +1,7 @@
 module DaFunk
   class ParamsDat
     FILE_NAME                   = "./main/params.dat"
-    SEARCHING_IMAGE_PATH        = './shared/searching_updates.bmp'
+    SEARCHING_IMAGE_PATH        = './shared/searching_updates_app.bmp'
     UPDATING_IMAGE_PATH         = './shared/updating.bmp'
     ATTACH_IMAGE_PATH           = './shared/network_conectar_init.bmp'
     CONNECTION_ERROR_IMAGE_PATH = './shared/network_system_error.bmp'
