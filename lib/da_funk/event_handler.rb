@@ -52,7 +52,7 @@ module DaFunk
       end
 
       unless config["timestamp"]
-        config["timestamp"] = hours2seconds(option["interval"])
+        config["timestamp"] = hours2seconds(option[:hours])
       else
         if config["interval"]["hours"].to_s != option[:hours].to_s
           config["timestamp"] = hours2seconds(option[:hours])
