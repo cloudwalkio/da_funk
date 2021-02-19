@@ -1,5 +1,9 @@
 # DaFunk
 
+### 3.33.1 - 2021-02-19
+
+- Fixed argument being passed to hours2seconds method which was nil;
+
 ### 3.33.0 - 2021-02-08
 
 - Added method Device::IO#get_format_or_touchscreen_action;
