@@ -106,7 +106,7 @@ module ISO8583
   Packed_Number.encoder = lambda { |val|
     val = val.to_s
     val = val.length % 2 == 0 ? val : "0"+val
-    raise ISO8583Exception.new("Invalid value: #{val} must be numeric!") unless val =~ /^[0-9]*$/
+    raise ISO8583Exception.new("Invalid value: #{val} must be numeric!") unless val =~ /^[0-9A-Fa-f]*$/
     [val].pack("H*")
   }
   Packed_Number.decoder = lambda{|encoded|
