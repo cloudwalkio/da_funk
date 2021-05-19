@@ -85,11 +85,46 @@ module ISO8583
   end
 
   class BCDField < Field
+    attr_accessor :data_length
+    attr_accessor :byte_length
     # This corrects the length for BCD fields, as their encoded length is half (+ parity) of the
     # content length. E.g. 123 (length = 3) encodes to "\x01\x23" (length 2)
     def length
-      _length = super
-      (_length % 2) != 0 ? (_length / 2) + 1 : _length / 2
+      @byte_length
+    end
+
+    def encode(value)
+      begin
+        encoded_value = codec.encode(value)
+        @data_length = value.size
+        @byte_length = encoded_value.size
+      rescue ISO8583Exception => e
+        ContextLog.exception(e, e.backtrace, "#{e.message} (#{name})") if Object.const_defined?(:ContextLog)
+        raise ISO8583Exception.new(e.message+" (#{name})")
+      end
+
+      if padding
+        if padding.arity == 1
+          encoded_value = padding.call(encoded_value)
+        elsif padding.arity == 2
+          encoded_value = padding.call(encoded_value, length)
+        end
+      end
+
+      len_str = case length
+                when Integer
+                  raise ISO8583Exception.new("Too long: #{value} (#{name})! length=#{length}")  if encoded_value.length > length
+                  raise ISO8583Exception.new("Too short: #{value} (#{name})! length=#{length}") if encoded_value.length < length
+                  ""
+                when Field
+                  raise ISO8583Exception.new("Max lenth exceeded: #{value}, max: #{max}") if max && encoded_value.length > max
+                  length.encode(@data_length)
+                else
+                  raise ISO8583Exception.new("Invalid length (#{length}) for '#{name}' field")
+                end
+
+      len_str + encoded_value
+
     end
   end
 
