@@ -97,7 +97,7 @@ module ISO8583
       begin
         encoded_value = codec.encode(value)
         @data_length = value.size
-        @byte_length = encoded_value.size
+        @byte_length = encoded_value.bytes.size
       rescue ISO8583Exception => e
         ContextLog.exception(e, e.backtrace, "#{e.message} (#{name})") if Object.const_defined?(:ContextLog)
         raise ISO8583Exception.new(e.message+" (#{name})")
@@ -117,7 +117,7 @@ module ISO8583
                   raise ISO8583Exception.new("Too short: #{value} (#{name})! length=#{length}") if encoded_value.length < length
                   ""
                 when Field
-                  raise ISO8583Exception.new("Max lenth exceeded: #{value}, max: #{max}") if max && encoded_value.length > max
+                  raise ISO8583Exception.new("Max length exceeded: #{value}, max: #{max}") if max && @byte_length > max
                   length.encode(@data_length)
                 else
                   raise ISO8583Exception.new("Invalid length (#{length}) for '#{name}' field")
