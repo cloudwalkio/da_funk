@@ -14,11 +14,18 @@ module ISO8583
   # transparently by the Message class.
   class Bitmap
     include DaFunk::Helper
+
+    # bitmap_size defines the size in bits of bitmap. It has to be multiple of 8 (a byte of 8 bits)
+    attr_reader :bitmap_size
+
     # create a new Bitmap object. In case an iso message
     # is passed in, that messages bitmap will be parsed. If
     # not, this initializes and empty bitmap.
-    def initialize(message = nil, hex_bitmap=false)
-      @bmp        = Array.new(128, false)
+    def initialize(message = nil, hex_bitmap=false, bitmap_size: 128)
+      raise ISO8583Exception.new "wrong bitmap_size: #{bitmap_size}" if bitmap_size % 8 != 0
+
+      @bitmap_size = bitmap_size
+      @bmp        = Array.new(bitmap_size, false)
       @hex_bitmap = hex_bitmap
 
       message ? initialize_from_message(message) : nil
@@ -40,9 +47,10 @@ module ISO8583
 
     # Set the bit to the indicated value. Only `true` sets the
     # bit, any other value unsets it.
+    # TODO @bruno.coimbra -- This method should be private
     def []=(i, value)
-      if i > 128
-        raise ISO8583Exception.new("Bits > 128 are not permitted.")
+      if i > bitmap_size
+        raise ISO8583Exception.new("Bits > #{bitmap_size} are not permitted. bitmap_size == #{bitmap_size}")
       elsif i < 2
         raise ISO8583Exception.new("Bits < 2 are not permitted (continutation bit is set automatically)")
       end
