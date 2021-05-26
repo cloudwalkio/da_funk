@@ -98,3 +98,9 @@ Rake::TestTask.new('test:iso8583') do |t|
   t.libs << File.join("test", "iso8583")
   t.test_files = FileList['test/iso8583/**/*_test.rb']
 end
+
+task "test:iso8583:cov" do
+  ENV.store('COV', '1')
+  Bundler.require(:default, :test)
+  Rake::Task["test:iso8583"].execute
+end
