@@ -18,15 +18,20 @@ module ISO8583
     # bitmap_size defines the size in bits of bitmap. It has to be multiple of 8 (a byte of 8 bits)
     attr_reader :bitmap_size
 
+    # has_additional_bitmap defines if the bit 1 (left to right) indicates the presence of another
+    # bitmap just after the current one
+    attr_reader :has_additional_bitmap
+
     # create a new Bitmap object. In case an iso message
     # is passed in, that messages bitmap will be parsed. If
     # not, this initializes and empty bitmap.
-    def initialize(message = nil, hex_bitmap=false, bitmap_size: 128)
+    def initialize(message = nil, hex_bitmap=false, bitmap_size: 128, has_additional_bitmap: true)
       raise ISO8583Exception.new "wrong bitmap_size: #{bitmap_size}" if bitmap_size % 8 != 0
 
-      @bitmap_size = bitmap_size
-      @bmp        = Array.new(bitmap_size, false)
-      @hex_bitmap = hex_bitmap
+      @bitmap_size           = bitmap_size
+      @bmp                   = Array.new(bitmap_size, false)
+      @hex_bitmap            = hex_bitmap
+      @has_additional_bitmap = has_additional_bitmap
 
       message ? initialize_from_message(message) : nil
     end
@@ -52,13 +57,24 @@ module ISO8583
       if i > bitmap_size
         raise ISO8583Exception.new("Bits > #{bitmap_size} are not permitted. bitmap_size == #{bitmap_size}")
       elsif i < 2
-        raise ISO8583Exception.new("Bits < 2 are not permitted (continutation bit is set automatically)")
+        if has_additional_bitmap
+          raise ISO8583Exception.new("Bits < 2 are not permitted (continuation bit is set automatically)")
+        end
       end
       @bmp[i-1] = (value == true)
     end
 
     # Sets bit #i
     def set(i)
+      if i > bitmap_size
+        raise ISO8583Exception, "can't set field #{i}, bitmap_size == #{bitmap_size}" unless has_additional_bitmap
+
+        rem = i % bitmap_size
+        @bitmap_size = i + rem
+        new_bmp = Array.new(bitmap_size, false)
+        @bmp.each_with_index {|v, i| new_bmp[i] = v}
+        @bmp = new_bmp
+      end
       self[i] = true
     end
 

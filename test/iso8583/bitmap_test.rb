@@ -16,10 +16,27 @@ module ISO8583
     end
 
     def test_avoid_set_bit_greater_than_size
-      bitmap = Bitmap.new(nil, false, bitmap_size: 8)
-      e = assert_raises { bitmap[9] =  true }
+      bitmap = Bitmap.new(nil, false, bitmap_size: 8, has_additional_bitmap: false)
+      e = assert_raises { bitmap.set(9) }
       assert_equal(ISO8583Exception, e.class)
-      assert_equal('Bits > 8 are not permitted. bitmap_size == 8', e.message)
+      assert_equal("can't set field 9, bitmap_size == 8", e.message)
+    end
+
+    def test_avoid_set_bit_1_when_has_additional_bitmap
+      bitmap = Bitmap.new(nil, false, bitmap_size: 8)
+      e = assert_raises { bitmap.set(1) }
+      assert_equal(ISO8583Exception, e.class)
+      assert_equal('Bits < 2 are not permitted (continuation bit is set automatically)', e.message)
+    end
+
+    def test_unset_field
+      bitmap = Bitmap.new(nil, false, bitmap_size: 8, has_additional_bitmap: false)
+      assert_equal(false, bitmap[1])
+      bitmap.set(1)
+      assert_equal(true, bitmap[1])
+      bitmap.unset(1)
+      assert_equal(false, bitmap[1])
+    end
     end
   end
 end
