@@ -37,6 +37,22 @@ module ISO8583
       bitmap.unset(1)
       assert_equal(false, bitmap[1])
     end
+
+    def test_to_hex
+      skip
+      bitmap = Bitmap.new(nil, false, bitmap_size: 64, has_additional_bitmap: true)
+      bitmap.set(2)
+      bitmap.set(3)
+      bitmap.set(4)
+      bitmap.set(5)
+      bitmap.set(6)
+      bitmap.set(7)
+      bitmap.set(8)
+      bitmap.set(66)
+
+      expected = "F000000040000000"
+
+      assert_equal(expected, bitmap.to_hex)
     end
   end
 end
