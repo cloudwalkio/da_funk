@@ -90,3 +90,11 @@ end
 task "test:all"         => :build
 task "test:unit"        => :build
 task "test:integration" => :build
+
+Rake::TestTask.new('test:iso8583') do |t|
+  Bundler.require(:default, :test)
+  t.libs << File.join("lib", "da_funk", "helper")
+  t.libs << File.join("lib","iso8583")
+  t.libs << File.join("test", "iso8583")
+  t.test_files = FileList['test/iso8583/**/*_test.rb']
+end
