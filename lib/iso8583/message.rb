@@ -152,7 +152,7 @@ module ISO8583
     def mti=(value)
       raise ISO8583Exception.new "can't set MTI when `ignore_mti` is set" if ignore_mti
 
-      num, name = _get_mti_definition(value)
+      num, _ = _get_mti_definition(value)
       @mti = num
     end
 
