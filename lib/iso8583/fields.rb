@@ -4,6 +4,8 @@
 # this distribution
 #++
 
+require_relative '../da_funk/helper'
+
 module ISO8583
   include DaFunk::Helper
 
