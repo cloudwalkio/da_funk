@@ -20,12 +20,14 @@ GEM
       rake
     cloudwalk_handshake (1.21.3)
       funky-simplehttp (~> 0.6)
+    docile (1.3.5)
     funky-emv (1.4.1)
       funky-tlv (~> 0.2)
     funky-mock (0.1.0)
     funky-simplehttp (0.6.0)
     funky-tlv (0.2.3)
     io-like (0.3.1)
+    minitest (5.14.4)
     parallel (1.19.2)
     parser (2.7.2.0)
       ast (~> 2.4.1)
@@ -47,6 +49,10 @@ GEM
     rubocop-ast (1.1.0)
       parser (>= 2.7.1.5)
     ruby-progressbar (1.10.1)
+    simplecov (0.18.5)
+      docile (~> 1.1)
+      simplecov-html (~> 0.11)
+    simplecov-html (0.12.3)
     unicode-display_width (1.7.0)
     yard (0.9.25)
 
@@ -60,8 +66,10 @@ DEPENDENCIES
   da_funk!
   funky-mock
   funky-simplehttp
+  minitest
   rubocop
+  simplecov
   yard
 
 BUNDLED WITH
-   2.1.4
+   2.2.7
