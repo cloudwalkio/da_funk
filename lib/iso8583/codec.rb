@@ -107,7 +107,7 @@ module ISO8583
     val = val.to_s
     val = val.length % 2 == 0 ? val : "0"+val
     raise ISO8583Exception.new("Invalid value: #{val} must be numeric!") unless val =~ /^[0-9A-Fa-f]*$/
-    [val].pack("H*")
+    String.new([val].pack("H*"), encoding: "ASCII-8BIT")
   }
   Packed_Number.decoder = lambda{|encoded|
     encoded.unpack("H*")[0].to_i

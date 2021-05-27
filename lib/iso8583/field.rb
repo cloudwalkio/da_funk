@@ -72,7 +72,7 @@ module ISO8583
                 when Integer
                   raise ISO8583Exception.new("Too long: #{value} (#{name})! length=#{length}")  if encoded_value.length > length
                   raise ISO8583Exception.new("Too short: #{value} (#{name})! length=#{length}") if encoded_value.length < length
-                  "" 
+                  String.new("", encoding: 'ASCII-8BIT')
                 when Field
                   raise ISO8583Exception.new("Max lenth exceeded: #{value}, max: #{max}") if max && encoded_value.length > max
                   length.encode(encoded_value.length)
@@ -115,7 +115,7 @@ module ISO8583
                 when Integer
                   raise ISO8583Exception.new("Too long: #{value} (#{name})! length=#{length}")  if encoded_value.length > length
                   raise ISO8583Exception.new("Too short: #{value} (#{name})! length=#{length}") if encoded_value.length < length
-                  ""
+                  String.new("", encoding: 'ASCII-8BIT')
                 when Field
                   raise ISO8583Exception.new("Max length exceeded: #{value}, max: #{max}") if max && @byte_length > max
                   length.encode(@data_length)
