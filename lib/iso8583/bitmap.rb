@@ -95,8 +95,12 @@ module ISO8583
       self[i] = true
     end
 
+    def size_in_bits
+      bitmaps * bitmap_size
+    end
+
     def size_in_bytes
-      bitmaps * (bitmap_size / 8)
+      size_in_bits / 8
     end
 
     def size_in_bytes_hex
@@ -139,10 +143,8 @@ module ISO8583
     # Generate a String representation of this bitmap in the form:
     #	01001100110000011010110110010100100110011000001101011011001010
     def to_s
-      high = @bitmaps * @bitmap_size
-
       str = String.new("", encoding: "ASCII-8BIT")
-      1.upto(high) do|i|
+      1.upto(size_in_bits) do |i|
         str << (self[i] ? '1' : '0')
       end
 
