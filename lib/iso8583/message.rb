@@ -193,7 +193,7 @@ module ISO8583
 
       return _body.join if ignore_mti
 
-      mti_enc = self.class._mti_format.encode(mti).force_encoding('UTF-8')
+      mti_enc = self.class._mti_format.encode(mti)
       mti_enc << _body.join
     end
 
@@ -222,11 +222,11 @@ module ISO8583
     # [bitmap_bytes, message_bytes]
     def _body
       bitmap  = Bitmap.new(bitmap_size: bitmap_size)
-      message = ""
+      message = String.new("", encoding: 'ASCII-8BIT')
       @values.keys.sort.each do |bmp_num|
         bitmap.set(bmp_num)
         enc_value = @values[bmp_num].encode
-        message << enc_value.force_encoding('UTF-8')
+        message << enc_value
       end
 
       if use_hex_bitmap
