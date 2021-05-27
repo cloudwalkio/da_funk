@@ -86,7 +86,7 @@ module ISO8583
         rem = i % bitmap_size
         @bitmaps = rem > 0 ? quo + 1 : quo
         new_bmp = Array.new(@bitmaps * bitmap_size, false)
-        @bmp.each_with_index { |v, i| new_bmp[i] = v }
+        @bmp.each_with_index { |v, idx| new_bmp[idx] = v }
         0.upto(@bitmaps - 2) do |pos|
           new_bmp[pos * bitmap_size] = true
         end
