@@ -120,7 +120,8 @@ module ISO8583
     # ignore_mti allow use of Message without mti. Useful for fields with variable subfields
     attr_reader :ignore_mti
 
-    # bitmap_size define the size of bitmap to be used. It should be a multiple of 8 (a byte of 8 bits)
+    # bitmap_size define the size of bitmap to be used, in number of bits.
+    # It should be a multiple of 8 (a byte of 8 bits)
     attr_reader :bitmap_size
 
     # Instantiate a new instance of this type of Message
@@ -368,12 +369,12 @@ module ISO8583
       end
 
       # Parse the bytes `str` returning a message of the defined type.
-      def parse(str, use_hex_bitmap = false)
-        message = self.new(nil, use_hex_bitmap)
+      def parse(str, use_hex_bitmap = false, bitmap_size: 64)
+        message = self.new(nil, use_hex_bitmap, bitmap_size: bitmap_size)
 
         message.mti, rest = _mti_format.parse(str)
 
-        bmp, rest = Bitmap.parse(rest, use_hex_bitmap)
+        bmp, rest = Bitmap.parse(rest, use_hex_bitmap, bitmap_size: bitmap_size)
 
         bmp.each {|bit|
           bmp_def      = _definitions[bit]
