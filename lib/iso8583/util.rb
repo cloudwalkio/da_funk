@@ -30,7 +30,7 @@ module ISO8583
   end
 
   def _conv(str, mapping)
-    _str = ""
+    _str = String.new("", encoding: "ASCII-8BIT")
     str.each_byte{|byte|
       _str << mapping[byte]
     }

@@ -117,9 +117,16 @@ module ISO8583
     # ISO8583 allows hex or binary bitmap, so it should be configurable
     attr_reader :use_hex_bitmap
 
+    # ignore_mti allow use of Message without mti. Useful for fields with variable subfields
+    attr_reader :ignore_mti
+
+    # bitmap_size define the size of bitmap to be used, in number of bits.
+    # It should be a multiple of 8 (a byte of 8 bits)
+    attr_reader :bitmap_size
+
     # Instantiate a new instance of this type of Message
     # optionally specifying an mti.
-    def initialize(mti = nil, use_hex_bitmap = false)
+    def initialize(mti = nil, use_hex_bitmap = false, ignore_mti = false, bitmap_size = 64)
       # values is an internal field used to collect all the
       # bmp number | bmp name | field en/decoders | values
       # which are set in this message.
@@ -127,7 +134,8 @@ module ISO8583
 
       self.mti = mti if mti
       @use_hex_bitmap = use_hex_bitmap
-
+      @ignore_mti = ignore_mti
+      @bitmap_size = bitmap_size
     end
 
     # Set the mti of the Message using either the actual value
@@ -143,7 +151,9 @@ module ISO8583
     #    mes = MyMessage.new
     #    mes.mti = 1100 # or mes.mti = "Authorization Request Acquirer Gateway"
     def mti=(value)
-      num, name = _get_mti_definition(value)
+      raise ISO8583Exception.new "can't set MTI when `ignore_mti` is set" if ignore_mti
+
+      num, _ = _get_mti_definition(value)
       @mti = num
     end
 
@@ -180,9 +190,12 @@ module ISO8583
 
     # Retrieve the byte representation of the bitmap.
     def to_b
-      raise ISO8583Exception.new "no MTI set!" unless mti
-      mti_enc = self.class._mti_format.encode(mti).force_encoding('UTF-8')
-      mti_enc << _body.join.force_encoding('UTF-8')
+      raise ISO8583Exception.new "no MTI set!" if !(ignore_mti || mti)
+
+      return _body.join if ignore_mti
+
+      mti_enc = self.class._mti_format.encode(mti)
+      mti_enc << _body.join
     end
 
     # Returns a nicely formatted representation of this
@@ -209,12 +222,12 @@ module ISO8583
     # Returns an array of two byte arrays:
     # [bitmap_bytes, message_bytes]
     def _body
-      bitmap  = Bitmap.new
-      message = ""
+      bitmap  = Bitmap.new(nil, use_hex_bitmap, bitmap_size)
+      message = String.new("", encoding: 'ASCII-8BIT')
       @values.keys.sort.each do |bmp_num|
         bitmap.set(bmp_num)
         enc_value = @values[bmp_num].encode
-        message << enc_value.force_encoding('UTF-8')
+        message << enc_value
       end
 
       if use_hex_bitmap
@@ -356,12 +369,12 @@ module ISO8583
       end
 
       # Parse the bytes `str` returning a message of the defined type.
-      def parse(str, use_hex_bitmap = false)
-        message = self.new(nil, use_hex_bitmap)
+      def parse(str, use_hex_bitmap = false, bitmap_size = 64)
+        message = self.new(nil, use_hex_bitmap, false, bitmap_size)
 
         message.mti, rest = _mti_format.parse(str)
 
-        bmp, rest = Bitmap.parse(rest, use_hex_bitmap)
+        bmp, rest = Bitmap.parse(rest, use_hex_bitmap, bitmap_size)
 
         bmp.each {|bit|
           bmp_def      = _definitions[bit]
