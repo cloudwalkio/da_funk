@@ -126,7 +126,7 @@ module ISO8583
 
     # Instantiate a new instance of this type of Message
     # optionally specifying an mti.
-    def initialize(mti = nil, use_hex_bitmap = false, ignore_mti: false, bitmap_size: 128)
+    def initialize(mti = nil, use_hex_bitmap = false, ignore_mti = false, bitmap_size = 128)
       # values is an internal field used to collect all the
       # bmp number | bmp name | field en/decoders | values
       # which are set in this message.
@@ -222,7 +222,7 @@ module ISO8583
     # Returns an array of two byte arrays:
     # [bitmap_bytes, message_bytes]
     def _body
-      bitmap  = Bitmap.new(bitmap_size: bitmap_size)
+      bitmap  = Bitmap.new(nil, use_hex_bitmap, bitmap_size)
       message = String.new("", encoding: 'ASCII-8BIT')
       @values.keys.sort.each do |bmp_num|
         bitmap.set(bmp_num)
@@ -369,12 +369,12 @@ module ISO8583
       end
 
       # Parse the bytes `str` returning a message of the defined type.
-      def parse(str, use_hex_bitmap = false, bitmap_size: 64)
-        message = self.new(nil, use_hex_bitmap, bitmap_size: bitmap_size)
+      def parse(str, use_hex_bitmap = false, bitmap_size = 64)
+        message = self.new(nil, use_hex_bitmap, false, bitmap_size)
 
         message.mti, rest = _mti_format.parse(str)
 
-        bmp, rest = Bitmap.parse(rest, use_hex_bitmap, bitmap_size: bitmap_size)
+        bmp, rest = Bitmap.parse(rest, use_hex_bitmap, bitmap_size)
 
         bmp.each {|bit|
           bmp_def      = _definitions[bit]

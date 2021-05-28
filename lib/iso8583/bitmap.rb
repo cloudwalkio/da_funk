@@ -18,8 +18,8 @@ module ISO8583
     class << self
       # Parse the bytes in string and return the Bitmap and bytes remaining in `str`
       # after the bitmap is taken away.
-      def parse(str, hex_bitmap = false, bitmap_size: 64)
-        bmp  = Bitmap.new(str, hex_bitmap, bitmap_size: bitmap_size)
+      def parse(str, hex_bitmap = false, bitmap_size = 64)
+        bmp  = Bitmap.new(str, hex_bitmap, bitmap_size)
 
         rest = if bmp.hex_bitmap?
                  str[bmp.size_in_bytes_hex, str.length]
@@ -43,7 +43,7 @@ module ISO8583
     # create a new Bitmap object. In case an iso message
     # is passed in, that messages bitmap will be parsed. If
     # not, this initializes and empty bitmap.
-    def initialize(message = nil, hex_bitmap=false, bitmap_size: 128, additional_bitmap: true)
+    def initialize(message = nil, hex_bitmap=false, bitmap_size = 128, additional_bitmap = true)
       raise ISO8583Exception.new "wrong bitmap_size: #{bitmap_size}" if bitmap_size % 8 != 0
 
       @bitmap_size           = bitmap_size

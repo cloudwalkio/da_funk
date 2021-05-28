@@ -7,7 +7,7 @@ module ISO8583
       hex_bitmap = true
       bitmap_size = 64
 
-      bitmap, _ = Bitmap.parse(message, hex_bitmap, bitmap_size: bitmap_size)
+      bitmap, _ = Bitmap.parse(message, hex_bitmap, bitmap_size)
 
       expect = "7020000000008000"
       assert_equal(expect, bitmap.to_hex)
@@ -18,7 +18,7 @@ module ISO8583
       hex_bitmap = false
       bitmap_size = 64
 
-      bitmap, _ = Bitmap.parse(message, hex_bitmap, bitmap_size: bitmap_size)
+      bitmap, _ = Bitmap.parse(message, hex_bitmap, bitmap_size)
 
       expect = String.new("\x70\x20\x00\x00\x00\x00\x80\x00", encoding: "ASCII-8BIT")
       assert_equal(expect, bitmap.to_bytes)
@@ -29,7 +29,7 @@ module ISO8583
       hex_bitmap = true
       bitmap_size = 64
 
-      bitmap, _ = Bitmap.parse(message, hex_bitmap, bitmap_size: bitmap_size)
+      bitmap, _ = Bitmap.parse(message, hex_bitmap, bitmap_size)
 
       expect = "F0200000000080000000000000000002"
       assert_equal(expect, bitmap.to_hex)
@@ -40,7 +40,7 @@ module ISO8583
       hex_bitmap = false
       bitmap_size = 64
 
-      bitmap, _ = Bitmap.parse(message, hex_bitmap, bitmap_size: bitmap_size)
+      bitmap, _ = Bitmap.parse(message, hex_bitmap, bitmap_size)
 
       expect = String.new("\xF0\x20\x00\x00\x00\x00\x80\x00\x00\x00\x00\x00\x00\x00\x00\x02", encoding: "ASCII-8BIT")
       assert_equal(expect, bitmap.to_bytes)
@@ -51,7 +51,7 @@ module ISO8583
       hex_bitmap = true
       bitmap_size = 8
 
-      bitmap, _ = Bitmap.parse(message, hex_bitmap, bitmap_size: bitmap_size)
+      bitmap, _ = Bitmap.parse(message, hex_bitmap, bitmap_size)
 
       expect = "808002"
       assert_equal(expect, bitmap.to_hex)
@@ -63,7 +63,7 @@ module ISO8583
       hex_bitmap = true
       bitmap_size = 8
 
-      _, rest = Bitmap.parse(message, hex_bitmap, bitmap_size: bitmap_size)
+      _, rest = Bitmap.parse(message, hex_bitmap, bitmap_size)
 
       expect = "blablabla"
       assert_equal(expect, rest)
@@ -74,7 +74,7 @@ module ISO8583
       hex_bitmap = true
       bitmap_size = 64
 
-      _, rest = Bitmap.parse(message, hex_bitmap, bitmap_size: bitmap_size)
+      _, rest = Bitmap.parse(message, hex_bitmap, bitmap_size)
 
       expect = "foobarbaz"
       assert_equal(expect, rest)
@@ -85,47 +85,47 @@ module ISO8583
       hex_bitmap = true
       bitmap_size = 128
 
-      _, rest = Bitmap.parse(message, hex_bitmap, bitmap_size: bitmap_size)
+      _, rest = Bitmap.parse(message, hex_bitmap, bitmap_size)
 
       expect = "bazbarfoo"
       assert_equal(expect, rest)
     end
 
     def test_raises_on_wrong_bitmap_size
-      e = assert_raises { Bitmap.new(nil, false, bitmap_size: 1) }
+      e = assert_raises { Bitmap.new(nil, false, 1) }
       assert_equal(ISO8583Exception, e.class)
       assert_equal('wrong bitmap_size: 1', e.message)
     end
 
     def test_set_and_get_value
-      bitmap = Bitmap.new(nil, false, bitmap_size: 8)
+      bitmap = Bitmap.new(nil, false, 8)
       bitmap.set(2)
       assert_equal(true, bitmap[2])
       assert_equal(false, bitmap[1])
     end
 
     def test_avoid_set_bit_greater_than_size
-      bitmap = Bitmap.new(nil, false, bitmap_size: 8, additional_bitmap: false)
+      bitmap = Bitmap.new(nil, false, 8,  false)
       e = assert_raises { bitmap.set(9) }
       assert_equal(ISO8583Exception, e.class)
       assert_equal("can't set field 9, bitmap_size == 8", e.message)
     end
 
     def test_allow_set_bit_1_when_no_has_additional_bitmap
-      bitmap = Bitmap.new(nil, false, bitmap_size: 8, additional_bitmap: false)
+      bitmap = Bitmap.new(nil, false, 8,  false)
       bitmap.set(1)
       assert_equal(true, bitmap[1])
     end
 
     def test_avoid_set_bit_1_when_has_additional_bitmap
-      bitmap = Bitmap.new(nil, false, bitmap_size: 8, additional_bitmap: true)
+      bitmap = Bitmap.new(nil, false, 8,  true)
       e = assert_raises { bitmap.set(1) }
       assert_equal(ISO8583Exception, e.class)
       assert_equal("field 1 shouldn't be set (continuation bit is set automatically)", e.message)
     end
 
     def test_set_continuation_bit
-      bitmap = Bitmap.new(nil, false, bitmap_size: 8, additional_bitmap: true)
+      bitmap = Bitmap.new(nil, false, 8,  true)
       bitmap.set(20)
       assert_equal(true, bitmap[1])
       assert_equal(true, bitmap[9])
@@ -134,7 +134,7 @@ module ISO8583
     end
 
     def test_set_continuation_bit_with_bitmap_size_of_64
-      bitmap = Bitmap.new(nil, false, bitmap_size: 64, additional_bitmap: true)
+      bitmap = Bitmap.new(nil, false, 64,  true)
       bitmap.set(180)
       assert_equal(true, bitmap[1])
       assert_equal(true, bitmap[65])
@@ -143,7 +143,7 @@ module ISO8583
     end
 
     def test_unset_field
-      bitmap = Bitmap.new(nil, false, bitmap_size: 8, additional_bitmap: false)
+      bitmap = Bitmap.new(nil, false, 8,  false)
       assert_equal(false, bitmap[1])
       bitmap.set(1)
       assert_equal(true, bitmap[1])
@@ -152,7 +152,7 @@ module ISO8583
     end
 
     def test_to_s_bitmap_size_8_bits
-      bitmap = Bitmap.new(nil, false, bitmap_size: 8, additional_bitmap: false)
+      bitmap = Bitmap.new(nil, false, 8,  false)
       bitmap.set(2)
       bitmap.set(7)
 
@@ -160,7 +160,7 @@ module ISO8583
     end
 
     def test_to_s_bitmap_size_8_bits_having_additional_bitmap
-      bitmap = Bitmap.new(nil, false, bitmap_size: 8, additional_bitmap: true)
+      bitmap = Bitmap.new(nil, false, 8,  true)
       bitmap.set(2)
       bitmap.set(10)
 
@@ -168,7 +168,7 @@ module ISO8583
     end
 
     def test_to_s_bitmap_size_64_bits
-      bitmap = Bitmap.new(nil, false, bitmap_size: 64, additional_bitmap: true)
+      bitmap = Bitmap.new(nil, false, 64,  true)
       bitmap.set(2)
       bitmap.set(3)
       bitmap.set(7)
@@ -179,7 +179,7 @@ module ISO8583
     end
 
     def test_to_s_bitmap_size_64_bits_having_additional_bitmap
-      bitmap = Bitmap.new(nil, false, bitmap_size: 64, additional_bitmap: true)
+      bitmap = Bitmap.new(nil, false, 64,  true)
       bitmap.set(2)
       bitmap.set(3)
       bitmap.set(7)
@@ -191,14 +191,14 @@ module ISO8583
     end
 
     def test_to_hex_without_fields
-      bitmap = Bitmap.new(nil, true, bitmap_size: 8, additional_bitmap: true)
+      bitmap = Bitmap.new(nil, true, 8,  true)
 
       expected = "00"
       assert_equal(expected, bitmap.to_hex)
     end
 
     def test_to_hex_with_many_fields
-      bitmap = Bitmap.new(nil, true, bitmap_size: 64, additional_bitmap: true)
+      bitmap = Bitmap.new(nil, true, 64,  true)
       bitmap.set(2)
       bitmap.set(3)
       bitmap.set(4)
@@ -214,7 +214,7 @@ module ISO8583
     end
 
     def test_to_b_bitmap_size_8
-      bitmap = Bitmap.new(nil, false, bitmap_size: 8, additional_bitmap: false)
+      bitmap = Bitmap.new(nil, false, 8,  false)
       bitmap.set(2)
       bitmap.set(3)
       bitmap.set(4)
@@ -228,7 +228,7 @@ module ISO8583
     end
 
     def test_to_b_bitmap_size_8_having_additional_bitmap
-      bitmap = Bitmap.new(nil, false, bitmap_size: 8, additional_bitmap: true)
+      bitmap = Bitmap.new(nil, false, 8,  true)
       bitmap.set(2)
       bitmap.set(3)
       bitmap.set(4)
@@ -243,7 +243,7 @@ module ISO8583
     end
 
     def test_to_b_bitmap_size_64
-      bitmap = Bitmap.new(nil, false, bitmap_size: 64, additional_bitmap: false)
+      bitmap = Bitmap.new(nil, false, 64,  false)
       bitmap.set(2)
       bitmap.set(3)
       bitmap.set(4)
@@ -259,7 +259,7 @@ module ISO8583
     end
 
     def test_to_b_bitmap_size_64_having_additional_bitmap
-      bitmap = Bitmap.new(nil, false, bitmap_size: 64, additional_bitmap: true)
+      bitmap = Bitmap.new(nil, false, 64,  true)
       bitmap.set(2)
       bitmap.set(3)
       bitmap.set(4)
@@ -272,7 +272,6 @@ module ISO8583
       expected = String.new("\xFF\x00\x00\x00\x00\x00\x00\x00\x40\x00\x00\x00\x00\x00\x00\x00", encoding: 'ASCII-8BIT')
 
       assert_equal(expected, bitmap.to_b)
-
     end
   end
 end

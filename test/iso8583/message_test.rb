@@ -21,12 +21,12 @@ module ISO8583
 
   class TestMessageInitialization < Minitest::Test
     def test_ignore_mti_field_set
-      msg = TestNoMTIMessage.new(nil, true, ignore_mti: true)
+      msg = TestNoMTIMessage.new(nil, true, true)
       assert_equal true, msg.ignore_mti
     end
 
     def test_cant_set_mit_if_ignore_mti
-      msg = TestNoMTIMessage.new(nil, true, ignore_mti: true)
+      msg = TestNoMTIMessage.new(nil, true, true)
       assert_raises { msg.mti = 100 }
     end
 
@@ -51,13 +51,13 @@ module ISO8583
     end
 
     def test_return_bitmap_without_mti_set_and_hex_bitmap
-      msg = TestNoMTIMessage.new(nil, true, ignore_mti: true, bitmap_size: 24)
+      msg = TestNoMTIMessage.new(nil, true, true, 24)
       msg[2] = "bar"
       assert_equal("400000bar", msg.to_b)
     end
 
     def test_return_bitmap_without_mti_set_and_bin_bitmap
-      msg = TestNoMTIMessage.new(nil, false, ignore_mti: true, bitmap_size: 24)
+      msg = TestNoMTIMessage.new(nil, false, true, 24)
       msg[2] = "bar"
 
       expected = String.new("\x40\x00\x00bar", encoding: 'ASCII-8BIT')
@@ -70,7 +70,7 @@ module ISO8583
     def test_parse_with_hex_bitmap
       msg = "010040bar"
 
-      isomsg = TestMTIMessage.parse(msg, true, bitmap_size: 8)
+      isomsg = TestMTIMessage.parse(msg, true, 8)
 
       expected = 100
       assert_equal(expected, isomsg.mti)
@@ -81,7 +81,7 @@ module ISO8583
     def test_parse_with_bin_bitmap
       msg = "0100\x40bar"
 
-      isomsg = TestMTIMessage.parse(msg, false, bitmap_size: 8)
+      isomsg = TestMTIMessage.parse(msg, false, 8)
 
       expected = 100
       assert_equal(expected, isomsg.mti)
@@ -92,9 +92,20 @@ module ISO8583
     def test_parse_raises_when_undefined_field
       msg = "0100\x20bar"
 
-      e = assert_raises { TestMTIMessage.parse(msg, false, bitmap_size: 8) }
+      e = assert_raises { TestMTIMessage.parse(msg, false, 8) }
       assert_equal(ISO8583ParseException, e.class)
       assert_equal("The message contains fields not defined", e.message)
+    end
+
+    def test_parse_raises_when_undefined_field
+      msg = "0100\x40\x00\x00\x00\x00\x00\x00\x00bar"
+
+      isomsg = TestMTIMessage.parse(msg, false)
+
+      expected = 100
+      assert_equal(expected, isomsg.mti)
+      expected = "bar"
+      assert_equal(expected, isomsg[2])
     end
   end
 end
