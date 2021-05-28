@@ -43,7 +43,7 @@ module ISO8583
     # create a new Bitmap object. In case an iso message
     # is passed in, that messages bitmap will be parsed. If
     # not, this initializes and empty bitmap.
-    def initialize(message = nil, hex_bitmap=false, bitmap_size = 128, additional_bitmap = true)
+    def initialize(message = nil, hex_bitmap=false, bitmap_size = 64, additional_bitmap = true)
       raise ISO8583Exception.new "wrong bitmap_size: #{bitmap_size}" if bitmap_size % 8 != 0
 
       @bitmap_size           = bitmap_size

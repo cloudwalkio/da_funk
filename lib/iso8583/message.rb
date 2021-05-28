@@ -126,7 +126,7 @@ module ISO8583
 
     # Instantiate a new instance of this type of Message
     # optionally specifying an mti.
-    def initialize(mti = nil, use_hex_bitmap = false, ignore_mti = false, bitmap_size = 128)
+    def initialize(mti = nil, use_hex_bitmap = false, ignore_mti = false, bitmap_size = 64)
       # values is an internal field used to collect all the
       # bmp number | bmp name | field en/decoders | values
       # which are set in this message.
