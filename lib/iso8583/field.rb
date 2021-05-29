@@ -90,7 +90,16 @@ module ISO8583
     # This corrects the length for BCD fields, as their encoded length is half (+ parity) of the
     # content length. E.g. 123 (length = 3) encodes to "\x01\x23" (length 2)
     def length
-      @byte_length
+      if @length.respond_to?(:odd?)
+        @data_length = @length
+        if @data_length.odd?
+          @byte_length = (@data_length + 1) / 2
+        else
+          @byte_length = @data_length / 2
+        end
+        return @byte_length
+      end
+      @length
     end
 
     def encode(value)
