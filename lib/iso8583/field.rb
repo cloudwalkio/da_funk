@@ -39,7 +39,7 @@ module ISO8583
       begin
         real_value = codec.decode(raw_value)
       rescue => e
-        ContextLog.exception e, e.backtrace if Object.defined?(:ContextLog)
+        ContextLog.exception e, e.backtrace if Object.const_defined?(:ContextLog)
         raise ISO8583ParseException.new(e.message+" (#{name})")
       end
 
